@@ -1,0 +1,44 @@
+# phpmy admin
+version: "3.8"
+services:
+  cashbackdb:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_PASSWORD: ${DB_PASS}
+    ports:
+      - 3306:3306
+    networks:
+      - cashback-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      PMA_HOST: ${DB_HOST}
+    networks:
+      - cashback-network
+
+  back:
+    build: ./back
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - ./back/src:/app/src
+      - ./back/package.json:/app/package.json
+      - ./back/tsconfig.json:/app/tsconfig.json
+    depends_on:
+      - cashbackdb
+    env_file:
+      .env
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    networks:
+      - cashback-network
+
+networks:
+  cashback-network:
