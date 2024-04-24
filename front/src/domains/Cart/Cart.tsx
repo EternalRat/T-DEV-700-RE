@@ -1,7 +1,15 @@
-import { createContext, useCallback, useMemo, useReducer } from 'react';
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useMemo,
+	useReducer,
+} from 'react';
 import { CartAction, CartStore, ProductCart } from './types';
 import { reducer } from './reducer';
 import { Product } from '../products/types';
+import { MessageContext, MessageStore } from '../message/Context';
+import { ActionTypeMessage, MessageType } from '../message/types';
 
 export const defaultCart: CartStore = {
 	cartStore: [],
@@ -14,6 +22,8 @@ export const CartContext = createContext<CartStore>(defaultCart);
 
 export const CartWrapper = ({ children }: { children: React.ReactNode }) => {
 	const [cartStore, dispatch] = useReducer(reducer, defaultCart.cartStore);
+	const { dispatch: dispatchMessage } =
+		useContext<MessageStore>(MessageContext);
 
 	const addProduct = useCallback((product: Product) => {
 		dispatch({
@@ -24,10 +34,20 @@ export const CartWrapper = ({ children }: { children: React.ReactNode }) => {
 				quantity: 1,
 			},
 		});
+		dispatchMessage({
+			message: 'ADD_PRODUCT',
+			type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
+			typeMessage: MessageType.SUCCESS,
+		});
 	}, []);
 
 	const removeProduct = useCallback((product_id: number) => {
-		dispatch({ type: CartAction.REMOVE_PRODUCT, product_id });
+        dispatch({ type: CartAction.REMOVE_PRODUCT, product_id });
+        dispatchMessage({
+			message: 'REMOVE_PRODUCT',
+			type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
+			typeMessage: MessageType.SUCCESS,
+		});
 	}, []);
 
 	const clearCart = useCallback(() => {

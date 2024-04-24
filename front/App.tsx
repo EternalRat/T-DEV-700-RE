@@ -6,6 +6,9 @@ import { Message } from './src/domains/message/Message';
 import { CashManagerRouter } from './src/router/Routes';
 import { MessageWrapper } from './src/domains/message/Context';
 import { ProductWrapper } from './src/domains/products/Products';
+import { CartWrapper } from './src/domains/Cart/Cart';
+import { MerchantWrapper } from './src/domains/merchants/Merchants';
+import { WebsocketWrapper } from './src/domains/Websocket/Websocket';
 
 function App(): React.JSX.Element {
 	return (
@@ -13,13 +16,19 @@ function App(): React.JSX.Element {
 			<NavigationContainer>
 				<MessageWrapper>
 					<ProductWrapper>
-						<GestureHandlerRootView
-							style={{
-								flex: 1,
-							}}>
-							<CashManagerRouter />
-						</GestureHandlerRootView>
-						<Message />
+						<CartWrapper>
+							<MerchantWrapper>
+								<WebsocketWrapper>
+									<GestureHandlerRootView
+										style={{
+											flex: 1,
+										}}>
+										<CashManagerRouter />
+									</GestureHandlerRootView>
+									<Message />
+								</WebsocketWrapper>
+							</MerchantWrapper>
+						</CartWrapper>
 					</ProductWrapper>
 				</MessageWrapper>
 			</NavigationContainer>
