@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "baseUrl": ".",
-        "target": "ES2022",
+        "target": "es2017",
         "module": "CommonJS",
         "lib": [
             "esnext"
@@ -16,10 +16,11 @@
         "experimentalDecorators": true,
         "outDir": "./build",
         "strictPropertyInitialization": false,
-        "paths": {}
     },
+    "exclude": [
+        "src/__tests__/"
+    ],
     "include": [
         "src",
-        "__tests__"
-    ]
+    ],
 }

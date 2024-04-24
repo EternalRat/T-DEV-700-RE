@@ -1,0 +1,45 @@
+import { createContext, useCallback, useMemo, useReducer } from 'react';
+import { CartAction, CartStore, ProductCart } from './types';
+import { reducer } from './reducer';
+import { Product } from '../products/types';
+
+export const defaultCart: CartStore = {
+	cartStore: [],
+	addProduct: (_: Product) => {},
+	removeProduct: (_: number) => {},
+	clearCart: () => {},
+};
+
+export const CartContext = createContext<CartStore>(defaultCart);
+
+export const CartWrapper = ({ children }: { children: React.ReactNode }) => {
+	const [cartStore, dispatch] = useReducer(reducer, defaultCart.cartStore);
+
+	const addProduct = useCallback((product: Product) => {
+		dispatch({
+			type: CartAction.ADD_PRODUCT,
+			product: {
+				id: product.id,
+				price: product.price,
+				quantity: 1,
+			},
+		});
+	}, []);
+
+	const removeProduct = useCallback((product_id: number) => {
+		dispatch({ type: CartAction.REMOVE_PRODUCT, product_id });
+	}, []);
+
+	const clearCart = useCallback(() => {
+		dispatch({ type: CartAction.CLEAR_CART });
+	}, []);
+
+	const value = useMemo(
+		() => ({ cartStore, addProduct, removeProduct, clearCart }),
+		[cartStore]
+	);
+
+	return (
+		<CartContext.Provider value={value}>{children}</CartContext.Provider>
+	);
+};

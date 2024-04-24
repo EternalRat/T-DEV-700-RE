@@ -18,5 +18,8 @@
     },
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
-    }
+    },
+    "[prisma]": {
+        "editor.formatOnSave": true
+    },
 }

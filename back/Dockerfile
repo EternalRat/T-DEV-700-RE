@@ -8,13 +8,13 @@ WORKDIR /usr/src/app
 COPY package.json ./
 COPY yarn.lock .
 
-# run npm install in our local machine
-RUN yarn
-
 # copy the generated modules and all other files to the container
 COPY . .
 
-RUN npx prisma migrate dev --name init
+# run npm install in our local machine
+RUN yarn
+
+RUN npx prisma generate
 
 EXPOSE 8080
 
