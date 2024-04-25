@@ -6,6 +6,7 @@ import {
 	useMemo,
 	useState,
 } from 'react';
+import { API_URL } from '@env';
 import { io, Socket } from 'socket.io-client';
 import { CartContext } from '../Cart/Cart';
 import { CartStore } from '../Cart/types';
@@ -13,9 +14,9 @@ import { MessageStore, MessageContext } from '../message/Context';
 import { ActionTypeMessage, MessageType } from '../message/types';
 
 export const WebsocketContext = createContext<{
-	sendMessage: (_: string) => void;
+	sendMessage: (eventName: string, _: any) => void;
 }>({
-	sendMessage: (_: string) => {},
+	sendMessage: (eventName: string, _: any) => {},
 });
 
 export const WebsocketWrapper = ({
@@ -30,14 +31,16 @@ export const WebsocketWrapper = ({
 		useContext<MessageStore>(MessageContext);
 
 	useEffect(() => {
-		const ws = io('ws://localhost:8080');
-		ws.connect();
+		const ws = io('ws://' + API_URL, {
+			transports: ['websocket'],
+			autoConnect: true,
+		});
 		ws.on('connect', () => {
 			console.log('connected');
 		});
 
 		ws.on('paiement', event => {
-			if (event === 'success') {
+			if (event.status === 'success') {
 				clearCart();
 				setAwaitingPayment(false);
 				dispatchMessage({
@@ -65,10 +68,10 @@ export const WebsocketWrapper = ({
 	}, []);
 
 	const sendMessage = useCallback(
-		(message: string) => {
+		(eventName: string, message: any) => {
 			if (socket) {
-				socket.send(message);
-				setAwaitingPayment(true);
+				socket.send(eventName, message);
+				if (eventName === 'send_paiement') setAwaitingPayment(true);
 			}
 		},
 		[socket]

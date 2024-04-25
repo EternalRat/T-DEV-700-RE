@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { CartAction, CartStore, ProductCart } from './types';
 import { reducer } from './reducer';
-import { Product } from '../products/types';
+import { Product } from '../Products/types';
 import { MessageContext, MessageStore } from '../message/Context';
 import { ActionTypeMessage, MessageType } from '../message/types';
 
@@ -42,8 +42,8 @@ export const CartWrapper = ({ children }: { children: React.ReactNode }) => {
 	}, []);
 
 	const removeProduct = useCallback((product_id: number) => {
-        dispatch({ type: CartAction.REMOVE_PRODUCT, product_id });
-        dispatchMessage({
+		dispatch({ type: CartAction.REMOVE_PRODUCT, product_id });
+		dispatchMessage({
 			message: 'REMOVE_PRODUCT',
 			type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
 			typeMessage: MessageType.SUCCESS,

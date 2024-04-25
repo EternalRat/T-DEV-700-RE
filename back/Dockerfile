@@ -19,4 +19,4 @@ RUN npx prisma generate
 EXPOSE 8080
 
 # the command that starts our app
-CMD ["yarn", "dev"]
+CMD npx prisma migrate dev --name init; npx prisma db seed; yarn dev

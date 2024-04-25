@@ -13,11 +13,4 @@ export interface SnackBarProps {
 	mode: DisplayMode;
 	colorStyle?: MessageType;
 }
-
-export enum SnackbarDisplayMode {
-	LEFT,
-	CENTER,
-	RIGHT,
-}
-
 export type ContentMode = 'background' | 'text';

@@ -10,20 +10,23 @@ import cookieParser from "cookie-parser";
 import DatabaseClient from "./class/database.class";
 import routes from "./routes";
 import CMWebSocket from "./class/websocket.class";
+import { JWT } from "./class/jwt.class";
 
 // Init the database client and create the instance
 DatabaseClient.getDatabaseInstance();
+JWT.getInstance();
 
 const expressApp = express();
 const PORT = process.env.port ?? 8080;
 
 expressApp.use(
     cors({
-        credentials: true,
+        // credentials: true,
         origin: "*",
     }),
 );
 expressApp.use(cookieParser());
+expressApp.use(express.json())
 
 expressApp.use("/api", routes);
 

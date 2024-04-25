@@ -1,12 +1,13 @@
 import express from "express";
-import merchantRoutes from "./merchant";
+import authRoutes from "./auth";
 import productRoutes from "./product";
 import userRoutes from "./user";
+import { JWT } from "../class/jwt.class";
 
 const router = express.Router();
 
-router.use("/merchant", merchantRoutes);
-router.use("/product", productRoutes);
-router.use("/user", userRoutes);
+router.use("/auth", authRoutes);
+router.use("/product", JWT.authToken, productRoutes);
+router.use("/user", JWT.authToken, userRoutes);
 
 export default router;

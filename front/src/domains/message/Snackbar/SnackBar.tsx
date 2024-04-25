@@ -12,7 +12,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { MessageType } from '../types';
-import { DisplayMode, SnackbarDisplayMode, SnackBarProps } from './type';
+import { DisplayMode, SnackBarProps } from './type';
 import { configStyle, getColorStyle } from './utils';
 
 const BASE_TOP_ERROR = -55;
@@ -40,8 +40,6 @@ export const SnackBar = ({
 		};
 	});
 
-	const paddingMode: SnackbarDisplayMode = SnackbarDisplayMode.CENTER;
-
 	useEffect(() => {
 		if (mode !== DisplayMode.BACKGROUND_COLOR) {
 			return;
@@ -65,45 +63,49 @@ export const SnackBar = ({
 
 	return (
 		<GestureHandlerRootView>
-			<Animated.View style={[styles.container, snackAnimation]}>
-				<TouchableOpacity
-					activeOpacity={1}
-					style={[
-						styles.snackbar,
-						type === MessageType.ERROR
-							? styles.error
-							: styles.success,
-						configStyle[mode].background(getColorStyle(colorStyle)),
-					]}
-					onPress={() => {
-						onPress();
-					}}>
-					<View
-						style={{
-							flexDirection: 'row',
-							justifyContent: 'center',
-							flex: 1,
+			{isVisible && (
+				<Animated.View style={[styles.container, snackAnimation]}>
+					<TouchableOpacity
+						activeOpacity={1}
+						style={[
+							styles.snackbar,
+							type === MessageType.ERROR
+								? styles.error
+								: styles.success,
+							configStyle[mode].background(
+								getColorStyle(colorStyle)
+							),
+						]}
+						onPress={() => {
+							onPress();
 						}}>
-						<Text
-							style={
-								[
-									{
-										paddingLeft: 0,
-										paddingRight: 0,
-										flexWrap: 'wrap',
-										alignSelf: 'center',
-										textAlign: 'center',
-									},
-									configStyle[mode].text(
-										getColorStyle(colorStyle)
-									),
-								] as TextStyle
-							}>
-							{text}
-						</Text>
-					</View>
-				</TouchableOpacity>
-			</Animated.View>
+						<View
+							style={{
+								flexDirection: 'row',
+								justifyContent: 'center',
+								flex: 1,
+							}}>
+							<Text
+								style={
+									[
+										{
+											paddingLeft: 0,
+											paddingRight: 0,
+											flexWrap: 'wrap',
+											alignSelf: 'center',
+											textAlign: 'center',
+										},
+										configStyle[mode].text(
+											getColorStyle(colorStyle)
+										),
+									] as TextStyle
+								}>
+								{text}
+							</Text>
+						</View>
+					</TouchableOpacity>
+				</Animated.View>
+			)}
 		</GestureHandlerRootView>
 	);
 };
@@ -130,9 +132,9 @@ const styles = StyleSheet.create({
 		zIndex: 5,
 	},
 	error: {
-		backgroundColor: '#000',
+		backgroundColor: '#0c0a0a',
 		borderRadius: 5,
-		borderColor: '#ff8c8c',
+		borderColor: '#DC0000',
 		borderWidth: 2,
 		color: '#fff',
 		zIndex: 5,

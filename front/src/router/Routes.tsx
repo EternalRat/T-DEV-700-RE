@@ -7,9 +7,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DrawerContent } from '../components/Drawer';
 import { RootStackParamList, Routes } from './routesName';
 import { Shop } from '../views/Shop/Shop';
-import { Settings } from '../views/Settings';
-import { Checkout } from '../views/Checkout';
-import { Transaction } from '../views/Transaction';
+import { Settings } from '../views/Settings/Settings';
+import { Checkout } from '../views/Checkout/Checkout';
+import { Transaction } from '../views/Transaction/Transaction';
 
 const Drawer = createDrawerNavigator<RootStackParamList>();
 
@@ -25,6 +25,9 @@ export const CashManagerRouter = () => {
 				drawerActiveBackgroundColor: '#FFA500',
 				drawerActiveTintColor: '#333',
 				drawerInactiveTintColor: '#fff',
+				headerStyle: {
+					backgroundColor: '#333',
+				},
 				drawerLabelStyle: {
 					fontSize: 15,
 					marginLeft: -25,

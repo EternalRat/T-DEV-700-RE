@@ -6,12 +6,14 @@ interface IClient {
     isMerchant: boolean;
     isUser: boolean;
     merchantId?: number;
+    isWaiting?: boolean;
 }
 
 const DEFAULT_CLIENT: IClient = {
     isMerchant: false,
     isUser: false,
     merchantId: undefined,
+    isWaiting: undefined,
 };
 
 export default class CMWebSocket {
@@ -35,7 +37,7 @@ export default class CMWebSocket {
                     ...this._clients[socket.id],
                     ...args,
                 };
-                callback({ status: "ok" });
+                callback({ status: "success" });
             });
 
             socket.on("connect-client", (args, callback) => {
@@ -51,7 +53,7 @@ export default class CMWebSocket {
                 );
                 if (tpeSocket)
                     this._io.to(tpeSocket).emit("client-connected", args);
-                callback({ status: "ok" });
+                callback({ status: "success" });
             });
 
             socket.on("validate-payment", (args, callback) => {
@@ -62,8 +64,10 @@ export default class CMWebSocket {
                         this._clients[key].merchantId === args.merchantId,
                 );
                 if (clientSocket) {
-                    this._io.to(clientSocket).emit("payment", args);
-                    callback({ status: "ok" });
+                    this._io.to(clientSocket).emit("payment", {
+                        status: "success",
+                    });
+                    callback({ status: "success" });
                 } else {
                     console.error("TPE not found");
                     callback({ status: "error" });
@@ -79,7 +83,7 @@ export default class CMWebSocket {
                 );
                 if (merchantSocket)
                     this._io.to(merchantSocket).emit("payment", args);
-                callback({ status: "ok" });
+                callback({ status: "success" });
             });
         });
     }

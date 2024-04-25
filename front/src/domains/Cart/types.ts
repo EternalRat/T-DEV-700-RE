@@ -1,5 +1,5 @@
-import { Product } from "../products/types";
-import { ReducerType } from "../reducer";
+import { Product } from '../Products/types';
+import { ReducerType } from '../reducer';
 
 export interface ProductCart {
 	id: number;
