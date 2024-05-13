@@ -6,7 +6,8 @@ const router = express.Router();
 // Get routes
 router.get("/", UserController.getAll);
 router.get("/:id", UserController.get);
-router.get("/cart/:id", UserController.getByCartId);
+router.get("/nfc/:id", UserController.getByNFC);
+router.get("/qrcode/:id", UserController.getByQRCode);
 
 // Post routes
 router.post("/", UserController.create);

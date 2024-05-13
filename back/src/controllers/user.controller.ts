@@ -84,16 +84,34 @@ export namespace UserController {
     };
 
     /**
-     * Get a user by its cart id
+     * Get a user by its nfc
      * @param req {Request}
      * @param res {Response}
      * @returns {Promise<void>}
      */
-    export const getByCartId = async (
+    export const getByNFC = async (
         req: Request,
         res: Response,
     ): Promise<void> => {
-        const user = await CMUser.fetchByCartId(req.params.id);
+        const user = await CMUser.fetchByNFC(req.params.id);
+        if (!user) {
+            res.status(404).send("User not found");
+            return;
+        }
+        res.json(user);
+    };
+
+    /**
+     * Get a user by its qr code
+     * @param req {Request}
+     * @param res {Response}
+     * @returns {Promise<void>}
+     */
+    export const getByQRCode = async (
+        req: Request,
+        res: Response,
+    ): Promise<void> => {
+        const user = await CMUser.fetchByQRCode(req.params.id);
         if (!user) {
             res.status(404).send("User not found");
             return;

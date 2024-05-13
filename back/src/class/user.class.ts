@@ -26,9 +26,15 @@ export default class CMUser {
     private name: string;
 
     /**
-     * User cart ID
+     * User NFC/QRCode ID
      */
-    private cartId: string;
+    private nfc: string;
+    private qrCode: string;
+
+    /**
+     * User amount
+     */
+    private amount: number;
 
     constructor() {}
 
@@ -65,19 +71,51 @@ export default class CMUser {
     }
 
     /**
-     * Set the user cart ID
-     * @param {string} cartId User cart ID
+     * Set the user nfc
+     * @param {string} nfc User nfc
      */
-    public setCartId(cartId: string): void {
-        this.cartId = cartId;
+    public setNFC(nfc: string): void {
+        this.nfc = nfc;
     }
 
     /**
-     * Get the user cart ID
-     * @return {string} User cart ID
+     * Get the user nfc
+     * @return {string} User nfc
      */
-    public getCartId(): string {
-        return this.cartId;
+    public getNFC(): string {
+        return this.nfc;
+    }
+
+    /**
+     * Set the user qr code
+     * @param {string} qrCode User qr code
+     */
+    public setQRCode(qrCode: string): void {
+        this.qrCode = qrCode;
+    }
+
+    /**
+     * Get the user qr code
+     * @return {string} User qr code
+     */
+    public getQRCode(): string {
+        return this.qrCode;
+    }
+
+    /**
+     * Set the user amount
+     * @param {number} amount
+     */
+    public setAmount(amount: number): void {
+        this.amount = amount;
+    }
+
+    /**
+     * Get the user amount
+     * @return {number} User amount
+     */
+    public getAmount(): number {
+        return this.amount;
     }
 
     /**
@@ -88,7 +126,9 @@ export default class CMUser {
         return {
             id: this.id,
             name: this.name,
-            cartId: this.cartId,
+            qrCode: this.qrCode,
+            nfc: this.nfc,
+            amount: this.amount,
         };
     }
 
@@ -101,7 +141,9 @@ export default class CMUser {
         const user = new CMUser();
         user.id = json.id;
         user.name = json.name;
-        user.cartId = json.cartId;
+        user.qrCode = json.qrCode;
+        user.nfc = json.nfc;
+        user.amount = json.amount;
         return user;
     }
 
@@ -116,7 +158,9 @@ export default class CMUser {
                 data: {
                     id: this.id,
                     name: this.name,
-                    cartId: this.cartId,
+                    nfc: this.nfc,
+                    qrCode: this.qrCode,
+                    amount: this.amount,
                 },
             });
         return user;
@@ -139,16 +183,32 @@ export default class CMUser {
     }
 
     /**
-     * Get a user by its cart ID
-     * @param {string} cartId User cart ID
+     * Get a user by its NFC
+     * @param {string} nfc User NFC
      * @returns {Promise<User | null>} User instance
      */
-    static async fetchByCartId(cartId: string): Promise<User | null> {
+    static async fetchByNFC(nfc: string): Promise<User | null> {
         const user = await DatabaseClient.getDatabaseInstance()
             .getClient()
             .user.findUnique({
                 where: {
-                    cartId: cartId,
+                    nfc: nfc,
+                },
+            });
+        return user;
+    }
+
+    /**
+     * Get a user by its qr code
+     * @param {string} nfc User qr code
+     * @returns {Promise<User | null>} User instance
+     */
+    static async fetchByQRCode(qrCode: string): Promise<User | null> {
+        const user = await DatabaseClient.getDatabaseInstance()
+            .getClient()
+            .user.findUnique({
+                where: {
+                    qrCode: qrCode,
                 },
             });
         return user;
@@ -178,7 +238,9 @@ export default class CMUser {
                 },
                 data: {
                     name: this.name,
-                    cartId: this.cartId,
+                    nfc: this.nfc,
+                    qrCode: this.qrCode,
+                    amount: this.amount,
                 },
             });
         return user;

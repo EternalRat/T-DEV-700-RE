@@ -1,39 +1,29 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import NfcManager, {NfcTech} from 'react-native-nfc-manager';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { WebsocketWrapper } from './src/domains/Websocket/Websocket';
+import { CashManagerRouter } from './src/router/Routes';
+import { NavigationContainer } from '@react-navigation/native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Message } from './src/domains/Message/Message';
 
-// Pre-step, call this before any NFC operations
-NfcManager.start();
-
-// register for the NFC tag with NDEF in it
 function App() {
-  async function readNdef() {
-    try {
-      await NfcManager.requestTechnology(NfcTech.Ndef);
-      // the resolved tag object will contain `ndefMessage` property
-      const tag = await NfcManager.getTag();
-      console.warn('Tag found', tag);
-    } catch (ex) {
-      console.warn('Oops!', ex);
-    }
-    NfcManager.cancelTechnologyRequest();
-  }
-
-  return (
-    <View style={styles.wrapper}>
-      <TouchableOpacity onPress={readNdef}>
-        <Text>Scan a Tag</Text>
-      </TouchableOpacity>
-    </View>
-  );
+	return (
+		<SafeAreaProvider>
+			<NavigationContainer>
+				<WebsocketWrapper>
+					<GestureHandlerRootView
+						style={{
+							flex: 1,
+							minHeight: '100%',
+							height: '100%',
+						}}>
+						<CashManagerRouter />
+					</GestureHandlerRootView>
+					<Message />
+				</WebsocketWrapper>
+			</NavigationContainer>
+		</SafeAreaProvider>
+	);
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default App;

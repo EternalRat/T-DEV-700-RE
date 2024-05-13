@@ -17,7 +17,6 @@ export namespace AuthController {
      * @returns {Promise<void>}
      */
     export const login = async (req: Request, res: Response): Promise<void> => {
-        console.log(req.body);
         const { username, password } = req.body;
         if (!username || !password) {
             res.status(403).send({
@@ -27,7 +26,6 @@ export namespace AuthController {
             return;
         }
         const user = await CMAuth.fetchByUsername(username);
-        console.log(user)
         if (!user) {
             res.status(403).send({
                 status: "error",
@@ -35,11 +33,6 @@ export namespace AuthController {
             });
             return;
         }
-        console.log(
-            user,
-            password,
-            await bcrypt.compare(password, user.password),
-        );
         if (await bcrypt.compare(password, user.password)) {
             const token = jwt.sign(
                 {
@@ -52,12 +45,16 @@ export namespace AuthController {
                 },
             );
 
+            res.cookie("token", token, {
+                httpOnly: true,
+                secure: false,
+            });
+
             res.status(200).send({
                 status: 200,
                 user: {
                     name: user.name,
                     id: user.id,
-                    token: token,
                 },
             });
         } else {

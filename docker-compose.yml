@@ -18,15 +18,15 @@ services:
       timeout: 2s
       retries: 55
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    ports:
-      - 8082:80
-    environment:
-      PMA_HOST: ${DB_HOST}
-    networks:
-      - cashback-network
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   restart: always
+  #   ports:
+  #     - 8082:80
+  #   environment:
+  #     PMA_HOST: ${DB_HOST}
+  #   networks:
+  #     - cashback-network
 
   back:
     build: ./back
@@ -36,8 +36,9 @@ services:
     volumes:
       - ./back/prisma:/usr/src/app/prisma
       - ./back/src:/usr/src/app/src
-      - ./back/package.json:/app/package.json
-      - ./back/tsconfig.json:/app/tsconfig.json
+      - ./back/package.json:/usr/src/app/package.json
+      - ./back/tsconfig.json:/usr/src/app/tsconfig.json
+      - shared_volume:/usr/src/app/build/apks
     depends_on:
       cashbackdb:
         condition: service_healthy
@@ -48,5 +49,19 @@ services:
     networks:
       - cashback-network
 
+  tpe:
+    platform: linux/x86_64
+    build: ./tpe
+    volumes:
+      - shared_volume:/app/build-apk/
+
+  front:
+    platform: linux/x86_64
+    build: ./front
+    volumes:
+      - shared_volume:/app/build-apk/
+
 networks:
   cashback-network:
+volumes:
+  shared_volume:

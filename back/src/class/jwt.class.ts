@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { NextFunction, Response, Request } from "express";
 import { User } from "@prisma/client";
 import CMAuth from "./auth.class";
+import CMUser from "./user.class";
 const JwtStrategy = passportJWT.Strategy;
 const ExtractJwt = passportJWT.ExtractJwt;
 
@@ -64,6 +65,13 @@ export class JWT {
                         message: "Invalid token",
                         status: 403,
                     });
+                const fetchedUser = await CMUser.fetchById((user as User).id);
+                if (!fetchedUser) {
+                    return res.status(403).json({
+                        message: "User inexistant",
+                        status: 403,
+                    });
+                }
                 req.user = user as User;
                 if (!(await CMAuth.fetchById((req.user! as User).id)))
                     return res.status(403).json({

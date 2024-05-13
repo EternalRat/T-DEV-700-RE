@@ -5,11 +5,11 @@ import {
 	useMemo,
 	useReducer,
 } from 'react';
-import { CartAction, CartStore, ProductCart } from './types';
+import { CartAction, CartStore } from './types';
 import { reducer } from './reducer';
 import { Product } from '../Products/types';
-import { MessageContext, MessageStore } from '../message/Context';
-import { ActionTypeMessage, MessageType } from '../message/types';
+import { MessageContext, MessageStore } from '../Message/Context';
+import { ActionTypeMessage, MessageType } from '../Message/types';
 
 export const defaultCart: CartStore = {
 	cartStore: [],
@@ -38,6 +38,7 @@ export const CartWrapper = ({ children }: { children: React.ReactNode }) => {
 			message: 'ADD_PRODUCT',
 			type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
 			typeMessage: MessageType.SUCCESS,
+			duration: 3000,
 		});
 	}, []);
 
@@ -47,6 +48,7 @@ export const CartWrapper = ({ children }: { children: React.ReactNode }) => {
 			message: 'REMOVE_PRODUCT',
 			type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
 			typeMessage: MessageType.SUCCESS,
+			duration: 3000,
 		});
 	}, []);
 

@@ -96,11 +96,12 @@ export namespace ProductController {
         const products = await CMProduct.fetchByMerchantId(
             parseInt(req.params.id),
         );
+        console.log(JSON.stringify(products));
         if (!products) {
             res.status(404).send("Products not found");
             return;
         }
-        res.json(products);
+        res.status(200).send({ status: "success", data: products });
     };
 
     /**

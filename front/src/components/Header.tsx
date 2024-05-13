@@ -17,8 +17,8 @@ export const Header = ({ title, navigation }: Props) => {
 				width: '100%',
 				justifyContent: 'center',
 				alignItems: 'center',
-                backgroundColor: '#333',
-                marginBottom: 16
+				backgroundColor: '#333',
+				marginBottom: 16,
 			}}>
 			<View style={{ position: 'absolute', left: 0 }}>
 				<TouchableOpacity onPress={() => navigation.openDrawer()}>
@@ -34,7 +34,7 @@ export const Header = ({ title, navigation }: Props) => {
 					/>
 				</TouchableOpacity>
 			</View>
-			<Text>{title}</Text>
+			<Text style={{ color: 'white' }}>{title}</Text>
 		</View>
 	);
 };

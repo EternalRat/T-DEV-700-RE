@@ -10,13 +10,19 @@ import { API_URL } from '@env';
 import { io, Socket } from 'socket.io-client';
 import { CartContext } from '../Cart/Cart';
 import { CartStore } from '../Cart/types';
-import { MessageStore, MessageContext } from '../message/Context';
-import { ActionTypeMessage, MessageType } from '../message/types';
+import { MessageContext, MessageStore } from '../Message/Context';
+import { ActionTypeMessage, MessageType } from '../Message/types';
+
+type TpeId = string;
 
 export const WebsocketContext = createContext<{
 	sendMessage: (eventName: string, _: any) => void;
+	awaitingPayment: boolean;
+	tpeInformations: TpeId[];
 }>({
 	sendMessage: (eventName: string, _: any) => {},
+	awaitingPayment: false,
+	tpeInformations: [],
 });
 
 export const WebsocketWrapper = ({
@@ -25,35 +31,82 @@ export const WebsocketWrapper = ({
 	children: React.ReactNode;
 }) => {
 	const [awaitingPayment, setAwaitingPayment] = useState<boolean>(false);
-	const [socket, setSocket] = useState<Socket<any, any> | null>(null);
 	const { clearCart } = useContext<CartStore>(CartContext);
 	const { dispatch: dispatchMessage } =
 		useContext<MessageStore>(MessageContext);
+	const [tpeInformations, setTpeInformations] = useState<TpeId[]>([]);
+	const [socket, setSocket] = useState<Socket | null>();
 
 	useEffect(() => {
 		const ws = io('ws://' + API_URL, {
 			transports: ['websocket'],
 			autoConnect: true,
 		});
+
+		ws.connect();
+
 		ws.on('connect', () => {
 			console.log('connected');
+			ws.emit('link-client');
 		});
 
-		ws.on('paiement', event => {
-			if (event.status === 'success') {
+		ws.on('connect_error', err => {
+			console.log(`connect_error due to ${err.message}`);
+		});
+
+		ws.on('payment-client', data => {
+			console.log('payment-client');
+			if (data.status === 'success') {
 				clearCart();
 				setAwaitingPayment(false);
 				dispatchMessage({
 					message: 'Paiement effectué',
 					typeMessage: MessageType.SUCCESS,
 					type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
+					duration: 3000,
 				});
 			} else {
 				dispatchMessage({
 					type: ActionTypeMessage.ADD_ERROR,
-					code: 'PAIEMENT_FAILED',
+					code: data.message,
+					duration: 3000,
 				});
 			}
+		});
+
+		ws.on('new-tpe', args => {
+			console.log('new-tpe', args);
+			setTpeInformations(args.allTpe);
+		});
+
+		ws.on('client-connected', () => {
+			console.log('client-connected');
+			dispatchMessage({
+				message: 'Connexion au TPE réussit',
+				typeMessage: MessageType.SUCCESS,
+				type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
+				duration: 3000,
+			});
+		});
+
+		ws.on('payment-error', () => {
+			console.log('payment-error');
+			dispatchMessage({
+				type: ActionTypeMessage.ADD_ERROR,
+				code: 'La validation du paiement a échoué',
+				duration: 3000,
+			});
+			setAwaitingPayment(false);
+		});
+
+		ws.on('payment-validated', () => {
+			console.log('payment-validated');
+			dispatchMessage({
+				message: 'Dirigez-vous vers le TPE.',
+				typeMessage: MessageType.SUCCESS,
+				type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
+				duration: 3000,
+			});
 		});
 
 		ws.on('disconnect', () => {
@@ -67,17 +120,17 @@ export const WebsocketWrapper = ({
 		};
 	}, []);
 
-	const sendMessage = useCallback(
-		(eventName: string, message: any) => {
-			if (socket) {
-				socket.send(eventName, message);
-				if (eventName === 'send_paiement') setAwaitingPayment(true);
-			}
-		},
-		[socket]
-	);
+	const sendMessage = useCallback((eventName: string, message: any) => {
+		if (socket) {
+			socket.emit(eventName, message);
+			if (eventName === 'validate-payment') setAwaitingPayment(true);
+		}
+	}, [socket]);
 
-	const value = useMemo(() => ({ sendMessage, awaitingPayment }), []);
+	const value = useMemo(
+		() => ({ sendMessage, awaitingPayment, tpeInformations }),
+		[tpeInformations, awaitingPayment]
+	);
 
 	return (
 		<WebsocketContext.Provider value={value}>

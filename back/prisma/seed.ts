@@ -7,7 +7,7 @@ const products: Product[] = [
         id: 1,
         name: "Haut",
         description: "Haut basic",
-        merchantId: 2,
+        merchantId: 1,
         price: 1.8,
         type: ProductType.CLOTHINGS,
     },
@@ -15,7 +15,7 @@ const products: Product[] = [
         id: 2,
         name: "Jean",
         description: "Jean basic",
-        merchantId: 2,
+        merchantId: 1,
         price: 3.5,
         type: ProductType.CLOTHINGS,
     },
@@ -23,7 +23,7 @@ const products: Product[] = [
         id: 3,
         name: "Shoes",
         description: "Shoes basic",
-        merchantId: 2,
+        merchantId: 1,
         price: 0.8,
         type: ProductType.CLOTHINGS,
     },
@@ -31,7 +31,7 @@ const products: Product[] = [
         id: 4,
         name: "Skirt",
         description: "Skirt basic",
-        merchantId: 2,
+        merchantId: 1,
         price: 2.5,
         type: ProductType.CLOTHINGS,
     },
@@ -39,7 +39,7 @@ const products: Product[] = [
         id: 5,
         name: "Pull",
         description: "Pull basic",
-        merchantId: 2,
+        merchantId: 1,
         price: 5.8,
         type: ProductType.CLOTHINGS,
     },
@@ -71,7 +71,7 @@ const products: Product[] = [
         id: 9,
         name: "Bed",
         description: "White bed",
-        merchantId: 2,
+        merchantId: 1,
         price: 100.8,
         type: ProductType.OTHERS,
     },
@@ -79,7 +79,7 @@ const products: Product[] = [
         id: 10,
         name: "Bed",
         description: "Red bed",
-        merchantId: 2,
+        merchantId: 1,
         price: 101.8,
         type: ProductType.OTHERS,
     },
@@ -117,6 +117,16 @@ async function main() {
             },
         });
     }
+    await prisma.user.upsert({
+        where: { id: 1 },
+        update: {},
+        create: {
+            qrCode: "040842BA926781",
+            name: "Benjamin",
+            nfc: "04A2F3DA926780",
+            amount: 999999999,
+        },
+    });
     console.log(mainMerchant, clothesMerchant);
 }
 main()

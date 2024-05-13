@@ -41,6 +41,7 @@ enum ProductType {
 model User {
   id     Int    @id @default(autoincrement())
   name   String
-  cartId String @unique
+  qrCode String @unique
+  nfc    String @unique
   amount Int?   @default(99999)
 }

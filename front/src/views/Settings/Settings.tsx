@@ -1,7 +1,5 @@
 import { useContext } from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
-import { ProductStore } from '../../domains/Products/types';
-import { ProductContext } from '../../domains/Products/Products';
+import { View } from 'react-native';
 import { RootStackParamList, Routes } from '../../router/routesName';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { AuthStore } from '../../domains/Auth/types';
@@ -13,12 +11,15 @@ import { Files } from '../../../images/ImagesTypes';
 import Images from '../../../images/Images';
 import { Button } from '../../domains/templating/buttons/Button';
 import { Label } from '../../domains/templating/texts/Label';
+import { WebsocketContext } from '../../domains/Websocket/Websocket';
+import RNPickerSelect from 'react-native-picker-select';
 
 export const Settings = ({
 	navigation,
 }: DrawerScreenProps<RootStackParamList, Routes.SETTINGS>) => {
 	const { login } = useContext<AuthStore>(AuthContext);
-	const { auth, setUsername, setPassword } = useSettings();
+	const { auth, setUsername, setPassword, setTpeId } = useSettings();
+	const { tpeInformations } = useContext(WebsocketContext);
 
 	return (
 		<View
@@ -61,6 +62,23 @@ export const Settings = ({
 						type='password'
 					/>
 				</View>
+				<View
+					style={{
+						paddingBottom: 16,
+					}}>
+					<Label style={{ color: '#fff' }}>Selection du TPE</Label>
+					<RNPickerSelect
+						items={tpeInformations.map(tpeInformation => {
+							return {
+								label: tpeInformation,
+								value: tpeInformation,
+							};
+						})}
+						onValueChange={value => {
+							setTpeId(value);
+						}}
+					/>
+				</View>
 				<Button
 					style={{
 						backgroundColor: 'white',
@@ -76,9 +94,16 @@ export const Settings = ({
 						color: 'black',
 						textAlign: 'center',
 					}}
-					onClick={() => {
-						console.log('test');
-						login(auth.username, auth.password, navigation);
+					onClick={async () => {
+						if (auth.tpeId === '') {
+							return;
+						}
+						await login(
+							auth.username,
+							auth.password,
+							auth.tpeId,
+							navigation
+						);
 					}}>
 					Se connecter
 				</Button>

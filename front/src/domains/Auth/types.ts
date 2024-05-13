@@ -12,13 +12,21 @@ export interface AuthStore {
 	login: (
 		username: string,
 		password: string,
+		tpeId: string,
+		navigation: DrawerNavigationProp<
+			RootStackParamList,
+			Routes.SETTINGS,
+			undefined
+		>
+	) => Promise<void>;
+	logout: () => void;
+	health: (
 		navigation: DrawerNavigationProp<
 			RootStackParamList,
 			Routes.SETTINGS,
 			undefined
 		>
 	) => void;
-	logout: () => void;
 }
 
 export enum AuthAction {

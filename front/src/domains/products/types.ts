@@ -28,7 +28,7 @@ export interface ProductStore {
 			Routes.SETTINGS,
 			undefined
 		>
-	) => void;
+	) => Promise<void>;
 }
 
 export enum ActionTypeProducts {
