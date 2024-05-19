@@ -69,121 +69,121 @@ describe("Auth Controller", () => {
         mockReset(mockPrismaClient); // Réinitialiser les mocks après chaque test
     });
 
-    // it("should refuse login since password is missing", async () => {
-    //     const req = {} as any as Request;
-    //     req.body = {
-    //         username: "newUser",
-    //     };
+    it("should refuse login since password is missing", async () => {
+        const req = {} as any as Request;
+        req.body = {
+            username: "newUser",
+        };
 
-    //     await AuthController.login(req, res);
-    //     expect(res.status).toHaveBeenCalledWith(403);
-    //     expect(res.send).toHaveBeenCalledWith({
-    //         status: "error",
-    //         message: "Missing username or password.",
-    //     });
-    // });
+        await AuthController.login(req, res);
+        expect(res.status).toHaveBeenCalledWith(403);
+        expect(res.send).toHaveBeenCalledWith({
+            status: "error",
+            message: "Missing username or password.",
+        });
+    });
 
-    // it("should refuse login since password is incorrect", async () => {
-    //     const req = {} as any as Request;
-    //     req.body = {
-    //         username: "newUser",
-    //         password: "newOkok",
-    //     };
+    it("should refuse login since password is incorrect", async () => {
+        const req = {} as any as Request;
+        req.body = {
+            username: "newUser",
+            password: "newOkok",
+        };
 
-    //     await AuthController.login(req, res);
-    //     expect(res.status).toHaveBeenCalledWith(403);
-    //     expect(res.send).toHaveBeenCalledWith({
-    //         status: "error",
-    //         message: "Invalid password.",
-    //     });
-    // });
+        await AuthController.login(req, res);
+        expect(res.status).toHaveBeenCalledWith(403);
+        expect(res.send).toHaveBeenCalledWith({
+            status: "error",
+            message: "Invalid password.",
+        });
+    });
 
-    // it("should refuse login since password is incorrect", async () => {
-    //     const req = {} as any as Request;
-    //     req.body = {
-    //         username: "newUser",
-    //         password: "newOkok",
-    //     };
+    it("should refuse login since password is incorrect", async () => {
+        const req = {} as any as Request;
+        req.body = {
+            username: "newUser",
+            password: "newOkok",
+        };
 
-    //     await AuthController.login(req, res);
-    //     expect(res.status).toHaveBeenCalledWith(403);
-    //     expect(res.send).toHaveBeenCalledWith({
-    //         status: "error",
-    //         message: "Invalid password.",
-    //     });
-    // });
+        await AuthController.login(req, res);
+        expect(res.status).toHaveBeenCalledWith(403);
+        expect(res.send).toHaveBeenCalledWith({
+            status: "error",
+            message: "Invalid password.",
+        });
+    });
 
-    // it("should return the logged user", async () => {
-    //     const req = {} as any as Request;
-    //     req.user = {
-    //         username: "newUser",
-    //         id: 1,
-    //     };
+    it("should return the logged user", async () => {
+        const req = {} as any as Request;
+        req.user = {
+            username: "newUser",
+            id: 1,
+        };
 
-    //     await AuthController.getAuthedUser(req, res);
-    //     expect(res.send).toHaveBeenCalledWith({
-    //         message: "User found",
-    //         data: req.user,
-    //     });
-    // });
+        await AuthController.getAuthedUser(req, res);
+        expect(res.send).toHaveBeenCalledWith({
+            message: "User found",
+            data: req.user,
+        });
+    });
 
-    // it("should return that no user is logged in", async () => {
-    //     const req = {} as any as Request;
+    it("should return that no user is logged in", async () => {
+        const req = {} as any as Request;
 
-    //     await AuthController.getAuthedUser(req, res);
-    //     expect(res.status).toHaveBeenCalledWith(404);
-    //     expect(res.json).toHaveBeenCalledWith({
-    //         message: "No user found",
-    //         status: 404,
-    //     });
-    // });
+        await AuthController.getAuthedUser(req, res);
+        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.json).toHaveBeenCalledWith({
+            message: "No user found",
+            status: 404,
+        });
+    });
 
-    // it("should refuse login since username is incorrect", async () => {
-    //     const mockAuthMethods = {
-    //         findUnique: vi.fn().mockResolvedValue(undefined),
-    //     };
+    it("should refuse login since username is incorrect", async () => {
+        const mockAuthMethods = {
+            findUnique: vi.fn().mockResolvedValue(undefined),
+        };
 
-    //     const specialPrismaClient = mockDeep<PrismaClient>();
-    //     // Assignez l'objet des méthodes user à la propriété user de mockPrismaClient
-    //     (specialPrismaClient as any).merchant = mockAuthMethods;
+        const specialPrismaClient = mockDeep<PrismaClient>();
+        // Assignez l'objet des méthodes user à la propriété user de mockPrismaClient
+        (specialPrismaClient as any).merchant = mockAuthMethods;
 
-    //     vi.spyOn(DatabaseClient.prototype, "getClient").mockReturnValue(
-    //         specialPrismaClient,
-    //     );
+        vi.spyOn(DatabaseClient.prototype, "getClient").mockReturnValue(
+            specialPrismaClient,
+        );
 
-    //     const req = {} as any as Request;
-    //     req.body = {
-    //         username: "newUserNew",
-    //         password: "new",
-    //     };
+        const req = {} as any as Request;
+        req.body = {
+            username: "newUserNew",
+            password: "new",
+        };
 
-    //     await AuthController.login(req, res);
-    //     expect(res.status).toHaveBeenCalledWith(403);
-    //     expect(res.send).toHaveBeenCalledWith({
-    //         status: "error",
-    //         message: "No user found with that username.",
-    //     });
+        await AuthController.login(req, res);
+        expect(res.status).toHaveBeenCalledWith(403);
+        expect(res.send).toHaveBeenCalledWith({
+            status: "error",
+            message: "No user found with that username.",
+        });
 
-    //     vi.spyOn(DatabaseClient.prototype, "getClient").mockReturnValue(
-    //         mockPrismaClient,
-    //     );
-    // });
+        vi.spyOn(DatabaseClient.prototype, "getClient").mockReturnValue(
+            mockPrismaClient,
+        );
+    });
 
-    // it("should allow login using the user newUser and the password pass", async () => {
-    //     const req = {} as any as Request;
-    //     req.body = {
-    //         username: "newUser",
-    //         password: "new",
-    //     };
+    it("should allow login using the user newUser and the password pass", async () => {
+        const req = {} as any as Request;
+        req.body = {
+            username: "newUser",
+            password: "new",
+        };
 
-    //     await AuthController.login(req, res);
-    //     expect(res.status).toHaveBeenCalledWith(200);
-    //     expect(res.send).toHaveBeenCalledWith({
-    //         status: 200,
-    //         user: {
-    //             name: "newUser",
-    //             id: 1,
-    //         },
-    //     });
-    // });
+        await AuthController.login(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.send).toHaveBeenCalledWith({
+            status: 200,
+            user: {
+                name: "newUser",
+                id: 1,
+            },
+        });
+    });
 });
