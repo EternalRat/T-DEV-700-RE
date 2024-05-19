@@ -19,11 +19,8 @@ jobs:
         with:
           node-version: 20.12.0
 
-      - name: CD Back
-        run: cd back
-
       - name: Install dependencies
-        run: yarn install
+        run: cd back && yarn install
 
       - name: Run Vitest tests with coverage
-        run: yarn test:unit
+        run: cd back && yarn test:unit
