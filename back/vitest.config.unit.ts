@@ -12,17 +12,17 @@ export default defineConfig({
                     "json",
                     {
                         subdir: "./",
-                        file: 'coverage.json'
+                        file: "coverage.json",
                     },
                 ],
             ],
             // If you want a coverage reports even if your tests are failing, include the reportOnFailure option
             reportOnFailure: true,
             thresholds: {
-                lines: 70,
-                branches: 70,
-                functions: 70,
-                statements: 70,
+                lines: 80,
+                branches: 80,
+                functions: 80,
+                statements: 80,
             },
             exclude: [
                 "src/__tests__/**",
