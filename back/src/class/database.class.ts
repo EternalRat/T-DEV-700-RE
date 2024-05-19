@@ -44,6 +44,7 @@ export default class DatabaseClient {
      * Get the Prisma client instance
      * @return {PrismaClient} Prisma client instance
      */
+    /* v8 ignore next 3 */
     public getClient(): PrismaClient {
         return this._prismaClient;
     }

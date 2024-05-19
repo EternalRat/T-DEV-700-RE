@@ -1,7 +1,7 @@
 FROM node:20.12.2
 
-RUN apt update && \
-    apt upgrade && \
+RUN apt update -y && \
+    apt upgrade -y && \
     apt -y install curl openjdk-17-jdk openjdk-17-jre android-sdk chromium
 
 ENV ANDROID_HOME /usr/lib/android-sdk/

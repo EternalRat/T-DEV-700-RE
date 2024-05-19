@@ -1,0 +1,40 @@
+name: Vitest Coverage and Threshold Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  vitest-coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.12.0
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run Vitest tests with coverage
+        run: yarn test:unit
+
+      - name: Upload coverage report to Codecov
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: back/coverage/coverage.json
+
+      - name: Check coverage thresholds
+        uses: Enrico13/action-coverage-threshold@v1.1
+        with:
+          reporter: json
+          pathToCoverageReport: "back/coverage/coverage-results.json"
+          thresholds: 80
+          failOnThresholdFailure: true # Échec du workflow si les seuils ne sont pas atteints

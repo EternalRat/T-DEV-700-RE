@@ -3,16 +3,16 @@ import DatabaseClient from "./database.class";
 import CMProduct from "./product.class";
 
 /**
- * CMMerchant class
+ * CMAuth class
  * @example
  * import { Merchant } from '@prisma/client';
- * import CMMerchant from './merchant.class';
+ * import CMAuth from './auth.class';
  *
- * const merchant = new CMMerchant();
+ * const merchant = new CMAuth();
  * merchant.setId(1);
  * merchant.setName('Merchant 1');
  * merchant.save();
- * @return {CMMerchant} CMMerchant instance
+ * @return {CMAuth} CMAuth instance
  */
 export default class CMAuth {
     /**
@@ -111,6 +111,15 @@ export default class CMAuth {
             name: this.name,
             products: this.products,
         };
+    }
+
+    public static fromJSON(json: any): CMAuth {
+        const auth = new CMAuth();
+        auth.id = json.id;
+        auth.name = json.name;
+        auth.password = json.password;
+        auth.products = json.products;
+        return auth;
     }
 
     public async save(): Promise<Merchant> {
