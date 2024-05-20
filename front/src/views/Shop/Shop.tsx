@@ -5,7 +5,7 @@ import { useShop } from './useShop';
 import { RootStackParamList, Routes } from '../../router/routesName';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { Header } from '../../components/Header';
-import { Button } from '../../domains/templating/buttons/Button';
+import { Button } from '../../domains/Templating/buttons/Button';
 
 export const Shop = ({
 	navigation,

@@ -3,7 +3,7 @@ import { RootStackParamList, Routes } from '../../router/routesName';
 import { useContext, useEffect } from 'react';
 import { WebsocketContext } from '../../domains/Websocket/Websocket';
 import { View } from 'react-native';
-import { Title } from '../../domains/templating/texts/Title';
+import { Title } from '../../domains/Templating/texts/Title';
 import { MessageContext, MessageStore } from '../../domains/Message/Context';
 import { ActionTypeMessage, MessageType } from '../../domains/Message/types';
 

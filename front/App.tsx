@@ -1,13 +1,13 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Message } from './src/domains/Message/Message';
 import { CashManagerRouter } from './src/router/Routes';
-import { MessageWrapper } from './src/domains/Message/Context';
 import { ProductWrapper } from './src/domains/Products/Products';
 import { CartWrapper } from './src/domains/Cart/Cart';
 import { WebsocketWrapper } from './src/domains/Websocket/Websocket';
 import { AuthWrapper } from './src/domains/Auth/Auth';
+import { MessageWrapper } from './src/domains/Message/Context';
+import { Message } from './src/domains/Message/Message';
 
 function App(): React.JSX.Element {
 	return (

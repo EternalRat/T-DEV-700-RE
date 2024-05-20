@@ -38,7 +38,8 @@ services:
       - ./back/src:/usr/src/app/src
       - ./back/package.json:/usr/src/app/package.json
       - ./back/tsconfig.json:/usr/src/app/tsconfig.json
-      - shared_volume:/usr/src/app/build/apks
+      - client_volume:/usr/src/app/build/client
+      - tpe_volume:/usr/src/app/build/tpe
     depends_on:
       cashbackdb:
         condition: service_healthy
@@ -52,16 +53,21 @@ services:
   tpe:
     platform: linux/x86_64
     build: ./tpe
+    depends_on:
+      - back
     volumes:
-      - shared_volume:/app/build-apk/
+      - tpe_volume:/app/build-apk/
 
   front:
     platform: linux/x86_64
     build: ./front
+    depends_on:
+      - back
     volumes:
-      - shared_volume:/app/build-apk/
+      - client_volume:/app/build-apk/
 
 networks:
   cashback-network:
 volumes:
-  shared_volume:
+  client_volume:
+  tpe_volume:

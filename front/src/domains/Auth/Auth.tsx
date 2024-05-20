@@ -50,20 +50,19 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 				undefined
 			>
 		) => {
-			console.log('test');
 			try {
 				const response = await loginAPI(username, password);
 				const { status, data } = response;
 				if (status === 200) {
 					const { user } = data;
 					console.log(user);
-					await getProducts(user.id, navigation);
-					console.log('success getProducts')
 					sendMessage('connect-client', {
 						isUser: true,
 						merchantId: user.id,
 						tpeId,
 					});
+					await getProducts(user.id, navigation);
+					console.log('success getProducts')
 					dispatch({ type: AuthAction.FILL_USER, user });
 					dispatchMessage({
 						type: ActionTypeMessage.ADD_GENERIC_MESSAGE,

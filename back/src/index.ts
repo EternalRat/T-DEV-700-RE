@@ -23,7 +23,6 @@ const PORT = 8080;
 
 expressApp.use(
     cors({
-        // credentials: true,
         origin: "*",
     }),
 );
@@ -41,9 +40,9 @@ expressApp.get("/:file", (req: any, res: any) => {
     if (file != "client.apk" && file != "tpe.apk") {
         res.send("File not found");
     } else if (file == "tpe.apk") {
-        res.download("apks/tpe.apk");
+        res.download("./build/tpe/tpe.apk");
     } else {
-        res.download("apks/client.apk");
+        res.download("./build/client/client.apk");
     }
 });
 

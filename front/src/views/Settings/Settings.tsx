@@ -6,11 +6,11 @@ import { AuthStore } from '../../domains/Auth/types';
 import { AuthContext } from '../../domains/Auth/Auth';
 import { useSettings } from './useSettings';
 import { Header } from '../../components/Header';
-import { Input } from '../../domains/templating/input/TextInput';
+import { Input } from '../../domains/Templating/input/TextInput';
 import { Files } from '../../../images/ImagesTypes';
 import Images from '../../../images/Images';
-import { Button } from '../../domains/templating/buttons/Button';
-import { Label } from '../../domains/templating/texts/Label';
+import { Button } from '../../domains/Templating/buttons/Button';
+import { Label } from '../../domains/Templating/texts/Label';
 import { WebsocketContext } from '../../domains/Websocket/Websocket';
 import RNPickerSelect from 'react-native-picker-select';
 

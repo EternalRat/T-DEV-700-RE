@@ -46,29 +46,31 @@ export const WebsocketWrapper = ({
 		price: -1,
 		merchantId: '',
 	});
-	const [socket, setSocket] = useState<Socket | null>();
+	const socket = useMemo<Socket>(
+		() =>
+			io('ws://' + API_URL, {
+				transports: ['websocket'],
+				autoConnect: false,
+			}),
+		[]
+	);
 
 	useEffect(() => {
-		const ws = io('ws://' + API_URL, {
-			transports: ['websocket'],
-			autoConnect: true,
-		});
+		socket.connect();
 
-		ws.connect();
-
-		ws.on('connect', () => {
+		socket.on('connect', () => {
 			console.log('connected');
-			ws.emit('connect-tpe', {
+			socket.emit('connect-tpe', {
 				isMerchant: true,
 				isWaiting: true,
 			});
 		});
 
-		ws.on('connect_error', err => {
+		socket.on('connect_error', err => {
 			console.log(`connect_error due to ${err.message}`);
 		});
 
-		ws.on('tpe-connected', () => {
+		socket.on('tpe-connected', () => {
 			console.log('tpe-connected');
 			dispatchMessage({
 				message: 'Connexion établis',
@@ -78,34 +80,35 @@ export const WebsocketWrapper = ({
 			});
 		});
 
-		ws.on('client-connected', () => {
+		socket.on('client-connected', () => {
 			console.log('new client connected');
 		});
 
-		ws.on('asking-payment', args => {
+		socket.on('asking-payment', args => {
 			console.log('asking-payment');
 			setAwaitingPayment(false);
 			console.log(args);
 			setMetadata(args);
 		});
 
-		ws.on('disconnect', () => {
+		socket.on('disconnect', () => {
 			console.log('disconnected');
 		});
 
-		setSocket(ws);
-
 		return () => {
-			ws.close();
+			socket.close();
 		};
 	}, []);
 
-	const sendMessage = useCallback((eventName: string, message: any) => {
-		if (socket) {
-			socket.emit(eventName, message);
-			if (eventName === 'payment') setAwaitingPayment(true);
-		}
-	}, [socket]);
+	const sendMessage = useCallback(
+		(eventName: string, message: any) => {
+			if (socket) {
+				socket.emit(eventName, message);
+				if (eventName === 'payment') setAwaitingPayment(true);
+			}
+		},
+		[socket]
+	);
 
 	const value = useMemo(
 		() => ({ sendMessage, awaitingPayment, metadata, screen, setScreen }),

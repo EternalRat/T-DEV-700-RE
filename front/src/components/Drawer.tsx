@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
 	DrawerContentComponentProps,
 	DrawerContentScrollView,
@@ -12,11 +12,17 @@ import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RootStackParamList, Routes } from '../router/routesName';
 import { AuthStore } from '../domains/Auth/types';
 import { AuthContext } from '../domains/Auth/Auth';
+import { API_URL } from '@env';
 
 export const DrawerContent = (props: DrawerContentComponentProps) => {
 	const { logout, loggedUser } = useContext<AuthStore>(AuthContext);
 	const navigation =
 		useNavigation<NativeStackNavigationProp<RootStackParamList, Routes>>();
+	const [debug, setDebug] = useState<number>(0);
+
+	const incDebug = () => {
+		setDebug(debug + 1);
+	};
 
 	return (
 		<View style={{ flex: 1, backgroundColor: '#0c0a0a', zIndex: 200 }}>
@@ -70,6 +76,63 @@ export const DrawerContent = (props: DrawerContentComponentProps) => {
 					/>
 				</View>
 			</DrawerContentScrollView>
+			{debug <= 5 ? (
+				<View
+					style={{
+						bottom: 46.5,
+						height: 46.5,
+						marginHorizontal: 10,
+						marginVertical: 4,
+						overflow: 'hidden',
+						borderRadius: 4,
+					}}>
+					<TouchableOpacity onPress={incDebug}>
+						<View
+							style={{
+								height: '100%',
+								padding: 8,
+								flexDirection: 'row',
+								borderRadius: 4,
+								alignItems: 'center',
+							}}>
+							<MaterialIcons
+								name='logout-variant'
+								size={22}
+								color={'#fff'}
+							/>
+							<Text
+								style={{
+									color: '#fff',
+									fontWeight: '500',
+									marginLeft: 10,
+									fontSize: 14,
+								}}>
+								Debug
+							</Text>
+						</View>
+					</TouchableOpacity>
+				</View>
+			) : (
+				<View
+					style={{
+						bottom: 46.5,
+						height: 46.5,
+						marginHorizontal: 10,
+						marginVertical: 4,
+						overflow: 'hidden',
+						borderRadius: 4,
+					}}>
+					<Text
+						style={{
+							color: '#fff',
+							fontWeight: '500',
+							marginLeft: 10,
+							fontSize: 14,
+						}}>
+						API_URL: {API_URL}
+					</Text>
+				</View>
+			)}
 			{loggedUser.id !== -1 && (
 				<View
 					style={{

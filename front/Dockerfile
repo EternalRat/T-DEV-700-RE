@@ -22,16 +22,24 @@ RUN yarn install
 
 COPY . .
 
+RUN react-native eject
+
+COPY backup_app/ /app/android/app/
+
 RUN chmod +x get-local-ip
 
-RUN ./get-local-ip
+RUN sh get-local-ip
 
 WORKDIR /app/android
 
-RUN ./gradlew assembleRelease
+RUN chmod +x gradlew
+
+RUN sh gradlew assembleRelease
 
 WORKDIR /app
 
 RUN mkdir -p ./build-apk/
 
 RUN mv ./android/app/build/outputs/apk/release/app-release.apk ./build-apk/client.apk
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]

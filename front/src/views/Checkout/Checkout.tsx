@@ -9,7 +9,7 @@ import { DrawerScreenProps } from '@react-navigation/drawer';
 import { RootStackParamList, Routes } from '../../router/routesName';
 import { Header } from '../../components/Header';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Button } from '../../domains/templating/buttons/Button';
+import { Button } from '../../domains/Templating/buttons/Button';
 import { WebsocketContext } from '../../domains/Websocket/Websocket';
 import { AuthStore } from '../../domains/Auth/types';
 import { AuthContext } from '../../domains/Auth/Auth';

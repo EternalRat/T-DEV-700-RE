@@ -35,26 +35,28 @@ export const WebsocketWrapper = ({
 	const { dispatch: dispatchMessage } =
 		useContext<MessageStore>(MessageContext);
 	const [tpeInformations, setTpeInformations] = useState<TpeId[]>([]);
-	const [socket, setSocket] = useState<Socket | null>();
+	const socket = useMemo<Socket>(
+		() =>
+			io('ws://' + API_URL, {
+				transports: ['websocket'],
+				autoConnect: false,
+			}),
+		[]
+	);
 
 	useEffect(() => {
-		const ws = io('ws://' + API_URL, {
-			transports: ['websocket'],
-			autoConnect: true,
-		});
+		socket.connect();
 
-		ws.connect();
-
-		ws.on('connect', () => {
+		socket.on('connect', () => {
 			console.log('connected');
-			ws.emit('link-client');
+			socket.emit('link-client');
 		});
 
-		ws.on('connect_error', err => {
+		socket.on('connect_error', err => {
 			console.log(`connect_error due to ${err.message}`);
 		});
 
-		ws.on('payment-client', data => {
+		socket.on('payment-client', data => {
 			console.log('payment-client');
 			if (data.status === 'success') {
 				clearCart();
@@ -74,12 +76,12 @@ export const WebsocketWrapper = ({
 			}
 		});
 
-		ws.on('new-tpe', args => {
+		socket.on('new-tpe', args => {
 			console.log('new-tpe', args);
 			setTpeInformations(args.allTpe);
 		});
 
-		ws.on('client-connected', () => {
+		socket.on('client-connected', () => {
 			console.log('client-connected');
 			dispatchMessage({
 				message: 'Connexion au TPE réussit',
@@ -89,7 +91,7 @@ export const WebsocketWrapper = ({
 			});
 		});
 
-		ws.on('payment-error', () => {
+		socket.on('payment-error', () => {
 			console.log('payment-error');
 			dispatchMessage({
 				type: ActionTypeMessage.ADD_ERROR,
@@ -99,7 +101,7 @@ export const WebsocketWrapper = ({
 			setAwaitingPayment(false);
 		});
 
-		ws.on('payment-validated', () => {
+		socket.on('payment-validated', () => {
 			console.log('payment-validated');
 			dispatchMessage({
 				message: 'Dirigez-vous vers le TPE.',
@@ -109,23 +111,24 @@ export const WebsocketWrapper = ({
 			});
 		});
 
-		ws.on('disconnect', () => {
+		socket.on('disconnect', () => {
 			console.log('disconnected');
 		});
 
-		setSocket(ws);
-
 		return () => {
-			ws.close();
+			socket.close();
 		};
 	}, []);
 
-	const sendMessage = useCallback((eventName: string, message: any) => {
-		if (socket) {
-			socket.emit(eventName, message);
-			if (eventName === 'validate-payment') setAwaitingPayment(true);
-		}
-	}, [socket]);
+	const sendMessage = useCallback(
+		(eventName: string, message: any) => {
+			if (socket) {
+				socket.emit(eventName, message);
+				if (eventName === 'validate-payment') setAwaitingPayment(true);
+			}
+		},
+		[socket]
+	);
 
 	const value = useMemo(
 		() => ({ sendMessage, awaitingPayment, tpeInformations }),
