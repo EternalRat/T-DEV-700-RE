@@ -48,7 +48,7 @@ export const WebsocketWrapper = ({
 	});
 	const socket = useMemo<Socket>(
 		() =>
-			io('ws://' + API_URL, {
+			io(API_URL, {
 				transports: ['websocket'],
 				autoConnect: false,
 			}),

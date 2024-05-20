@@ -19,7 +19,7 @@ JWT.getInstance();
 
 const expressApp = express();
 const httpServer = http.createServer(expressApp);
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 expressApp.use(
     cors({

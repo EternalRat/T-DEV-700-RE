@@ -37,7 +37,7 @@ export const WebsocketWrapper = ({
 	const [tpeInformations, setTpeInformations] = useState<TpeId[]>([]);
 	const socket = useMemo<Socket>(
 		() =>
-			io('ws://' + API_URL, {
+			io(API_URL, {
 				transports: ['websocket'],
 				autoConnect: false,
 			}),

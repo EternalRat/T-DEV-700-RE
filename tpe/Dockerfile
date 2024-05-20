@@ -26,10 +26,6 @@ RUN react-native eject
 
 COPY backup_app/ /app/android/app/
 
-RUN chmod +x get-local-ip
-
-RUN sh get-local-ip
-
 WORKDIR /app/android
 
 RUN chmod +x gradlew

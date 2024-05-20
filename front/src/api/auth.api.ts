@@ -4,7 +4,7 @@ import axios from 'axios';
 export const loginAPI = async (username: string, password: string) => {
 	return await axios({
 		method: 'post',
-		url: 'http://' + API_URL + '/api/auth/login',
+		url: API_URL + '/api/auth/login',
 		data: { username: username, password: password },
 	});
 };
@@ -12,6 +12,6 @@ export const loginAPI = async (username: string, password: string) => {
 export const loginHealth = async () => {
 	return await axios({
 		method: 'get',
-		url: 'http://' + API_URL + '/api/auth',
+		url: API_URL + '/api/auth',
 	});
 };
