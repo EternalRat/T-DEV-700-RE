@@ -61,7 +61,27 @@ export const DrawerContent = (props: DrawerContentComponentProps) => {
 								routes: [{ name: Routes.SETTINGS }],
 							});
 						}}
-						focused={props.state.index === 2}
+						focused={props.state.index === 1}
+						activeBackgroundColor='#FFA500'
+						activeTintColor='#333'
+						inactiveTintColor='#fff'
+						labelStyle={{ fontSize: 15, marginLeft: -25 }}
+						icon={({ color }) => (
+							<MaterialIcons
+								name='vote'
+								size={22}
+								color={color}
+							/>
+						)}
+					/>
+					<DrawerItem
+						label={'Admin Panel'}
+						onPress={() => {
+							props.navigation.reset({
+								routes: [{ name: Routes.ADMIN_PANEL }],
+							});
+						}}
+						focused={props.state.index === 4}
 						activeBackgroundColor='#FFA500'
 						activeTintColor='#333'
 						inactiveTintColor='#fff'

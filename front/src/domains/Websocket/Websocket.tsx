@@ -101,6 +101,16 @@ export const WebsocketWrapper = ({
 			setAwaitingPayment(false);
 		});
 
+		socket.on('client-waiting', () => {
+			console.log('client-waiting');
+			dispatchMessage({
+				type: ActionTypeMessage.ADD_ERROR,
+				code: 'Un client attend déjà une validation de paiement',
+				duration: 3000,
+			});
+			setAwaitingPayment(false);
+		});
+
 		socket.on('payment-validated', () => {
 			console.log('payment-validated');
 			dispatchMessage({

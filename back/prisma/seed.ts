@@ -85,15 +85,18 @@ const products: Product[] = [
     },
 ];
 
-async function main() {
+const main = async () => {
     const hash1 = await bcrypt.hash("Sells", 10);
+    const secrethash1 = await bcrypt.hash("Secret", 10);
     const hash2 = await bcrypt.hash("Sellsnew", 10);
+    const secrethash2 = await bcrypt.hash("Secret", 10);
     const mainMerchant = await prisma.merchant.upsert({
         where: { name: "Epices" },
         update: {},
         create: {
             name: "Epices",
             password: hash1,
+            secretPassword: secrethash1,
         },
     });
     const clothesMerchant = await prisma.merchant.upsert({
@@ -102,6 +105,7 @@ async function main() {
         create: {
             name: "Clothes",
             password: hash2,
+            secretPassword: secrethash2,
         },
     });
     for (const product of products) {
@@ -128,7 +132,7 @@ async function main() {
         },
     });
     console.log(mainMerchant, clothesMerchant);
-}
+};
 main()
     .then(async () => {
         await prisma.$disconnect();

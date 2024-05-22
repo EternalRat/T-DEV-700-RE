@@ -10,6 +10,7 @@ import { Shop } from '../views/Shop/Shop';
 import { Settings } from '../views/Settings/Settings';
 import { Checkout } from '../views/Checkout/Checkout';
 import { Transaction } from '../views/Transaction/Transaction';
+import { AdminPanel } from '../views/AdminPanel/AdminPanel';
 
 const Drawer = createDrawerNavigator<RootStackParamList>();
 
@@ -68,10 +69,25 @@ export const CashManagerRouter = () => {
 				name={Routes.TRANSACTION}
 				component={Transaction}
 				options={{
-					drawerLabel: 'Top Voteurs',
+					drawerLabel: 'Transaction',
 					drawerIcon: ({ color }) => (
 						<MaterialIcons name='vote' size={22} color={color} />
 					),
+				}}
+			/>
+			<Drawer.Screen
+				name={Routes.ADMIN_PANEL}
+				component={AdminPanel}
+				options={{
+					drawerLabel: 'Admin',
+					drawerIcon: ({ color }) => (
+						<Ionicons
+							name='shield-half-outline'
+							size={22}
+							color={color}
+						/>
+					),
+					
 				}}
 			/>
 		</Drawer.Navigator>

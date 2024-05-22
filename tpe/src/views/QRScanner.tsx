@@ -9,11 +9,14 @@ import {
 import { WebsocketContext } from '../domains/Websocket/Websocket';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, Routes } from '../router/routesName';
+import { MessageContext, MessageStore } from '../domains/Message/Context';
+import { ActionTypeMessage, MessageType } from '../domains/Message/types';
 
 export const QRSCanner = ({
 	navigation,
 }: NativeStackScreenProps<RootStackParamList, Routes.QRSCANNER>) => {
 	const { metadata, sendMessage } = useContext(WebsocketContext);
+	const { dispatch } = useContext<MessageStore>(MessageContext);
 	const device = useCameraDevice('back');
 	const { hasPermission, requestPermission } = useCameraPermission();
 	const codeScanner = useCodeScanner({
@@ -28,11 +31,20 @@ export const QRSCanner = ({
 				)
 					? parsedValue.cardNumber
 					: undefined;
+				const amount: number = parsedValue.hasOwnProperty('price')
+					? parsedValue.price
+					: undefined;
 				if (cardNumber) {
 					sendMessage('payment', {
 						merchantId: metadata.merchantId,
 						price: metadata.price,
 						qrcode: cardNumber,
+					});
+					dispatch({
+						type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
+						message: 'Paiement en cours... Reprenez le client.',
+						typeMessage: MessageType.SUCCESS,
+						duration: 3000,
 					});
 					navigation.navigate(Routes.HOME);
 				}

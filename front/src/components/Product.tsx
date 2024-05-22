@@ -1,7 +1,7 @@
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Product as IProduct } from '../domains/Products/types';
 import { useContext, useMemo } from 'react';
-import { CartStore, ProductCart } from '../domains/Cart/types';
+import { CartStore } from '../domains/Cart/types';
 import { CartContext } from '../domains/Cart/Cart';
 import { Button } from '../domains/Templating/buttons/Button';
 

@@ -3,6 +3,7 @@ export enum Routes {
 	SHOP = 'Shop',
 	CHECKOUT = 'Checkout',
 	TRANSACTION = 'Transaction',
+	ADMIN_PANEL = 'AdminPanel',
 }
 
 export type RootStackParamList = {
@@ -10,4 +11,5 @@ export type RootStackParamList = {
 	[Routes.SHOP]: undefined;
 	[Routes.CHECKOUT]: undefined;
 	[Routes.TRANSACTION]: undefined;
+	[Routes.ADMIN_PANEL]: undefined;
 };

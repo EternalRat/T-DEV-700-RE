@@ -14,10 +14,11 @@ datasource db {
 }
 
 model Merchant {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique
-  password String
-  Product  Product[]
+  id             Int       @id @default(autoincrement())
+  name           String    @unique
+  password       String
+  secretPassword String
+  Product        Product[]
 }
 
 model Product {
