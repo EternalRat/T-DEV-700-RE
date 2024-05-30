@@ -9,10 +9,10 @@ import {
 } from 'react';
 import { io, Socket } from 'socket.io-client';
 
-import { CartContext } from '../Cart/Cart';
-import { CartStore } from '../Cart/types';
-import { MessageContext, MessageStore } from '../Messages/Context';
-import { ActionTypeMessage, MessageType } from '../Messages/types';
+import { CartContext } from '../cart/Cart';
+import { CartStore } from '../cart/types';
+import { MessageContext, MessageStore } from '../message/Context';
+import { ActionTypeMessage, MessageType } from '../message/types';
 
 type TpeId = string;
 

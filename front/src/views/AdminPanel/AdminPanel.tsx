@@ -4,8 +4,8 @@ import { TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 
 import { Header } from '../../components/Header';
-import { ProductContext } from '../../domains/Products/Products';
-import { Product, ProductStore } from '../../domains/Products/types';
+import { ProductContext } from '../../domains/product/Products';
+import { Product, ProductStore } from '../../domains/product/types';
 import { Color } from '../../domains/Template/style';
 import { RootStackParamList, Routes } from '../../router/routesName';
 import { ManageProduct } from './Items/ManageProduct';

@@ -19,6 +19,19 @@ jobs:
         with:
           node-version: 20.12.0
 
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules-back
+        with:
+          path: |
+            back/node_modules
+            ~/.cache/yarn
+          key: ${{ runner.os }}-yarn-back-${{ hashFiles('back/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-back-
+
       - name: Install dependencies
         run: cd back && yarn install
 

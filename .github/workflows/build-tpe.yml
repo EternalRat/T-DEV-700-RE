@@ -28,18 +28,19 @@ jobs:
         id: cache-npm
         uses: actions/cache@v3
         env:
-          cache-name: cache-node-modules
+          cache-name: cache-node-modules-tpe
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
           path: |
-            **/node_modules
+            tpe/node_modules
             ~/.cache/yarn
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-tpe-${{ hashFiles('tpe/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-yarn-tpe-
 
       - name: Install dependencies
-        run: yarn install
+        run: |
+          cd ./tpe
+          yarn install
 
       - name: Checking linter
         run: |

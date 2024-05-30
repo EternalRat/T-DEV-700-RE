@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { FlatList } from 'react-native';
 
-import { ProductContext } from '../../../domains/Products/Products';
-import { Product, ProductStore } from '../../../domains/Products/types';
+import { ProductContext } from '../../../domains/product/Products';
+import { Product, ProductStore } from '../../../domains/product/types';
 import { ProductItem } from '../ProductItem';
 
 interface Props {

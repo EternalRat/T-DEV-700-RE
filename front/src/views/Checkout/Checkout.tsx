@@ -5,12 +5,12 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import { Header } from '../../components/Header';
 import { Product } from '../../components/Product';
-import { AuthContext } from '../../domains/Auth/Auth';
-import { AuthStore } from '../../domains/Auth/types';
-import { CartContext } from '../../domains/Cart/Cart';
-import { CartStore } from '../../domains/Cart/types';
-import { ProductContext } from '../../domains/Products/Products';
-import { ProductStore } from '../../domains/Products/types';
+import { AuthContext } from '../../domains/authentification/Auth';
+import { AuthStore } from '../../domains/authentification/types';
+import { CartContext } from '../../domains/cart/Cart';
+import { CartStore } from '../../domains/cart/types';
+import { ProductContext } from '../../domains/product/Products';
+import { ProductStore } from '../../domains/product/types';
 import { CustomButton } from '../../domains/Template/buttons/Button';
 import { WebsocketContext } from '../../domains/Websocket/Websocket';
 import { RootStackParamList, Routes } from '../../router/routesName';

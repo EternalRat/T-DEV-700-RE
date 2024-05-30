@@ -9,10 +9,10 @@ import {
 
 import { loginAPI, loginHealth, panelAdmin } from '../../api/auth.api';
 import { RootStackParamList, Routes } from '../../router/routesName';
-import { MessageContext, MessageStore } from '../Messages/Context';
-import { ActionTypeMessage, MessageType } from '../Messages/types';
-import { ProductContext } from '../Products/Products';
-import { ProductStore } from '../Products/types';
+import { MessageContext, MessageStore } from '../message/Context';
+import { ActionTypeMessage, MessageType } from '../message/types';
+import { ProductContext } from '../product/Products';
+import { ProductStore } from '../product/types';
 import { WebsocketContext } from '../Websocket/Websocket';
 import { reducer } from './reducer';
 import { AuthAction, AuthStore } from './types';

@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 import { CustomModal } from '../../components/Modal';
-import { Product, ProductType } from '../../domains/Products/types';
+import { Product, ProductType } from '../../domains/product/types';
 import { CustomButton } from '../../domains/Template/buttons/Button';
 import { Input } from '../../domains/Template/input/TextInput';
 import { CONTAINER_WIDTH } from '../../domains/Template/style';

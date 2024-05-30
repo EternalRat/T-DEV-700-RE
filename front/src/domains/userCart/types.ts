@@ -1,4 +1,4 @@
-import { Product } from '../Products/types';
+import { Product } from '../product/types';
 import { ReducerType } from '../reducer';
 
 export interface ProductCart {

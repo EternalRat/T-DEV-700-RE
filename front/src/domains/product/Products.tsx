@@ -13,8 +13,8 @@ import {
 	updateProduct,
 } from '../../api/product.api';
 import { RootStackParamList, Routes } from '../../router/routesName';
-import { MessageContext, MessageStore } from '../Messages/Context';
-import { ActionTypeMessage, MessageType } from '../Messages/types';
+import { MessageContext, MessageStore } from '../message/Context';
+import { ActionTypeMessage, MessageType } from '../message/types';
 import { reducer } from './reducer';
 import { ActionTypeProducts, ProductStore, ProductType } from './types';
 

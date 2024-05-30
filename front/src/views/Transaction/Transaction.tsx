@@ -2,8 +2,8 @@ import { DrawerScreenProps } from '@react-navigation/drawer';
 import { useContext, useEffect } from 'react';
 import { View } from 'react-native';
 
-import { MessageContext, MessageStore } from '../../domains/Messages/Context';
-import { ActionTypeMessage, MessageType } from '../../domains/Messages/types';
+import { MessageContext, MessageStore } from '../../domains/message/Context';
+import { ActionTypeMessage, MessageType } from '../../domains/message/types';
 import { Title } from '../../domains/Template/texts/Title';
 import { WebsocketContext } from '../../domains/Websocket/Websocket';
 import { RootStackParamList, Routes } from '../../router/routesName';

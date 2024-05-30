@@ -1,11 +1,11 @@
 import { useContext, useMemo } from 'react';
 
-import { AuthContext } from '../../domains/Auth/Auth';
-import { AuthStore } from '../../domains/Auth/types';
-import { CartContext } from '../../domains/Cart/Cart';
-import { CartStore } from '../../domains/Cart/types';
-import { ProductContext } from '../../domains/Products/Products';
-import { ProductStore } from '../../domains/Products/types';
+import { AuthContext } from '../../domains/authentification/Auth';
+import { AuthStore } from '../../domains/authentification/types';
+import { CartContext } from '../../domains/cart/Cart';
+import { CartStore } from '../../domains/cart/types';
+import { ProductContext } from '../../domains/product/Products';
+import { ProductStore } from '../../domains/product/types';
 
 export const useShop = () => {
 	const { productStore } = useContext<ProductStore>(ProductContext);

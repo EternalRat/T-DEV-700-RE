@@ -1,7 +1,7 @@
 import { API_URL } from '@env';
 import axios from 'axios';
 
-import { ProductType } from '../domains/Products/types';
+import { ProductType } from '../domains/product/types';
 
 export const getProductsByMerchantID = async (merchantId: number) => {
 	return await axios({

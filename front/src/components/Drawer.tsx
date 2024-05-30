@@ -11,8 +11,8 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { AuthContext } from '../domains/Auth/Auth';
-import { AuthStore } from '../domains/Auth/types';
+import { AuthContext } from '../domains/authentification/Auth';
+import { AuthStore } from '../domains/authentification/types';
 import { RootStackParamList, Routes } from '../router/routesName';
 
 export const DrawerContent = (props: DrawerContentComponentProps) => {

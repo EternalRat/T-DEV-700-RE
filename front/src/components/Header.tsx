@@ -4,9 +4,9 @@ import { Dispatch, SetStateAction, useContext } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import Images, { Files } from '../../images/Images';
-import { AuthContext } from '../domains/Auth/Auth';
-import { AuthStore } from '../domains/Auth/types';
-import { Product, ProductType } from '../domains/Products/types';
+import { AuthContext } from '../domains/authentification/Auth';
+import { AuthStore } from '../domains/authentification/types';
+import { Product, ProductType } from '../domains/product/types';
 import { RootStackParamList, Routes } from '../router/routesName';
 
 interface Props {
