@@ -30,7 +30,6 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
           path: |
             ./front/node_modules
             ~/.cache/yarn
@@ -44,6 +43,7 @@ jobs:
       - name: Checking linter
         run: |
           cd ./front
+          ls -la ./node_modules
           yarn lint
 
       - name: Checking typings
