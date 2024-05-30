@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import { Header } from '../../components/Header';
 import { Product } from '../../components/Product';
-import { Button } from '../../domains/Templating/buttons/Button';
+import { CustomButton } from '../../domains/Template/buttons/Button';
 import { RootStackParamList, Routes } from '../../router/routesName';
 import { useShop } from './useShop';
 
@@ -30,7 +30,7 @@ export const Shop = ({
 						))}
 					</ScrollView>
 					<View style={{ height: 60 }}>
-						<Button
+						<CustomButton
 							onClick={() => navigation.navigate(Routes.CHECKOUT)}
 							text={`Total: ${totalPrice.toString()}€`}
 							style={{

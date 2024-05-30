@@ -9,8 +9,8 @@ import {
 
 import { loginAPI, loginHealth, panelAdmin } from '../../api/auth.api';
 import { RootStackParamList, Routes } from '../../router/routesName';
-import { MessageContext, MessageStore } from '../Message/Context';
-import { ActionTypeMessage, MessageType } from '../Message/types';
+import { MessageContext, MessageStore } from '../Messages/Context';
+import { ActionTypeMessage, MessageType } from '../Messages/types';
 import { ProductContext } from '../Products/Products';
 import { ProductStore } from '../Products/types';
 import { WebsocketContext } from '../Websocket/Websocket';

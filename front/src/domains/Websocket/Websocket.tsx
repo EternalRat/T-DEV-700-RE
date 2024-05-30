@@ -11,8 +11,8 @@ import { io, Socket } from 'socket.io-client';
 
 import { CartContext } from '../Cart/Cart';
 import { CartStore } from '../Cart/types';
-import { MessageContext, MessageStore } from '../Message/Context';
-import { ActionTypeMessage, MessageType } from '../Message/types';
+import { MessageContext, MessageStore } from '../Messages/Context';
+import { ActionTypeMessage, MessageType } from '../Messages/types';
 
 type TpeId = string;
 

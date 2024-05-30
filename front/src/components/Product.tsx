@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import { CartContext } from '../domains/Cart/Cart';
 import { CartStore } from '../domains/Cart/types';
 import { Product as IProduct } from '../domains/Products/types';
-import { Button } from '../domains/Templating/buttons/Button';
+import { CustomButton } from '../domains/Template/buttons/Button';
 
 interface Props {
 	product: IProduct;
@@ -76,7 +76,7 @@ export const Product = ({ product, isCheckout = false, quantity }: Props) => {
 							height: 68,
 							flexDirection: 'column',
 						}}>
-						<Button
+						<CustomButton
 							onClick={() => addProduct(product)}
 							style={{
 								width: '100%',
@@ -89,9 +89,9 @@ export const Product = ({ product, isCheckout = false, quantity }: Props) => {
 								fontSize: 14,
 								lineHeight: 20,
 								fontWeight: '500',
-							}}>
-							+
-						</Button>
+							}}
+							text='+'
+						/>
 						<Text
 							style={{
 								height: 16,
@@ -102,7 +102,7 @@ export const Product = ({ product, isCheckout = false, quantity }: Props) => {
 							}}>
 							{actualProduct?.quantity ?? 0}
 						</Text>
-						<Button
+						<CustomButton
 							onClick={() => removeProduct(product.id)}
 							style={{
 								width: '100%',
@@ -115,9 +115,9 @@ export const Product = ({ product, isCheckout = false, quantity }: Props) => {
 								fontSize: 14,
 								lineHeight: 20,
 								fontWeight: '500',
-							}}>
-							-
-						</Button>
+							}}
+							text='-'
+						/>
 					</View>
 				)}
 			</View>

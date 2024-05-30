@@ -6,8 +6,8 @@ import {
 	useReducer,
 } from 'react';
 
-import { MessageContext, MessageStore } from '../Message/Context';
-import { ActionTypeMessage, MessageType } from '../Message/types';
+import { MessageContext, MessageStore } from '../Messages/Context';
+import { ActionTypeMessage, MessageType } from '../Messages/types';
 import { Product } from '../Products/types';
 import { reducer } from './reducer';
 import { CartAction, CartStore } from './types';

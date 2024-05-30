@@ -6,10 +6,10 @@ import { Files } from '../../../images/ImagesTypes';
 import { CustomModal } from '../../components/Modal';
 import { AuthContext } from '../../domains/Auth/Auth';
 import { AuthStore } from '../../domains/Auth/types';
-import { Button } from '../../domains/Templating/buttons/Button';
-import { Input } from '../../domains/Templating/input/TextInput';
-import { CONTAINER_WIDTH } from '../../domains/Templating/style';
-import { Label } from '../../domains/Templating/texts/Label';
+import { CustomButton } from '../../domains/Template/buttons/Button';
+import { Input } from '../../domains/Template/input/TextInput';
+import { CONTAINER_WIDTH } from '../../domains/Template/style';
+import { Label } from '../../domains/Template/texts/Label';
 
 export const SecretModal = () => {
 	const { accessPanelAdmin } = useContext<AuthStore>(AuthContext);
@@ -43,7 +43,7 @@ export const SecretModal = () => {
 						secured
 						style={{ width: '90%' }}
 					/>
-					<Button
+					<CustomButton
 						text='Submit'
 						onClick={() => {
 							accessPanelAdmin(password).then(val => {

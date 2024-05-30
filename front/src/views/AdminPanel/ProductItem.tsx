@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 
-import { Button } from '../../domains/Templating/buttons/Button';
+import { CustomButton } from '../../domains/Template/buttons/Button';
 
 interface Props {
 	name: string;
@@ -15,7 +15,7 @@ export const ProductItem = ({ name, onClick }: Props) => {
 				borderBottomWidth: 1,
 				borderBottomColor: '#ccc',
 			}}>
-			<Button
+			<CustomButton
 				style={{
 					padding: 16,
 				}}

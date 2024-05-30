@@ -11,7 +11,7 @@ import { CartContext } from '../../domains/Cart/Cart';
 import { CartStore } from '../../domains/Cart/types';
 import { ProductContext } from '../../domains/Products/Products';
 import { ProductStore } from '../../domains/Products/types';
-import { Button } from '../../domains/Templating/buttons/Button';
+import { CustomButton } from '../../domains/Template/buttons/Button';
 import { WebsocketContext } from '../../domains/Websocket/Websocket';
 import { RootStackParamList, Routes } from '../../router/routesName';
 
@@ -48,7 +48,7 @@ export const Checkout = ({
 				})}
 			</ScrollView>
 			<View style={{ bottom: 0 }}>
-				<Button
+				<CustomButton
 					onClick={() => {
 						sendMessage('validate-payment', {
 							merchantId: loggedUser.id,

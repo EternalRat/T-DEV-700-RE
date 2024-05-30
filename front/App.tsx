@@ -4,8 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AuthWrapper } from './src/domains/Auth/Auth';
 import { CartWrapper } from './src/domains/Cart/Cart';
-import { MessageWrapper } from './src/domains/Message/Context';
-import { Message } from './src/domains/Message/Message';
+import { MessageWrapper } from './src/domains/Messages/Context';
+import { Message } from './src/domains/Messages/Message';
 import { ProductWrapper } from './src/domains/Products/Products';
 import { WebsocketWrapper } from './src/domains/Websocket/Websocket';
 import { CashManagerRouter } from './src/router/Routes';

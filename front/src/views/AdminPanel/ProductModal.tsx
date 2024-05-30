@@ -4,10 +4,10 @@ import RNPickerSelect from 'react-native-picker-select';
 
 import { CustomModal } from '../../components/Modal';
 import { Product, ProductType } from '../../domains/Products/types';
-import { Button } from '../../domains/Templating/buttons/Button';
-import { Input } from '../../domains/Templating/input/TextInput';
-import { CONTAINER_WIDTH } from '../../domains/Templating/style';
-import { Label } from '../../domains/Templating/texts/Label';
+import { CustomButton } from '../../domains/Template/buttons/Button';
+import { Input } from '../../domains/Template/input/TextInput';
+import { CONTAINER_WIDTH } from '../../domains/Template/style';
+import { Label } from '../../domains/Template/texts/Label';
 
 interface Props {
 	visible: boolean;
@@ -124,7 +124,7 @@ export const ProductModal = ({
 						/>
 					</View>
 					<View>
-						<Button
+						<CustomButton
 							text={product.id ? 'Modifier' : 'Créer'}
 							onClick={async () => {
 								if (

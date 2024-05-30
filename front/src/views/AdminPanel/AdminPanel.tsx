@@ -6,7 +6,7 @@ import Carousel from 'react-native-reanimated-carousel';
 import { Header } from '../../components/Header';
 import { ProductContext } from '../../domains/Products/Products';
 import { Product, ProductStore } from '../../domains/Products/types';
-import { Color } from '../../domains/Templating/style';
+import { Color } from '../../domains/Template/style';
 import { RootStackParamList, Routes } from '../../router/routesName';
 import { ManageProduct } from './Items/ManageProduct';
 import { ProductModal } from './ProductModal';

@@ -8,9 +8,9 @@ import { Files } from '../../../images/ImagesTypes';
 import { Header } from '../../components/Header';
 import { AuthContext } from '../../domains/Auth/Auth';
 import { AuthStore } from '../../domains/Auth/types';
-import { Button } from '../../domains/Templating/buttons/Button';
-import { Input } from '../../domains/Templating/input/TextInput';
-import { Label } from '../../domains/Templating/texts/Label';
+import { CustomButton } from '../../domains/Template/buttons/Button';
+import { Input } from '../../domains/Template/input/TextInput';
+import { Label } from '../../domains/Template/texts/Label';
 import { WebsocketContext } from '../../domains/Websocket/Websocket';
 import { RootStackParamList, Routes } from '../../router/routesName';
 import { useSettings } from './useSettings';
@@ -85,7 +85,7 @@ export const Settings = ({
 						}}
 					/>
 				</View>
-				<Button
+				<CustomButton
 					style={{
 						backgroundColor: 'white',
 						height: 40,
