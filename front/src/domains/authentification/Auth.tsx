@@ -13,7 +13,7 @@ import { MessageContext, MessageStore } from '../message/Context';
 import { ActionTypeMessage, MessageType } from '../message/types';
 import { ProductContext } from '../product/Products';
 import { ProductStore } from '../product/types';
-import { WebsocketContext } from '../Websocket/Websocket';
+import { WebsocketContext } from '../socket/Websocket';
 import { reducer } from './reducer';
 import { AuthAction, AuthStore } from './types';
 

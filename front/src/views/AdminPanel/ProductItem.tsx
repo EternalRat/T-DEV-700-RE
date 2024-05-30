@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 
-import { CustomButton } from '../../domains/Template/buttons/Button';
+import { CustomButton } from '../../domains/templating/buttons/Button';
 
 interface Props {
 	name: string;

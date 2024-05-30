@@ -4,10 +4,10 @@ import RNPickerSelect from 'react-native-picker-select';
 
 import { CustomModal } from '../../components/Modal';
 import { Product, ProductType } from '../../domains/product/types';
-import { CustomButton } from '../../domains/Template/buttons/Button';
-import { Input } from '../../domains/Template/input/TextInput';
-import { CONTAINER_WIDTH } from '../../domains/Template/style';
-import { Label } from '../../domains/Template/texts/Label';
+import { CustomButton } from '../../domains/templating/buttons/Button';
+import { Input } from '../../domains/templating/input/TextInput';
+import { CONTAINER_WIDTH } from '../../domains/templating/style';
+import { Label } from '../../domains/templating/texts/Label';
 
 interface Props {
 	visible: boolean;

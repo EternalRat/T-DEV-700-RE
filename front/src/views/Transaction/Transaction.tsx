@@ -4,8 +4,8 @@ import { View } from 'react-native';
 
 import { MessageContext, MessageStore } from '../../domains/message/Context';
 import { ActionTypeMessage, MessageType } from '../../domains/message/types';
-import { Title } from '../../domains/Template/texts/Title';
-import { WebsocketContext } from '../../domains/Websocket/Websocket';
+import { WebsocketContext } from '../../domains/socket/Websocket';
+import { Title } from '../../domains/templating/texts/Title';
 import { RootStackParamList, Routes } from '../../router/routesName';
 
 export const Transaction = ({

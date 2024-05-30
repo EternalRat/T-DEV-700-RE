@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import { Header } from '../../components/Header';
 import { Product } from '../../components/Product';
-import { CustomButton } from '../../domains/Template/buttons/Button';
+import { CustomButton } from '../../domains/templating/buttons/Button';
 import { RootStackParamList, Routes } from '../../router/routesName';
 import { useShop } from './useShop';
 

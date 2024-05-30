@@ -6,10 +6,10 @@ import { Files } from '../../../images/ImagesTypes';
 import { CustomModal } from '../../components/Modal';
 import { AuthContext } from '../../domains/authentification/Auth';
 import { AuthStore } from '../../domains/authentification/types';
-import { CustomButton } from '../../domains/Template/buttons/Button';
-import { Input } from '../../domains/Template/input/TextInput';
-import { CONTAINER_WIDTH } from '../../domains/Template/style';
-import { Label } from '../../domains/Template/texts/Label';
+import { CustomButton } from '../../domains/templating/buttons/Button';
+import { Input } from '../../domains/templating/input/TextInput';
+import { CONTAINER_WIDTH } from '../../domains/templating/style';
+import { Label } from '../../domains/templating/texts/Label';
 
 export const SecretModal = () => {
 	const { accessPanelAdmin } = useContext<AuthStore>(AuthContext);

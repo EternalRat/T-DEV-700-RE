@@ -2,8 +2,8 @@ import { useContext, useMemo } from 'react';
 
 import { AuthContext } from '../../domains/authentification/Auth';
 import { AuthStore } from '../../domains/authentification/types';
-import { CartContext } from '../../domains/cart/Cart';
-import { CartStore } from '../../domains/cart/types';
+import { CartContext } from '../../domains/userCart/Cart';
+import { CartStore } from '../../domains/userCart/types';
 import { ProductContext } from '../../domains/product/Products';
 import { ProductStore } from '../../domains/product/types';
 
