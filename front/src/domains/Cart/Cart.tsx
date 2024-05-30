@@ -5,11 +5,12 @@ import {
 	useMemo,
 	useReducer,
 } from 'react';
-import { CartAction, CartStore } from './types';
-import { reducer } from './reducer';
-import { Product } from '../Products/types';
+
 import { MessageContext, MessageStore } from '../Message/Context';
 import { ActionTypeMessage, MessageType } from '../Message/types';
+import { Product } from '../Products/types';
+import { reducer } from './reducer';
+import { CartAction, CartStore } from './types';
 
 export const defaultCart: CartStore = {
 	cartStore: [],

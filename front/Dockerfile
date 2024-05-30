@@ -2,7 +2,7 @@ FROM node:20.12.2
 
 RUN apt update -y && \
     apt upgrade -y && \
-    apt -y install curl openjdk-17-jdk openjdk-17-jre android-sdk chromium
+    apt -y install curl openjdk-17-jdk openjdk-17-jre android-sdk chromium dos2unix
 
 ENV ANDROID_HOME /usr/lib/android-sdk/
 ENV PATH PATH ${ANDROID_HOME}/tools:$ANDROID_HOME/platform-tools:$PATH
@@ -22,13 +22,11 @@ RUN yarn install
 
 COPY . .
 
-RUN react-native eject
-
-COPY backup_app/ /app/android/app/
-
 WORKDIR /app/android
 
 RUN chmod +x gradlew
+
+RUN dos2unix ./gradlew && apt-get --purge remove -y dos2unix && rm -rf /var/lib/apt/lists/*
 
 RUN sh gradlew assembleRelease
 

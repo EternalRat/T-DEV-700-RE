@@ -1,11 +1,12 @@
-import { Text, View } from 'react-native';
-import { Product } from '../../components/Product';
-import { ScrollView } from 'react-native-gesture-handler';
-import { useShop } from './useShop';
-import { RootStackParamList, Routes } from '../../router/routesName';
 import { DrawerScreenProps } from '@react-navigation/drawer';
+import { Text, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+
 import { Header } from '../../components/Header';
+import { Product } from '../../components/Product';
 import { Button } from '../../domains/Templating/buttons/Button';
+import { RootStackParamList, Routes } from '../../router/routesName';
+import { useShop } from './useShop';
 
 export const Shop = ({
 	navigation,
@@ -31,7 +32,7 @@ export const Shop = ({
 					<View style={{ height: 60 }}>
 						<Button
 							onClick={() => navigation.navigate(Routes.CHECKOUT)}
-							children={`Total: ${totalPrice.toString()}€`}
+							text={`Total: ${totalPrice.toString()}€`}
 							style={{
 								height: 60,
 								justifyContent: 'center',

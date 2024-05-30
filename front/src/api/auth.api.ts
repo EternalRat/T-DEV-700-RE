@@ -15,3 +15,11 @@ export const loginHealth = async () => {
 		url: API_URL + '/api/auth',
 	});
 };
+
+export const panelAdmin = async (secretPassword: string) => {
+	return await axios({
+		method: 'post',
+		url: API_URL + '/api/auth/admin',
+		data: { secretPassword },
+	});
+};

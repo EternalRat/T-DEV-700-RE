@@ -32,6 +32,12 @@ export const Images: FilesInfos = {
 		android: { type: AndroidFileType.Vector },
 		ios: { type: IosFileType.Pdf },
 	},
+	[Files.add]: {
+		path: './files/add.svg',
+		source: { uri: 'add' },
+		android: { type: AndroidFileType.Vector },
+		ios: { type: IosFileType.Pdf },
+	},
 };
 
 export default Images;

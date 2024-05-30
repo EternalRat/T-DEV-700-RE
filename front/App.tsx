@@ -1,13 +1,14 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CashManagerRouter } from './src/router/Routes';
-import { ProductWrapper } from './src/domains/Products/Products';
-import { CartWrapper } from './src/domains/Cart/Cart';
-import { WebsocketWrapper } from './src/domains/Websocket/Websocket';
+
 import { AuthWrapper } from './src/domains/Auth/Auth';
+import { CartWrapper } from './src/domains/Cart/Cart';
 import { MessageWrapper } from './src/domains/Message/Context';
 import { Message } from './src/domains/Message/Message';
+import { ProductWrapper } from './src/domains/Products/Products';
+import { WebsocketWrapper } from './src/domains/Websocket/Websocket';
+import { CashManagerRouter } from './src/router/Routes';
 
 function App(): React.JSX.Element {
 	return (

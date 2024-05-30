@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from 'react';
 
 import { MessageContext } from './Context';
 import { SnackBar } from './Snackbar/SnackBar';
-import { ActionTypeMessage } from './types';
 import { DisplayMode } from './Snackbar/type';
+import { ActionTypeMessage } from './types';
 
 let callBack: NodeJS.Timeout | null = null;
 

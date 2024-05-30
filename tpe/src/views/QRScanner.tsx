@@ -1,3 +1,4 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useContext, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import {
@@ -6,11 +7,11 @@ import {
 	useCameraPermission,
 	useCodeScanner,
 } from 'react-native-vision-camera';
-import { WebsocketContext } from '../domains/Websocket/Websocket';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList, Routes } from '../router/routesName';
+
 import { MessageContext, MessageStore } from '../domains/Message/Context';
 import { ActionTypeMessage, MessageType } from '../domains/Message/types';
+import { WebsocketContext } from '../domains/Websocket/Websocket';
+import { RootStackParamList, Routes } from '../router/routesName';
 
 export const QRSCanner = ({
 	navigation,
@@ -42,7 +43,7 @@ export const QRSCanner = ({
 					});
 					dispatch({
 						type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
-						message: 'Paiement en cours... Reprenez le client.',
+						message: `Paiement en cours de ${amount}... Reprenez le client.`,
 						typeMessage: MessageType.SUCCESS,
 						duration: 3000,
 					});

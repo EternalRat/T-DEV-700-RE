@@ -5,7 +5,7 @@ import { PrismaClient, ProductType } from "@prisma/client";
 import DatabaseClient from "../class/database.class";
 import { ProductController } from "../controllers/product.controller";
 
-describe("Auth Controller", () => {
+describe("Product Controller", () => {
     const res = {} as any as Response;
     const mockPrismaClient = mockDeep<PrismaClient>();
 
@@ -69,7 +69,6 @@ describe("Auth Controller", () => {
             ]),
         };
 
-        // Assignez l'objet des méthodes user à la propriété user de mockPrismaClient
         (mockPrismaClient as any).product = mockProductMethods;
 
         vi.spyOn(DatabaseClient.prototype, "getClient").mockReturnValue(
@@ -102,6 +101,28 @@ describe("Auth Controller", () => {
         });
     });
 
+    it("should handle errors when creating a product", async () => {
+        const req = {} as any as Request;
+        req.body = {
+            name: "Prisma Fan",
+            price: 1,
+            description: "Prisma Desc",
+            merchantId: 1,
+            type: ProductType.ELECTRONICS,
+        };
+
+        (mockPrismaClient.product.create as any).mockRejectedValueOnce(
+            new Error("Create error"),
+        );
+
+        await ProductController.create(req, res);
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.send).toHaveBeenCalledWith({
+            status: "Internal Server Error",
+            message: "An unknown error occurred",
+        });
+    });
+
     it("should get a product with its id sent as params", async () => {
         const req = {} as any as Request;
         req.params = { id: "1" };
@@ -117,14 +138,29 @@ describe("Auth Controller", () => {
         });
     });
 
+    it("should handle errors when getting a product by ID", async () => {
+        const req = {} as any as Request;
+        req.params = { id: "1" };
+
+        (mockPrismaClient.product.findUnique as any).mockRejectedValueOnce(
+            new Error("Find error"),
+        );
+
+        await ProductController.get(req, res);
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.send).toHaveBeenCalledWith({
+            status: "Internal Server Error",
+            message: "An unknown error occurred",
+        });
+    });
+
     it("should get a product with its invalid id", async () => {
-        const mockAuthMethods = {
+        const mockProductMethods = {
             findUnique: vi.fn().mockResolvedValue(undefined),
         };
 
         const specialPrismaClient = mockDeep<PrismaClient>();
-        // Assignez l'objet des méthodes user à la propriété user de mockPrismaClient
-        (specialPrismaClient as any).product = mockAuthMethods;
+        (specialPrismaClient as any).product = mockProductMethods;
 
         vi.spyOn(DatabaseClient.prototype, "getClient").mockReturnValue(
             specialPrismaClient,
@@ -164,6 +200,29 @@ describe("Auth Controller", () => {
         });
     });
 
+    it("should handle errors when updating a product", async () => {
+        const req = {} as any as Request;
+        req.body = {
+            name: "Prisma Fan New",
+            price: 10,
+            description: "Prisma Desc",
+            merchantId: 1,
+            type: ProductType.ELECTRONICS,
+        };
+        req.params = { id: "1" };
+
+        (mockPrismaClient.product.update as any).mockRejectedValueOnce(
+            new Error("Update error"),
+        );
+
+        await ProductController.update(req, res);
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.send).toHaveBeenCalledWith({
+            status: "Internal Server Error",
+            message: "An unknown error occurred",
+        });
+    });
+
     it("should delete a product with its id", async () => {
         const req = {} as any as Request;
         req.params = { id: "1" };
@@ -171,6 +230,22 @@ describe("Auth Controller", () => {
         await ProductController.remove(req, res);
         expect(res.send).toHaveBeenCalled();
         expect(res.status).toHaveBeenCalledWith(204);
+    });
+
+    it("should handle errors when deleting a product", async () => {
+        const req = {} as any as Request;
+        req.params = { id: "1" };
+
+        (mockPrismaClient.product.delete as any).mockRejectedValueOnce(
+            new Error("Delete error"),
+        );
+
+        await ProductController.remove(req, res);
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.send).toHaveBeenCalledWith({
+            status: "Internal Server Error",
+            message: "An unknown error occurred",
+        });
     });
 
     it("should get all existing products", async () => {
@@ -195,6 +270,21 @@ describe("Auth Controller", () => {
                 id: 2,
             },
         ]);
+    });
+
+    it("should handle errors when getting all products", async () => {
+        const req = {} as any as Request;
+
+        (mockPrismaClient.product.findMany as any).mockRejectedValueOnce(
+            new Error("Find error"),
+        );
+
+        await ProductController.getAll(req, res);
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.send).toHaveBeenCalledWith({
+            status: "Internal Server Error",
+            message: "An unknown error occurred",
+        });
     });
 
     it("should get all products from a merchant", async () => {
@@ -227,13 +317,12 @@ describe("Auth Controller", () => {
     });
 
     it("should fail to find products from an invalid merchant id", async () => {
-        const mockAuthMethods = {
+        const mockProductMethods = {
             findMany: vi.fn().mockResolvedValue(undefined),
         };
 
         const specialPrismaClient = mockDeep<PrismaClient>();
-        // Assignez l'objet des méthodes user à la propriété user de mockPrismaClient
-        (specialPrismaClient as any).product = mockAuthMethods;
+        (specialPrismaClient as any).product = mockProductMethods;
 
         vi.spyOn(DatabaseClient.prototype, "getClient").mockReturnValue(
             specialPrismaClient,
@@ -251,6 +340,22 @@ describe("Auth Controller", () => {
         );
     });
 
+    it("should handle errors when getting products by merchant id", async () => {
+        const req = {} as any as Request;
+        req.params = { id: "1" };
+
+        (mockPrismaClient.product.findMany as any).mockRejectedValueOnce(
+            new Error("Find error"),
+        );
+
+        await ProductController.getByMerchantId(req, res);
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.send).toHaveBeenCalledWith({
+            status: "Internal Server Error",
+            message: "An unknown error occurred",
+        });
+    });
+
     it("should delete all products with merchant id", async () => {
         const req = {} as any as Request;
         req.params = { id: "1" };
@@ -260,11 +365,42 @@ describe("Auth Controller", () => {
         expect(res.send).toHaveBeenCalledWith(1);
     });
 
+    it("should handle errors when deleting products by merchant id", async () => {
+        const req = {} as any as Request;
+        req.params = { id: "1" };
+
+        (mockPrismaClient.product.deleteMany as any).mockRejectedValueOnce(
+            new Error("Delete error"),
+        );
+
+        await ProductController.deleteByMerchantId(req, res);
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.send).toHaveBeenCalledWith({
+            status: "Internal Server Error",
+            message: "An unknown error occurred",
+        });
+    });
+
     it("should delete all products", async () => {
         const req = {} as any as Request;
 
         await ProductController.deleteAll(req, res);
         expect(res.status).toHaveBeenCalledWith(204);
         expect(res.send).toHaveBeenCalled();
+    });
+
+    it("should handle errors when deleting all products", async () => {
+        const req = {} as any as Request;
+
+        (mockPrismaClient.product.deleteMany as any).mockRejectedValueOnce(
+            new Error("Delete error"),
+        );
+
+        await ProductController.deleteAll(req, res);
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.send).toHaveBeenCalledWith({
+            status: "Internal Server Error",
+            message: "An unknown error occurred",
+        });
     });
 });

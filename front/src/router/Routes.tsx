@@ -5,12 +5,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { DrawerContent } from '../components/Drawer';
-import { RootStackParamList, Routes } from './routesName';
-import { Shop } from '../views/Shop/Shop';
-import { Settings } from '../views/Settings/Settings';
-import { Checkout } from '../views/Checkout/Checkout';
-import { Transaction } from '../views/Transaction/Transaction';
 import { AdminPanel } from '../views/AdminPanel/AdminPanel';
+import { Checkout } from '../views/Checkout/Checkout';
+import { Settings } from '../views/Settings/Settings';
+import { Shop } from '../views/Shop/Shop';
+import { Transaction } from '../views/Transaction/Transaction';
+import { RootStackParamList, Routes } from './routesName';
 
 const Drawer = createDrawerNavigator<RootStackParamList>();
 
@@ -87,7 +87,6 @@ export const CashManagerRouter = () => {
 							color={color}
 						/>
 					),
-					
 				}}
 			/>
 		</Drawer.Navigator>

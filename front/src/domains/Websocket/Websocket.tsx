@@ -1,3 +1,4 @@
+import { API_URL } from '@env';
 import {
 	createContext,
 	useCallback,
@@ -6,8 +7,8 @@ import {
 	useMemo,
 	useState,
 } from 'react';
-import { API_URL } from '@env';
 import { io, Socket } from 'socket.io-client';
+
 import { CartContext } from '../Cart/Cart';
 import { CartStore } from '../Cart/types';
 import { MessageContext, MessageStore } from '../Message/Context';
@@ -16,11 +17,11 @@ import { ActionTypeMessage, MessageType } from '../Message/types';
 type TpeId = string;
 
 export const WebsocketContext = createContext<{
-	sendMessage: (eventName: string, _: any) => void;
+	sendMessage: (_e: string, _: any) => void;
 	awaitingPayment: boolean;
 	tpeInformations: TpeId[];
 }>({
-	sendMessage: (eventName: string, _: any) => {},
+	sendMessage: (_e: string, _: any) => {},
 	awaitingPayment: false,
 	tpeInformations: [],
 });
@@ -48,16 +49,16 @@ export const WebsocketWrapper = ({
 		socket.connect();
 
 		socket.on('connect', () => {
-			console.log('connected');
+			console.info('connected');
 			socket.emit('link-client');
 		});
 
 		socket.on('connect_error', err => {
-			console.log(`connect_error due to ${err.message}`);
+			console.error(`connect_error due to ${err.message}`);
 		});
 
 		socket.on('payment-client', data => {
-			console.log('payment-client');
+			console.info('payment-client');
 			if (data.status === 'success') {
 				clearCart();
 				setAwaitingPayment(false);
@@ -77,12 +78,12 @@ export const WebsocketWrapper = ({
 		});
 
 		socket.on('new-tpe', args => {
-			console.log('new-tpe', args);
+			console.info('new-tpe', args);
 			setTpeInformations(args.allTpe);
 		});
 
 		socket.on('client-connected', () => {
-			console.log('client-connected');
+			console.info('client-connected');
 			dispatchMessage({
 				message: 'Connexion au TPE réussit',
 				typeMessage: MessageType.SUCCESS,
@@ -92,7 +93,7 @@ export const WebsocketWrapper = ({
 		});
 
 		socket.on('payment-error', () => {
-			console.log('payment-error');
+			console.error('payment-error');
 			dispatchMessage({
 				type: ActionTypeMessage.ADD_ERROR,
 				code: 'La validation du paiement a échoué',
@@ -102,7 +103,7 @@ export const WebsocketWrapper = ({
 		});
 
 		socket.on('client-waiting', () => {
-			console.log('client-waiting');
+			console.info('client-waiting');
 			dispatchMessage({
 				type: ActionTypeMessage.ADD_ERROR,
 				code: 'Un client attend déjà une validation de paiement',
@@ -112,7 +113,7 @@ export const WebsocketWrapper = ({
 		});
 
 		socket.on('payment-validated', () => {
-			console.log('payment-validated');
+			console.info('payment-validated');
 			dispatchMessage({
 				message: 'Dirigez-vous vers le TPE.',
 				typeMessage: MessageType.SUCCESS,
@@ -122,7 +123,7 @@ export const WebsocketWrapper = ({
 		});
 
 		socket.on('disconnect', () => {
-			console.log('disconnected');
+			console.info('disconnected');
 		});
 
 		return () => {

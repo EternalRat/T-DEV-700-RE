@@ -14,11 +14,20 @@ datasource db {
 }
 
 model Merchant {
-  id             Int       @id @default(autoincrement())
-  name           String    @unique
-  password       String
-  secretPassword String
-  Product        Product[]
+  id               Int                @id @default(autoincrement())
+  name             String             @unique
+  password         String
+  secretPassword   String
+  Product          Product[]
+  MerchantSettings MerchantSettings[]
+}
+
+model MerchantSettings {
+  id         Int      @id @default(autoincrement())
+  property   String
+  value      Int
+  merchant   Merchant @relation(fields: [merchantId], references: [id])
+  merchantId Int
 }
 
 model Product {

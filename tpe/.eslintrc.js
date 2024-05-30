@@ -42,7 +42,6 @@ module.exports = {
 		],
 		'no-prototype-builtins': 'off',
 		'no-redeclare': 'off',
-		indent: ['error', 'tab'],
 		'simple-import-sort/imports': 'error',
 		'simple-import-sort/exports': 'error',
 	},

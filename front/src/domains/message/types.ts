@@ -11,7 +11,6 @@ export enum MessageType {
 	ERROR = 'error',
 }
 
-
 export interface MessageState {
 	message: string;
 	type: MessageType;

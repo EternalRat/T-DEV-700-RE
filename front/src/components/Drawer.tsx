@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { API_URL } from '@env';
 import {
 	DrawerContentComponentProps,
 	DrawerContentScrollView,
@@ -6,13 +6,14 @@ import {
 } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useContext, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { RootStackParamList, Routes } from '../router/routesName';
-import { AuthStore } from '../domains/Auth/types';
+
 import { AuthContext } from '../domains/Auth/Auth';
-import { API_URL } from '@env';
+import { AuthStore } from '../domains/Auth/types';
+import { RootStackParamList, Routes } from '../router/routesName';
 
 export const DrawerContent = (props: DrawerContentComponentProps) => {
 	const { logout, loggedUser } = useContext<AuthStore>(AuthContext);
@@ -75,7 +76,7 @@ export const DrawerContent = (props: DrawerContentComponentProps) => {
 						)}
 					/>
 					<DrawerItem
-						label={'Admin Panel'}
+						label={'Gérer les produits'}
 						onPress={() => {
 							props.navigation.reset({
 								routes: [{ name: Routes.ADMIN_PANEL }],

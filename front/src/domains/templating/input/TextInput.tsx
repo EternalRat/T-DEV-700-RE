@@ -1,6 +1,8 @@
 import NativeImage from '@chouicgames/react-native-images-to-native-images';
 import { File } from '@chouicgames/react-native-images-to-native-images/src/types';
 import {
+	DimensionValue,
+	KeyboardTypeOptions,
 	NativeSyntheticEvent,
 	StyleProp,
 	StyleSheet,
@@ -17,7 +19,7 @@ interface Props {
 	style?: StyleProp<TextStyle>;
 	imageStyle?: any;
 	updateText: (e: NativeSyntheticEvent<TextInputChangeEventData>) => void;
-	icon: File;
+	icon?: File;
 	type?:
 		| 'none'
 		| 'URL'
@@ -49,6 +51,8 @@ interface Props {
 		| 'oneTimeCode'
 		| undefined;
 	secured?: boolean;
+	width?: DimensionValue;
+	keyboardType?: KeyboardTypeOptions;
 }
 
 export const Input = ({
@@ -57,8 +61,10 @@ export const Input = ({
 	imageStyle,
 	updateText,
 	icon,
+	keyboardType,
 	type = 'none',
 	secured = false,
+	width = '100%',
 }: Props) => {
 	return (
 		<View
@@ -66,32 +72,35 @@ export const Input = ({
 				display: 'flex',
 				flexDirection: 'row',
 				alignItems: 'center',
-				width: '100%',
+				width: width,
 				paddingTop: 5,
 			}}>
-			<View
-				style={{
-					width: 30,
-					height: 40,
-					backgroundColor: Color.GREY,
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-				}}>
-				<NativeImage
-					file={icon}
+			{icon && (
+				<View
 					style={{
-						width: 18,
-						height: '100%',
-						resizeMode: 'contain',
-						tintColor: Color.BLACK,
-						...imageStyle,
-					}}
-				/>
-			</View>
+						width: 30,
+						height: 40,
+						backgroundColor: Color.GREY,
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'center',
+					}}>
+					<NativeImage
+						file={icon}
+						style={{
+							width: 18,
+							height: '100%',
+							resizeMode: 'contain',
+							tintColor: Color.BLACK,
+							...imageStyle,
+						}}
+					/>
+				</View>
+			)}
 			<TextInput
+				keyboardType={keyboardType}
 				textContentType={type}
-				style={[style, styles.input]}
+				style={[styles.input, style]}
 				value={value}
 				onChange={updateText}
 				secureTextEntry={secured}

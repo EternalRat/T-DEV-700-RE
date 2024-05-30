@@ -1,13 +1,15 @@
-import { useContext } from 'react';
-import { WebsocketContext } from '../domains/Websocket/Websocket';
-import { Pressable, Text, View } from 'react-native';
-import { RootStackParamList, Routes } from '../router/routesName';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useContext } from 'react';
+import { Pressable, Text, View } from 'react-native';
+
+import { WebsocketContext } from '../domains/Websocket/Websocket';
+import { RootStackParamList, Routes } from '../router/routesName';
 
 export const Home = ({
 	navigation,
 }: NativeStackScreenProps<RootStackParamList, Routes.HOME>) => {
 	const { screen, setScreen } = useContext(WebsocketContext);
+
 	return (
 		<View
 			style={{
@@ -32,7 +34,6 @@ export const Home = ({
 						width: '100%',
 					}}
 					onPress={() => {
-						console.log('test');
 						if (screen == Routes.NFC) {
 							setScreen(Routes.HOME);
 							return;

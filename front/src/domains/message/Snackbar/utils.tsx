@@ -1,6 +1,3 @@
-import React from 'react';
-import { ActivityIndicator } from 'react-native';
-
 import { MessageType } from '../types';
 import { ContentMode, DisplayMode } from './type';
 

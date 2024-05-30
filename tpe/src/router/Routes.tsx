@@ -1,10 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { enableScreens } from 'react-native-screens';
 
-import { RootStackParamList, Routes } from './routesName';
 import { Home } from '../views/Home';
 import { NFC } from '../views/NFC';
 import { QRSCanner } from '../views/QRScanner';
+import { RootStackParamList, Routes } from './routesName';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

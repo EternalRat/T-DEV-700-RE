@@ -1,18 +1,19 @@
+import { DrawerScreenProps } from '@react-navigation/drawer';
 import { useContext } from 'react';
 import { View } from 'react-native';
-import { RootStackParamList, Routes } from '../../router/routesName';
-import { DrawerScreenProps } from '@react-navigation/drawer';
-import { AuthStore } from '../../domains/Auth/types';
-import { AuthContext } from '../../domains/Auth/Auth';
-import { useSettings } from './useSettings';
-import { Header } from '../../components/Header';
-import { Input } from '../../domains/Templating/input/TextInput';
-import { Files } from '../../../images/ImagesTypes';
+import RNPickerSelect from 'react-native-picker-select';
+
 import Images from '../../../images/Images';
+import { Files } from '../../../images/ImagesTypes';
+import { Header } from '../../components/Header';
+import { AuthContext } from '../../domains/Auth/Auth';
+import { AuthStore } from '../../domains/Auth/types';
 import { Button } from '../../domains/Templating/buttons/Button';
+import { Input } from '../../domains/Templating/input/TextInput';
 import { Label } from '../../domains/Templating/texts/Label';
 import { WebsocketContext } from '../../domains/Websocket/Websocket';
-import RNPickerSelect from 'react-native-picker-select';
+import { RootStackParamList, Routes } from '../../router/routesName';
+import { useSettings } from './useSettings';
 
 export const Settings = ({
 	navigation,
@@ -68,6 +69,11 @@ export const Settings = ({
 					}}>
 					<Label style={{ color: '#fff' }}>Selection du TPE</Label>
 					<RNPickerSelect
+						style={{
+							viewContainer: {
+								marginRight: 16,
+							},
+						}}
 						items={tpeInformations.map(tpeInformation => {
 							return {
 								label: tpeInformation,
@@ -104,9 +110,9 @@ export const Settings = ({
 							auth.tpeId,
 							navigation
 						);
-					}}>
-					Se connecter
-				</Button>
+					}}
+					text='Se connecter'
+				/>
 			</View>
 		</View>
 	);

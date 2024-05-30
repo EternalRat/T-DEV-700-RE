@@ -19,7 +19,7 @@
   "author": "HENRY Benjamin",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "5.12.1",
+    "@prisma/client": "5.14.0",
     "@vitest/coverage-istanbul": "^1.6.0",
     "bcrypt": "5.1.1",
     "cookie-parser": "1.4.6",
@@ -37,7 +37,7 @@
     "mysql": "2.18.1",
     "passport-jwt": "4.0.1",
     "prettier": "3.2.5",
-    "prisma": "5.12.1",
+    "prisma": "5.14.0",
     "socket.io": "4.5.4"
   },
   "devDependencies": {

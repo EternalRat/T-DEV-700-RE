@@ -1,3 +1,4 @@
+import { API_URL } from '@env';
 import {
 	createContext,
 	Dispatch,
@@ -8,11 +9,11 @@ import {
 	useMemo,
 	useState,
 } from 'react';
-import { API_URL } from '@env';
 import { io, Socket } from 'socket.io-client';
-import { ActionTypeMessage, MessageType } from '../Message/types';
+
 import { Routes } from '../../router/routesName';
 import { MessageContext, MessageStore } from '../Message/Context';
+import { ActionTypeMessage, MessageType } from '../Message/types';
 
 interface Metadata {
 	price: number;
@@ -20,17 +21,17 @@ interface Metadata {
 }
 
 export const WebsocketContext = createContext<{
-	sendMessage: (eventName: string, _: any) => void;
+	sendMessage: (_e: string, _: any) => void;
 	awaitingPayment: boolean;
 	metadata: Metadata;
 	screen: Routes;
 	setScreen: Dispatch<SetStateAction<Routes>>;
 }>({
-	sendMessage: (eventName: string, _: any) => {},
+	sendMessage: (_e: string, _: any) => {},
 	awaitingPayment: false,
 	metadata: { price: 0, merchantId: '' },
 	screen: Routes.HOME,
-	setScreen: (value: SetStateAction<Routes>) => {},
+	setScreen: (_: SetStateAction<Routes>) => {},
 });
 
 export const WebsocketWrapper = ({
@@ -59,7 +60,7 @@ export const WebsocketWrapper = ({
 		socket.connect();
 
 		socket.on('connect', () => {
-			console.log('connected');
+			console.info('connected');
 			socket.emit('connect-tpe', {
 				isMerchant: true,
 				isWaiting: true,
@@ -67,11 +68,11 @@ export const WebsocketWrapper = ({
 		});
 
 		socket.on('connect_error', err => {
-			console.log(`connect_error due to ${err.message}`);
+			console.error(`connect_error due to ${err.message}`);
 		});
 
 		socket.on('tpe-connected', () => {
-			console.log('tpe-connected');
+			console.info('tpe-connected');
 			dispatchMessage({
 				message: 'Connexion établis',
 				typeMessage: MessageType.SUCCESS,
@@ -81,18 +82,17 @@ export const WebsocketWrapper = ({
 		});
 
 		socket.on('client-connected', () => {
-			console.log('new client connected');
+			console.info('new client connected');
 		});
 
 		socket.on('asking-payment', args => {
-			console.log('asking-payment');
+			console.info('asking-payment');
 			setAwaitingPayment(false);
-			console.log(args);
 			setMetadata(args);
 		});
 
 		socket.on('disconnect', () => {
-			console.log('disconnected');
+			console.info('disconnected');
 		});
 
 		return () => {

@@ -1,3 +1,4 @@
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 import {
 	createContext,
 	useCallback,
@@ -5,16 +6,16 @@ import {
 	useMemo,
 	useReducer,
 } from 'react';
-import { AuthAction, AuthStore } from './types';
-import { reducer } from './reducer';
-import { MessageContext, MessageStore } from '../Message/Context';
-import { loginAPI, loginHealth } from '../../api/auth.api';
-import { ActionTypeMessage, MessageType } from '../Message/types';
-import { ProductStore } from '../Products/types';
-import { ProductContext } from '../Products/Products';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
+
+import { loginAPI, loginHealth, panelAdmin } from '../../api/auth.api';
 import { RootStackParamList, Routes } from '../../router/routesName';
+import { MessageContext, MessageStore } from '../Message/Context';
+import { ActionTypeMessage, MessageType } from '../Message/types';
+import { ProductContext } from '../Products/Products';
+import { ProductStore } from '../Products/types';
 import { WebsocketContext } from '../Websocket/Websocket';
+import { reducer } from './reducer';
+import { AuthAction, AuthStore } from './types';
 
 export const defaultAuth: AuthStore = {
 	loggedUser: { id: -1, name: '' },
@@ -28,6 +29,7 @@ export const defaultAuth: AuthStore = {
 	health: (
 		_n: DrawerNavigationProp<RootStackParamList, Routes.SETTINGS, undefined>
 	) => {},
+	accessPanelAdmin: (_: string) => Promise.resolve(false),
 };
 
 export const AuthContext = createContext<AuthStore>(defaultAuth);
@@ -51,18 +53,15 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 			>
 		) => {
 			try {
-				const response = await loginAPI(username, password);
-				const { status, data } = response;
+				const { status, data } = await loginAPI(username, password);
 				if (status === 200) {
 					const { user } = data;
-					console.log(user);
 					sendMessage('connect-client', {
 						isUser: true,
 						merchantId: user.id,
 						tpeId,
 					});
 					await getProducts(user.id, navigation);
-					console.log('success getProducts')
 					dispatch({ type: AuthAction.FILL_USER, user });
 					dispatchMessage({
 						type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
@@ -78,7 +77,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 					duration: 3000,
 				});
 			} catch (err: any) {
-				console.log(err)
+				console.error(err);
 				dispatchMessage({
 					type: ActionTypeMessage.ADD_ERROR,
 					code: 'LOGIN_FAILED ' + err.message,
@@ -88,6 +87,18 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 		},
 		[]
 	);
+
+	const accessPanelAdmin = useCallback(async (secretPassword: string) => {
+		try {
+			const { status } = await panelAdmin(secretPassword);
+			if (status === 200) {
+				return true;
+			}
+			return false;
+		} catch (err) {
+			return false;
+		}
+	}, []);
 
 	const logout = useCallback(() => {
 		dispatch({ type: AuthAction.LOGOUT });
@@ -135,6 +146,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 			login,
 			logout,
 			health,
+			accessPanelAdmin,
 		}),
 		[loggedUser]
 	);

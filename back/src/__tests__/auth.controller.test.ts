@@ -17,47 +17,15 @@ describe("Auth Controller", () => {
         res.json = vi.fn();
 
         const mockAuthMethods = {
-            create: vi.fn().mockResolvedValue({
-                name: "newUser",
-                password: bcrypt.hashSync("new", 10),
-                id: 1,
-                products: [],
-            }),
             findUnique: vi.fn().mockResolvedValue({
                 name: "newUser",
                 password: bcrypt.hashSync("new", 10),
-                products: [],
                 id: 1,
-            }),
-            findMany: vi.fn().mockResolvedValue([
-                {
-                    name: "newUser",
-                    password: bcrypt.hashSync("new", 10),
-                    products: [],
-                    id: 1,
-                },
-                {
-                    name: "newUser",
-                    password: bcrypt.hashSync("new", 10),
-                    products: [],
-                    id: 2,
-                },
-            ]),
-            update: vi.fn().mockResolvedValue({
-                id: 2,
-                name: "newUserNew",
-                password: bcrypt.hashSync("newPassword", 10),
-                products: [],
-            }),
-            delete: vi.fn().mockResolvedValue({
-                name: "newUser",
-                password: bcrypt.hashSync("new", 10),
-                products: [],
-                id: 1,
+                secretPassword: bcrypt.hashSync("secret", 10),
             }),
         };
 
-        // Assignez l'objet des méthodes user à la propriété user de mockPrismaClient
+        // Assignez l'objet des méthodes auth à la propriété auth de mockPrismaClient
         (mockPrismaClient as any).merchant = mockAuthMethods;
 
         vi.spyOn(DatabaseClient.prototype, "getClient").mockReturnValue(
@@ -87,7 +55,7 @@ describe("Auth Controller", () => {
         const req = {} as any as Request;
         req.body = {
             username: "newUser",
-            password: "newOkok",
+            password: "wrongPassword",
         };
 
         await AuthController.login(req, res);
@@ -98,18 +66,74 @@ describe("Auth Controller", () => {
         });
     });
 
-    it("should refuse login since password is incorrect", async () => {
+    it("should refuse login since username is incorrect", async () => {
+        const mockAuthMethods = {
+            fetchByUsername: vi.fn().mockResolvedValue(undefined),
+        };
+
+        const specialPrismaClient = mockDeep<PrismaClient>();
+        (specialPrismaClient as any).auth = mockAuthMethods;
+
+        vi.spyOn(DatabaseClient.prototype, "getClient").mockReturnValue(
+            specialPrismaClient,
+        );
+
         const req = {} as any as Request;
         req.body = {
-            username: "newUser",
-            password: "newOkok",
+            username: "wrongUser",
+            password: "new",
         };
 
         await AuthController.login(req, res);
         expect(res.status).toHaveBeenCalledWith(403);
         expect(res.send).toHaveBeenCalledWith({
             status: "error",
-            message: "Invalid password.",
+            message: "No user found with that username.",
+        });
+
+        vi.spyOn(DatabaseClient.prototype, "getClient").mockReturnValue(
+            mockPrismaClient,
+        );
+    });
+
+    it("should allow login using the correct username and password and create a token cookie", async () => {
+        const req = {} as any as Request;
+        req.body = {
+            username: "newUser",
+            password: "new",
+        };
+
+        await AuthController.login(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.cookie).toHaveBeenCalledWith("token", expect.any(String), {
+            httpOnly: true,
+            secure: false,
+        });
+        expect(res.send).toHaveBeenCalledWith({
+            status: 200,
+            user: {
+                name: "newUser",
+                id: 1,
+            },
+        });
+    });
+
+    it("should handle login errors", async () => {
+        const req = {} as any as Request;
+        req.body = {
+            username: "newUser",
+            password: "new",
+        };
+
+        (mockPrismaClient.merchant.findUnique as any).mockRejectedValueOnce(
+            new Error("Database error"),
+        );
+
+        await AuthController.login(req, res);
+        expect(res.status).toHaveBeenCalledWith(403);
+        expect(res.send).toHaveBeenCalledWith({
+            status: "error",
+            message: "Something went wrong",
         });
     });
 
@@ -138,30 +162,70 @@ describe("Auth Controller", () => {
         });
     });
 
-    it("should refuse login since username is incorrect", async () => {
-        const mockAuthMethods = {
-            findUnique: vi.fn().mockResolvedValue(undefined),
+    it("should allow checking the secret password", async () => {
+        const req = {} as any as Request;
+        req.user = {
+            id: 1,
+        };
+        req.body = {
+            secretPassword: "secret",
+        };
+
+        await AuthController.checkSecretPassword(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    it("should refuse checking the secret password if incorrect", async () => {
+        const req = {} as any as Request;
+        req.user = {
+            id: 1,
+        };
+        req.body = {
+            secretPassword: "wrongSecret",
+        };
+
+        await AuthController.checkSecretPassword(req, res);
+        expect(res.status).toHaveBeenCalledWith(403);
+    });
+
+    it("should handle missing secret password", async () => {
+        const req = {} as any as Request;
+        req.user = {
+            id: 1,
+        };
+        req.body = {};
+
+        await AuthController.checkSecretPassword(req, res);
+        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.send).toHaveBeenCalledWith({
+            status: "error",
+            message: "secret password is required",
+        });
+    });
+
+    it("should handle wrong user when checking secret password", async () => {
+        const req = {} as any as Request;
+        req.user = {
+            id: 2,
+        };
+        req.body = {
+            secretPassword: "secret",
         };
 
         const specialPrismaClient = mockDeep<PrismaClient>();
-        // Assignez l'objet des méthodes user à la propriété user de mockPrismaClient
-        (specialPrismaClient as any).merchant = mockAuthMethods;
+        (specialPrismaClient as any).auth = {
+            fetchById: vi.fn().mockResolvedValue(undefined),
+        };
 
         vi.spyOn(DatabaseClient.prototype, "getClient").mockReturnValue(
             specialPrismaClient,
         );
 
-        const req = {} as any as Request;
-        req.body = {
-            username: "newUserNew",
-            password: "new",
-        };
-
-        await AuthController.login(req, res);
-        expect(res.status).toHaveBeenCalledWith(403);
+        await AuthController.checkSecretPassword(req, res);
+        expect(res.status).toHaveBeenCalledWith(404);
         expect(res.send).toHaveBeenCalledWith({
             status: "error",
-            message: "No user found with that username.",
+            message: "Wrong user",
         });
 
         vi.spyOn(DatabaseClient.prototype, "getClient").mockReturnValue(
@@ -169,21 +233,24 @@ describe("Auth Controller", () => {
         );
     });
 
-    it("should allow login using the user newUser and the password pass", async () => {
+    it("should handle fetchById error when checking secret password", async () => {
         const req = {} as any as Request;
+        req.user = {
+            id: 1,
+        };
         req.body = {
-            username: "newUser",
-            password: "new",
+            secretPassword: "secret",
         };
 
-        await AuthController.login(req, res);
-        expect(res.status).toHaveBeenCalledWith(200);
+        (mockPrismaClient.merchant.findUnique as any).mockRejectedValueOnce(
+            new Error("Database error"),
+        );
+
+        await AuthController.checkSecretPassword(req, res);
+        expect(res.status).toHaveBeenCalledWith(500);
         expect(res.send).toHaveBeenCalledWith({
-            status: 200,
-            user: {
-                name: "newUser",
-                id: 1,
-            },
+            status: "Internal Server Error",
+            message: "An unknown error occurred",
         });
     });
 });

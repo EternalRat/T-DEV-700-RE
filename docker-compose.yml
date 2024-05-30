@@ -18,15 +18,15 @@ services:
       timeout: 2s
       retries: 55
 
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   restart: always
-  #   ports:
-  #     - 8082:80
-  #   environment:
-  #     PMA_HOST: ${DB_HOST}
-  #   networks:
-  #     - cashback-network
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8082:80
+    environment:
+      PMA_HOST: ${DB_HOST}
+    networks:
+      - cashback-network
 
   back:
     build: ./back

@@ -7,10 +7,10 @@ import {
 } from './types';
 
 const configReducer: AuthReducer = {
-	[AuthAction.FILL_USER]: (state: AuthedUser, action: Action) => {
+	[AuthAction.FILL_USER]: (_: AuthedUser, action: Action) => {
 		return (action as FillUserAction).user;
 	},
-	[AuthAction.LOGOUT]: (state: AuthedUser, action: Action) => {
+	[AuthAction.LOGOUT]: (_s: AuthedUser, _a: Action) => {
 		return { id: -1, name: '' };
 	},
 };

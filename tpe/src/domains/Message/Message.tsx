@@ -14,7 +14,6 @@ export const Message = () => {
 		if (message.duration > 0) {
 			callBack = setTimeout(() => {
 				dispatch({ type: ActionTypeMessage.CLOSE_MESSAGE });
-				console.log('test')
 				callBack = null;
 			}, message.duration);
 		} else if (callBack) {

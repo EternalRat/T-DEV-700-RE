@@ -1,10 +1,11 @@
+import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import { Message } from './src/domains/Message/Message';
 import { WebsocketWrapper } from './src/domains/Websocket/Websocket';
 import { CashManagerRouter } from './src/router/Routes';
-import { NavigationContainer } from '@react-navigation/native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Message } from './src/domains/Message/Message';
 
 function App() {
 	return (

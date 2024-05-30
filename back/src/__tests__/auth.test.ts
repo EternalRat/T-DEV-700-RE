@@ -129,6 +129,12 @@ describe("User class", () => {
         expect(auth.getPassword()).toStrictEqual("pass");
     });
 
+    it("should return the setted merchantId", async () => {
+        const auth = new CMAuth();
+        auth.setSecret("pass");
+        expect(auth.getSecret()).toStrictEqual("pass");
+    });
+
     it("should return the setted name", async () => {
         const auth = new CMAuth();
         auth.setProducts([

@@ -108,6 +108,24 @@ const main = async () => {
             secretPassword: secrethash2,
         },
     });
+    await prisma.merchantSettings.upsert({
+        where: { id: 1 },
+        update: {},
+        create: {
+            property: "maxProduct",
+            value: 10,
+            merchantId: 1,
+        },
+    });
+    await prisma.merchantSettings.upsert({
+        where: { id: 2 },
+        update: {},
+        create: {
+            property: "maxProduct",
+            value: 15,
+            merchantId: 2,
+        },
+    });
     for (const product of products) {
         await prisma.product.upsert({
             where: { id: product.id },

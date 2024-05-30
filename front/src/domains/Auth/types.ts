@@ -1,4 +1,5 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+
 import { RootStackParamList, Routes } from '../../router/routesName';
 import { ReducerType } from '../reducer';
 
@@ -27,6 +28,7 @@ export interface AuthStore {
 			undefined
 		>
 	) => void;
+	accessPanelAdmin: (secretPassword: string) => Promise<boolean>;
 }
 
 export enum AuthAction {

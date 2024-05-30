@@ -5,6 +5,7 @@ export enum Files {
 	user,
 	back,
 	hamburger,
+	add,
 }
 
 export type FilesInfos = {

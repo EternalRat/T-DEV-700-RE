@@ -31,6 +31,11 @@ export default class CMAuth {
     private password: string;
 
     /**
+     * Merchant secret password
+     */
+    private secretPassword: string;
+
+    /**
      * Merchant products
      */
     private products: Product[];
@@ -86,6 +91,22 @@ export default class CMAuth {
     }
 
     /**
+     * Set the merchant secret password
+     * @param {string} secret Merchant secret
+     */
+    public setSecret(secret: string): void {
+        this.secretPassword = secret;
+    }
+
+    /**
+     * Get the merchant secret password
+     * @returns {string} Merchant secret password
+     */
+    public getSecret(): string {
+        return this.secretPassword;
+    }
+
+    /**
      * Set the merchant products
      * @param {Product[]} products Merchant products
      */
@@ -118,6 +139,7 @@ export default class CMAuth {
         auth.id = json.id;
         auth.name = json.name;
         auth.password = json.password;
+        auth.secretPassword = json.secretPassword;
         auth.products = json.products;
         return auth;
     }
@@ -129,6 +151,7 @@ export default class CMAuth {
                 data: {
                     name: this.name,
                     password: this.password,
+                    secretPassword: this.secretPassword,
                 },
             });
         return merchant;
@@ -173,6 +196,7 @@ export default class CMAuth {
                 data: {
                     name: this.name,
                     password: this.password,
+                    secretPassword: this.secretPassword,
                 },
             });
         return merchant;

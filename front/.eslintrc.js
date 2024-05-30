@@ -1,7 +1,11 @@
 module.exports = {
 	root: true,
 	// extends: "@react-native-community",
-	extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+	extends: [
+		'eslint:recommended',
+		'plugin:react/recommended',
+		'plugin:prettier/recommended',
+	],
 	parser: '@typescript-eslint/parser',
 	plugins: [
 		'react',
@@ -42,11 +46,8 @@ module.exports = {
 		],
 		'no-prototype-builtins': 'off',
 		'no-redeclare': 'off',
-		indent: ['error', 'tab'],
 		'simple-import-sort/imports': 'error',
 		'simple-import-sort/exports': 'error',
-	},
-	parserOptions: {
-		project: ['./tsconfig.json'],
+		'react/no-unescaped-entities': 'off',
 	},
 };

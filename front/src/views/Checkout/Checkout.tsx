@@ -1,18 +1,19 @@
+import { DrawerScreenProps } from '@react-navigation/drawer';
 import { useContext } from 'react';
+import { View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+
+import { Header } from '../../components/Header';
+import { Product } from '../../components/Product';
+import { AuthContext } from '../../domains/Auth/Auth';
+import { AuthStore } from '../../domains/Auth/types';
 import { CartContext } from '../../domains/Cart/Cart';
 import { CartStore } from '../../domains/Cart/types';
-import { Pressable, Text, View } from 'react-native';
 import { ProductContext } from '../../domains/Products/Products';
 import { ProductStore } from '../../domains/Products/types';
-import { Product } from '../../components/Product';
-import { DrawerScreenProps } from '@react-navigation/drawer';
-import { RootStackParamList, Routes } from '../../router/routesName';
-import { Header } from '../../components/Header';
-import { ScrollView } from 'react-native-gesture-handler';
 import { Button } from '../../domains/Templating/buttons/Button';
 import { WebsocketContext } from '../../domains/Websocket/Websocket';
-import { AuthStore } from '../../domains/Auth/types';
-import { AuthContext } from '../../domains/Auth/Auth';
+import { RootStackParamList, Routes } from '../../router/routesName';
 
 export const Checkout = ({
 	navigation,
@@ -58,7 +59,7 @@ export const Checkout = ({
 						});
 						navigation.navigate(Routes.TRANSACTION);
 					}}
-					children={`Total: ${cartStore.reduce(
+					text={`Total: ${cartStore.reduce(
 						(acc, product) => acc + product.price,
 						0
 					)}€`}

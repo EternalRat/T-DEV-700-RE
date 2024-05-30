@@ -10,7 +10,7 @@ import {
 import { Color } from '../style';
 
 interface Props {
-	children: string;
+	text: string;
 	style?: StyleProp<ViewStyle>;
 	disabled?: boolean;
 	textStyle?: StyleProp<TextStyle>;
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const Button = ({
-	children,
+	text,
 	style,
 	onClick,
 	textStyle,
@@ -27,7 +27,7 @@ export const Button = ({
 	return (
 		<TouchableOpacity onPress={onClick} disabled={disabled}>
 			<View style={[style]}>
-				<Text style={[styles.label, textStyle]}>{children}</Text>
+				<Text style={[styles.label, textStyle]}>{text}</Text>
 			</View>
 		</TouchableOpacity>
 	);

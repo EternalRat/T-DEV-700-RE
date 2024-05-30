@@ -1,8 +1,9 @@
-import { Text, View } from 'react-native';
-import { Product as IProduct } from '../domains/Products/types';
 import { useContext, useMemo } from 'react';
-import { CartStore } from '../domains/Cart/types';
+import { Text, View } from 'react-native';
+
 import { CartContext } from '../domains/Cart/Cart';
+import { CartStore } from '../domains/Cart/types';
+import { Product as IProduct } from '../domains/Products/types';
 import { Button } from '../domains/Templating/buttons/Button';
 
 interface Props {
