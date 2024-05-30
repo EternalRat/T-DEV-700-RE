@@ -44,12 +44,12 @@ jobs:
 
       - name: Checking linter
         run: |
-          cd ./front
+          cd ./tpe
           yarn lint
 
       - name: Checking typings
         run: |
-          cd ./front
+          cd ./tpe
           yarn tsc
 
       - name: Create tpe apk
