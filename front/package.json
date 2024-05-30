@@ -8,8 +8,8 @@
     "start": "react-native start",
     "test": "jest",
     "format": "prettier --write \"./src/**/*.{ts,css,md,json}\"",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx src/ --fix"
+    "lint": "npx eslint ./ --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "npx eslint ./ --ext .js,.jsx,.ts,.tsx src/ --fix"
   },
   "dependencies": {
     "@chouicgames/react-native-images-to-native-images": "https://github.com/ChouicGames/react-native-images-to-native-images.git",
