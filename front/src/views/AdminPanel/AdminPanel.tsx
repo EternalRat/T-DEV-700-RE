@@ -8,6 +8,7 @@ import { ProductContext } from '../../domains/product/Products';
 import { Product, ProductStore } from '../../domains/product/types';
 import { Color } from '../../domains/templating/style';
 import { RootStackParamList, Routes } from '../../router/routesName';
+import { Configuration } from './Items/Configuration';
 import { ManageProduct } from './Items/ManageProduct';
 import { ProductModal } from './ProductModal';
 import { SecretModal } from './SecretModal';
@@ -25,7 +26,7 @@ export interface ItemProps {
 
 const CarouselItems: Record<Items, (props: ItemProps) => JSX.Element> = {
 	[Items.PRODUCTS]: ManageProduct,
-	[Items.CONFIGURATION]: ManageProduct,
+	[Items.CONFIGURATION]: Configuration,
 };
 
 export const AdminPanel = ({

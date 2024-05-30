@@ -6,6 +6,7 @@ import { ReducerType } from '../reducer';
 export interface AuthedUser {
 	id: number;
 	name: string;
+	tpeId: string;
 }
 
 export interface AuthStore {
@@ -38,6 +39,7 @@ export enum AuthAction {
 
 export interface FillUserAction {
 	user: AuthedUser;
+	tpeId: string;
 }
 
 export type Action =

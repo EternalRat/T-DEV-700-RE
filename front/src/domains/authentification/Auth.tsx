@@ -13,12 +13,14 @@ import { MessageContext, MessageStore } from '../message/Context';
 import { ActionTypeMessage, MessageType } from '../message/types';
 import { ProductContext } from '../product/Products';
 import { ProductStore } from '../product/types';
+import { SettingsContext } from '../settings/Settings';
+import { SettingsStore } from '../settings/types';
 import { WebsocketContext } from '../socket/Websocket';
 import { reducer } from './reducer';
 import { AuthAction, AuthStore } from './types';
 
 export const defaultAuth: AuthStore = {
-	loggedUser: { id: -1, name: '' },
+	loggedUser: { id: -1, name: '', tpeId: '' },
 	login: (
 		_: string,
 		_p: string,
@@ -40,6 +42,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 		useContext<MessageStore>(MessageContext);
 	const { getProducts } = useContext<ProductStore>(ProductContext);
 	const { sendMessage } = useContext(WebsocketContext);
+	const { getSettings } = useContext<SettingsStore>(SettingsContext);
 
 	const login = useCallback(
 		async (
@@ -62,7 +65,8 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 						tpeId,
 					});
 					await getProducts(user.id, navigation);
-					dispatch({ type: AuthAction.FILL_USER, user });
+					await getSettings();
+					dispatch({ type: AuthAction.FILL_USER, user, tpeId });
 					dispatchMessage({
 						type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
 						message: 'Vous êtes connectés',
@@ -118,7 +122,11 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 					const { status, data } = res;
 					if (status === 200) {
 						const { user } = data;
-						dispatch({ type: AuthAction.FILL_USER, user });
+						dispatch({
+							type: AuthAction.FILL_USER,
+							user,
+							tpeId: '',
+						});
 						return;
 					}
 					dispatchMessage({

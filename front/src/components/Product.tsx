@@ -1,7 +1,11 @@
 import { useContext, useMemo } from 'react';
 import { Text, View } from 'react-native';
 
+import { MessageContext } from '../domains/message/Context';
+import { ActionTypeMessage, MessageType } from '../domains/message/types';
 import { Product as IProduct } from '../domains/product/types';
+import { SettingsContext } from '../domains/settings/Settings';
+import { SettingsStore } from '../domains/settings/types';
 import { CustomButton } from '../domains/templating/buttons/Button';
 import { CartContext } from '../domains/userCart/Cart';
 import { CartStore } from '../domains/userCart/types';
@@ -15,9 +19,17 @@ interface Props {
 export const Product = ({ product, isCheckout = false, quantity }: Props) => {
 	const { cartStore, addProduct, removeProduct } =
 		useContext<CartStore>(CartContext);
+	const { settings } = useContext<SettingsStore>(SettingsContext);
+	const { dispatch: dispatchMessage } = useContext(MessageContext);
 	const actualProduct = useMemo(() => {
 		return cartStore.find(productCart => productCart.id === product.id);
 	}, [cartStore, product]);
+	const maxProduct = useMemo(() => {
+		const setting = settings.find(
+			setting => setting.property === 'maxProduct'
+		);
+		return setting?.value ?? -1;
+	}, [settings]);
 
 	return (
 		<View
@@ -77,7 +89,25 @@ export const Product = ({ product, isCheckout = false, quantity }: Props) => {
 							flexDirection: 'column',
 						}}>
 						<CustomButton
-							onClick={() => addProduct(product)}
+							onClick={() => {
+								const cartSize = cartStore.reduce(
+									(acc, cart) => (acc += cart.quantity),
+									0
+								);
+								if (
+									maxProduct !== -1 &&
+									maxProduct === cartSize
+								) {
+									dispatchMessage({
+										type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
+										message: 'Panier plein',
+										typeMessage: MessageType.ERROR,
+										duration: 3000,
+									});
+									return;
+								}
+								addProduct(product);
+							}}
 							style={{
 								width: '100%',
 								height: 26,
@@ -103,7 +133,10 @@ export const Product = ({ product, isCheckout = false, quantity }: Props) => {
 							{actualProduct?.quantity ?? 0}
 						</Text>
 						<CustomButton
-							onClick={() => removeProduct(product.id)}
+							onClick={() => {
+								if (actualProduct?.quantity === 0) return;
+								removeProduct(product.id);
+							}}
 							style={{
 								width: '100%',
 								height: 26,

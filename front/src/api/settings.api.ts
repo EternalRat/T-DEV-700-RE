@@ -1,14 +1,14 @@
 import { API_URL } from '@env';
 import axios from 'axios';
 
-export const getSettings = async () => {
+export const getMerchantSettings = async () => {
 	return await axios({
 		method: 'get',
 		url: API_URL + '/api/settings',
 	});
 };
 
-export const updateSettings = async (
+export const updateMerchantSettings = async (
 	id: number,
 	property: string,
 	value: number

@@ -6,6 +6,7 @@ import { AuthWrapper } from './src/domains/authentification/Auth';
 import { MessageWrapper } from './src/domains/message/Context';
 import { Message } from './src/domains/message/Message';
 import { ProductWrapper } from './src/domains/product/Products';
+import { SettingsWrapper } from './src/domains/settings/Settings';
 import { WebsocketWrapper } from './src/domains/socket/Websocket';
 import { CartWrapper } from './src/domains/userCart/Cart';
 import { CashManagerRouter } from './src/router/Routes';
@@ -24,17 +25,19 @@ function App(): React.JSX.Element {
 					<ProductWrapper>
 						<CartWrapper>
 							<WebsocketWrapper>
-								<AuthWrapper>
-									<GestureHandlerRootView
-										style={{
-											flex: 1,
-											minHeight: '100%',
-											height: '100%',
-										}}>
-										<CashManagerRouter />
-									</GestureHandlerRootView>
-									<Message />
-								</AuthWrapper>
+								<SettingsWrapper>
+									<AuthWrapper>
+										<GestureHandlerRootView
+											style={{
+												flex: 1,
+												minHeight: '100%',
+												height: '100%',
+											}}>
+											<CashManagerRouter />
+										</GestureHandlerRootView>
+										<Message />
+									</AuthWrapper>
+								</SettingsWrapper>
 							</WebsocketWrapper>
 						</CartWrapper>
 					</ProductWrapper>
