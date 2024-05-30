@@ -92,12 +92,8 @@ describe("Product Controller", () => {
 
         await ProductController.create(req, res);
         expect(res.json).toHaveBeenCalledWith({
-            name: "Prisma Fan",
-            price: 1,
-            description: "Prisma Desc",
-            merchantId: 1,
-            type: ProductType.ELECTRONICS,
             id: 1,
+            status: "success",
         });
     });
 
@@ -191,12 +187,15 @@ describe("Product Controller", () => {
 
         await ProductController.update(req, res);
         expect(res.json).toHaveBeenCalledWith({
-            name: "Prisma Fan New",
-            price: 10,
-            description: "Prisma Desc",
-            merchantId: 1,
-            type: ProductType.ELECTRONICS,
-            id: 2,
+            product: {
+                name: "Prisma Fan New",
+                price: 10,
+                description: "Prisma Desc",
+                merchantId: 1,
+                type: ProductType.ELECTRONICS,
+                id: 2,
+            },
+            status: "success",
         });
     });
 
