@@ -1,10 +1,10 @@
 import { useContext, useMemo } from 'react';
 import { Text, View } from 'react-native';
 
-import { CartContext } from '../domains/userCart/Cart';
-import { CartStore } from '../domains/userCart/types';
 import { Product as IProduct } from '../domains/product/types';
 import { CustomButton } from '../domains/templating/buttons/Button';
+import { CartContext } from '../domains/userCart/Cart';
+import { CartStore } from '../domains/userCart/types';
 
 interface Props {
 	product: IProduct;

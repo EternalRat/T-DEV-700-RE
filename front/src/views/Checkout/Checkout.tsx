@@ -7,12 +7,12 @@ import { Header } from '../../components/Header';
 import { Product } from '../../components/Product';
 import { AuthContext } from '../../domains/authentification/Auth';
 import { AuthStore } from '../../domains/authentification/types';
-import { CartContext } from '../../domains/userCart/Cart';
-import { CartStore } from '../../domains/userCart/types';
 import { ProductContext } from '../../domains/product/Products';
 import { ProductStore } from '../../domains/product/types';
-import { CustomButton } from '../../domains/templating/buttons/Button';
 import { WebsocketContext } from '../../domains/socket/Websocket';
+import { CustomButton } from '../../domains/templating/buttons/Button';
+import { CartContext } from '../../domains/userCart/Cart';
+import { CartStore } from '../../domains/userCart/types';
 import { RootStackParamList, Routes } from '../../router/routesName';
 
 export const Checkout = ({

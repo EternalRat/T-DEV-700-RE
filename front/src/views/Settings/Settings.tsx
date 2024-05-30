@@ -8,10 +8,10 @@ import { Files } from '../../../images/ImagesTypes';
 import { Header } from '../../components/Header';
 import { AuthContext } from '../../domains/authentification/Auth';
 import { AuthStore } from '../../domains/authentification/types';
+import { WebsocketContext } from '../../domains/socket/Websocket';
 import { CustomButton } from '../../domains/templating/buttons/Button';
 import { Input } from '../../domains/templating/input/TextInput';
 import { Label } from '../../domains/templating/texts/Label';
-import { WebsocketContext } from '../../domains/socket/Websocket';
 import { RootStackParamList, Routes } from '../../router/routesName';
 import { useSettings } from './useSettings';
 
