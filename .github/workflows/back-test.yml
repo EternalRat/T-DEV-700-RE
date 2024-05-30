@@ -26,9 +26,9 @@ jobs:
           cache-name: cache-node-modules-back
         with:
           path: |
-            back/node_modules
+            ./back/node_modules
             ~/.cache/yarn
-          key: ${{ runner.os }}-yarn-back-${{ hashFiles('back/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-back-${{ hashFiles('./back/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-back-
 

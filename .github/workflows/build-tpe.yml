@@ -31,15 +31,15 @@ jobs:
           cache-name: cache-node-modules-tpe
         with:
           path: |
-            tpe/node_modules
+            ./tpe/node_modules
             ~/.cache/yarn
-          key: ${{ runner.os }}-yarn-tpe-${{ hashFiles('tpe/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-tpe-${{ hashFiles('./tpe/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-tpe-
 
       - name: Install dependencies
         run: |
-          cd ./tpe
+          cd tpe
           yarn install
 
       - name: Checking linter
@@ -55,4 +55,4 @@ jobs:
       - name: Create tpe apk
         run: |
           cd ./tpe
-          cd android && chmod +x gradlew && ./gradlew assembleDebug
+          cd android && chmod +x gradlew && ./gradlew assembleRelease

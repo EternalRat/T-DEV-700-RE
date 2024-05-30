@@ -55,4 +55,4 @@ jobs:
       - name: Create front apk
         run: |
           cd ./front/android
-          chmod +x gradlew && ./gradlew assembleDebug
+          chmod +x gradlew && ./gradlew assembleRelease
