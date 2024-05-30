@@ -8,8 +8,8 @@
     "start": "react-native start",
     "test": "jest",
     "format": "prettier --write \"./src/**/*.{ts,css,md,json}\" --config ./.prettierrc",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
+    "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "npx eslint . --ext .js,.jsx,.ts,.tsx --fix"
   },
   "dependencies": {
     "@react-navigation/native": "6.1.17",
