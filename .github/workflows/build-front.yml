@@ -31,19 +31,20 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: |
-            ./front/node_modules
+            front/node_modules
             ~/.cache/yarn
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        run: yarn install
+        run: |
+          cd front
+          yarn install
 
       - name: Checking linter
         run: |
           cd ./front
-          ls ./node_modules
           yarn lint
 
       - name: Checking typings
