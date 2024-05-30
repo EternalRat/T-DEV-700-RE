@@ -106,7 +106,6 @@ export const ProductWrapper = ({ children }: { children: React.ReactNode }) => {
 					type,
 					merchantId
 				);
-				console.log(status, id);
 				if (status !== 'success') {
 					dispatchMessage({
 						code: 'Add product failed',
@@ -188,7 +187,6 @@ export const ProductWrapper = ({ children }: { children: React.ReactNode }) => {
 					duration: 3000,
 				});
 			} catch (err) {
-				console.log(err);
 				dispatchMessage({
 					code: 'Edit product failed',
 					type: ActionTypeMessage.ADD_ERROR,

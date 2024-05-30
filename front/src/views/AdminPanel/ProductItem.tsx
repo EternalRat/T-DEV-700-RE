@@ -1,13 +1,13 @@
 import { View } from 'react-native';
+
 import { Button } from '../../domains/Templating/buttons/Button';
 
 interface Props {
 	name: string;
-	productModal: boolean;
 	onClick: () => void;
 }
 
-export const ProductItem = ({ name, productModal, onClick }: Props) => {
+export const ProductItem = ({ name, onClick }: Props) => {
 	return (
 		<View
 			style={{

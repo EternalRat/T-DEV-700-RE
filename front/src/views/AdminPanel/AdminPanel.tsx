@@ -1,16 +1,16 @@
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { Dispatch, SetStateAction, useContext, useMemo, useState } from 'react';
 import { TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import Carousel from 'react-native-reanimated-carousel';
 
 import { Header } from '../../components/Header';
 import { ProductContext } from '../../domains/Products/Products';
 import { Product, ProductStore } from '../../domains/Products/types';
-import { RootStackParamList, Routes } from '../../router/routesName';
-import { SecretModal } from './SecretModal';
-import { ProductModal } from './ProductModal';
 import { Color } from '../../domains/Templating/style';
-import Carousel from 'react-native-reanimated-carousel';
+import { RootStackParamList, Routes } from '../../router/routesName';
 import { ManageProduct } from './Items/ManageProduct';
+import { ProductModal } from './ProductModal';
+import { SecretModal } from './SecretModal';
 
 enum Items {
 	PRODUCTS,
@@ -29,6 +29,7 @@ const CarouselItems: Record<Items, (props: ItemProps) => JSX.Element> = {
 };
 
 export const AdminPanel = ({
+	// eslint-disable-next-line react/prop-types
 	navigation,
 }: DrawerScreenProps<RootStackParamList, Routes.ADMIN_PANEL>) => {
 	const { addProduct, editProduct } =
@@ -96,7 +97,7 @@ export const AdminPanel = ({
 				data={Object.keys(CarouselItems)}
 				defaultIndex={select}
 				onSnapToItem={(index: number) => setSelect(index)}
-				renderItem={({ index }: { index: number }) => {
+				renderItem={() => {
 					return (
 						<Component
 							productModal={productModal}

@@ -1,15 +1,13 @@
-import { Dispatch, SetStateAction, useContext, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
-import Images from '../../../images/Images';
-import { Files } from '../../../images/ImagesTypes';
 import { CustomModal } from '../../components/Modal';
+import { Product, ProductType } from '../../domains/Products/types';
+import { Button } from '../../domains/Templating/buttons/Button';
 import { Input } from '../../domains/Templating/input/TextInput';
 import { CONTAINER_WIDTH } from '../../domains/Templating/style';
 import { Label } from '../../domains/Templating/texts/Label';
-import { Product, ProductType } from '../../domains/Products/types';
-import { Button } from '../../domains/Templating/buttons/Button';
 
 interface Props {
 	visible: boolean;

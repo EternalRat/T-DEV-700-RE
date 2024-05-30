@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction, useContext } from 'react';
-import { ProductContext } from '../../../domains/Products/Products';
-import { ProductStore, Product } from '../../../domains/Products/types';
-import { ProductItem } from '../ProductItem';
 import { FlatList } from 'react-native';
+
+import { ProductContext } from '../../../domains/Products/Products';
+import { Product, ProductStore } from '../../../domains/Products/types';
+import { ProductItem } from '../ProductItem';
 
 interface Props {
 	productModal: boolean;
@@ -24,7 +25,6 @@ export const ManageProduct = ({
 			renderItem={({ item }) => (
 				<ProductItem
 					name={item.name}
-					productModal={productModal}
 					onClick={() => {
 						setProductModal(!productModal);
 						setSelectedProduct(item);

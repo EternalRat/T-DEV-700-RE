@@ -1,13 +1,13 @@
 import NativeImage from '@chouicgames/react-native-images-to-native-images';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { Dispatch, SetStateAction, useContext } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import Images, { Files } from '../../images/Images';
-import { RootStackParamList, Routes } from '../router/routesName';
-import { Dispatch, SetStateAction, useContext } from 'react';
-import { AuthStore } from '../domains/Auth/types';
 import { AuthContext } from '../domains/Auth/Auth';
+import { AuthStore } from '../domains/Auth/types';
 import { Product, ProductType } from '../domains/Products/types';
+import { RootStackParamList, Routes } from '../router/routesName';
 
 interface Props {
 	title: string;
@@ -23,7 +23,6 @@ export const Header = ({
 	setSelectedProduct,
 }: Props) => {
 	const { loggedUser } = useContext<AuthStore>(AuthContext);
-	console.log(loggedUser);
 
 	return (
 		<View

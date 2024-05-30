@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import { getSettings } from '../../../api/settings.api';
 
 interface Settings {
