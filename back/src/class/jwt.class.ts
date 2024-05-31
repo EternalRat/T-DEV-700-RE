@@ -1,11 +1,10 @@
-import { User } from '@prisma/client';
+import { Merchant } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import passportJWT from 'passport-jwt';
 
 import CMAuth from './auth.class';
-import CMUser from './user.class';
 const JwtStrategy = passportJWT.Strategy;
 const ExtractJwt = passportJWT.ExtractJwt;
 
@@ -61,20 +60,14 @@ export class JWT {
 			authHeader,
 			JWT.getInstance()._secret,
 			async (err: any, user: any) => {
-				if (err)
+				if (err) {
 					return res.status(403).json({
 						message: 'Invalid token',
 						status: 403,
 					});
-				const fetchedUser = await CMUser.fetchById((user as User).id);
-				if (!fetchedUser) {
-					return res.status(403).json({
-						message: 'User inexistant',
-						status: 403,
-					});
 				}
-				req.user = user as User;
-				if (!(await CMAuth.fetchById((req.user! as User).id)))
+				req.user = user as Merchant;
+				if (!(await CMAuth.fetchById((req.user! as Merchant).id)))
 					return res.status(403).json({
 						message: 'Invalid token',
 						status: 403,

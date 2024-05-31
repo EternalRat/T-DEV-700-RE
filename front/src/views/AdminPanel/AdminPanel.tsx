@@ -97,6 +97,9 @@ export const AdminPanel = ({
 				loop={false}
 				data={Object.keys(CarouselItems)}
 				defaultIndex={select}
+				panGestureHandlerProps={{
+					activeOffsetX: [-20, 20],
+				}}
 				onSnapToItem={(index: number) => setSelect(index)}
 				renderItem={() => {
 					return (

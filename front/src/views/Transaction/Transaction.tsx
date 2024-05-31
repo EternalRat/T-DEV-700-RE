@@ -11,12 +11,16 @@ import { RootStackParamList, Routes } from '../../router/routesName';
 export const Transaction = ({
 	navigation,
 }: DrawerScreenProps<RootStackParamList, Routes.TRANSACTION>) => {
-	const { awaitingPayment } = useContext(WebsocketContext);
+	const { paymentDetail } = useContext(WebsocketContext);
 	const { dispatch: dispatchMessage } =
 		useContext<MessageStore>(MessageContext);
 
 	useEffect(() => {
-		if (!awaitingPayment) {
+		if (
+			!paymentDetail.waiting &&
+			!paymentDetail.error &&
+			!paymentDetail.alreadyWaiting
+		) {
 			dispatchMessage({
 				typeMessage: MessageType.SUCCESS,
 				type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
@@ -26,8 +30,28 @@ export const Transaction = ({
 			setTimeout(() => {
 				navigation.navigate(Routes.SHOP);
 			}, 3000);
+		} else if (!paymentDetail.waiting && paymentDetail.error) {
+			dispatchMessage({
+				typeMessage: MessageType.ERROR,
+				type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
+				message: 'Erreur lors du paiement',
+				duration: 3000,
+			});
+			setTimeout(() => {
+				navigation.navigate(Routes.CHECKOUT);
+			}, 3000);
+		} else if (!paymentDetail.waiting && paymentDetail.alreadyWaiting) {
+			dispatchMessage({
+				typeMessage: MessageType.ERROR,
+				type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
+				message: 'Une autre transaction est déjà en cours',
+				duration: 3000,
+			});
+			setTimeout(() => {
+				navigation.navigate(Routes.CHECKOUT);
+			}, 3000);
 		}
-	}, [awaitingPayment]);
+	}, [paymentDetail]);
 
 	return (
 		<View
@@ -40,9 +64,11 @@ export const Transaction = ({
 				flex: 1,
 			}}>
 			<Title>
-				{awaitingPayment
+				{paymentDetail.waiting
 					? 'En attente du paiement...'
-					: 'Paiement effectué.'}
+					: !paymentDetail.error && !paymentDetail.alreadyWaiting
+					? 'Paiement effectué.'
+					: "Une erreur s'est produite."}
 			</Title>
 		</View>
 	);

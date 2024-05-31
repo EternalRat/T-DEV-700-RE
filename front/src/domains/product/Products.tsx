@@ -82,7 +82,7 @@ export const ProductWrapper = ({ children }: { children: React.ReactNode }) => {
 				});
 				navigation.navigate(Routes.SHOP);
 			} catch (err) {
-				console.error(err);
+				console.error((err as any).message);
 			}
 		},
 		[]

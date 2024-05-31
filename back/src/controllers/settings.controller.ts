@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import { Merchant } from '@prisma/client';
 import { Request, Response } from 'express';
 
 import { Configuration } from '../class/configuration.class';
@@ -11,7 +11,7 @@ export namespace SettingsController {
 	 * @return {Promise<void>} A promise that resolves when the operation is complete.
 	 */
 	export const get = async (req: Request, res: Response): Promise<void> => {
-		const id = (req.user as User).id; // Extracts the user ID from the request object
+		const id = (req.user as Merchant).id; // Extracts the user ID from the request object
 		const settings = await Configuration.fetchByMerchantId(id); // Fetches settings by merchant ID
 		if (!settings) {
 			res.status(404).send({
@@ -34,7 +34,7 @@ export namespace SettingsController {
 		res: Response
 	): Promise<void> => {
 		const { settings } = req.body; // Extracts the setting parameter from the request
-		const id = (req.user as User).id; // Extracts the user ID from the request object
+		const id = (req.user as Merchant).id; // Extracts the user ID from the request object
 		const configuration = Configuration.fromJSON({
 			...settings, // Parses the setting parameter into a JSON object
 			merchantId: id, // Adds the merchant ID to the configuration

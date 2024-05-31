@@ -52,6 +52,7 @@ export const Product = ({ product, isCheckout = false, quantity }: Props) => {
 							fontSize: 20,
 							lineHeight: 28,
 							fontWeight: 'bold',
+							color: 'white',
 						}}>
 						{product.name}
 					</Text>
@@ -60,6 +61,7 @@ export const Product = ({ product, isCheckout = false, quantity }: Props) => {
 							fontSize: 14,
 							lineHeight: 20,
 							fontWeight: '500',
+							color: 'white',
 						}}>
 						{product.description}
 					</Text>
@@ -68,6 +70,7 @@ export const Product = ({ product, isCheckout = false, quantity }: Props) => {
 							fontSize: 14,
 							lineHeight: 20,
 							fontWeight: '500',
+							color: 'white',
 						}}>
 						{product.price}
 					</Text>
@@ -79,8 +82,10 @@ export const Product = ({ product, isCheckout = false, quantity }: Props) => {
 							height: '100%',
 							flexDirection: 'column',
 						}}>
-						<Text>{quantity}</Text>
-						<Text>Prix total: {product.price * quantity!}€</Text>
+						<Text style={{ color: 'white' }}>{quantity}</Text>
+						<Text style={{ color: 'white' }}>
+							Prix total: {product.price * quantity!}€
+						</Text>
 					</View>
 				) : (
 					<View
@@ -130,6 +135,7 @@ export const Product = ({ product, isCheckout = false, quantity }: Props) => {
 								lineHeight: 20,
 								fontWeight: '500',
 								textAlign: 'center',
+								color: 'white',
 							}}>
 							{actualProduct?.quantity ?? 0}
 						</Text>

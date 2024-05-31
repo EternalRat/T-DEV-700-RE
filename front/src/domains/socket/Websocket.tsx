@@ -1,4 +1,5 @@
 import { API_URL } from '@env';
+import { useNavigation } from '@react-navigation/native';
 import {
 	createContext,
 	useCallback,
@@ -9,6 +10,7 @@ import {
 } from 'react';
 import { io, Socket } from 'socket.io-client';
 
+import { Routes } from '../../router/routesName';
 import { MessageContext, MessageStore } from '../message/Context';
 import { ActionTypeMessage, MessageType } from '../message/types';
 import { CartContext } from '../userCart/Cart';
@@ -18,11 +20,19 @@ type TpeId = string;
 
 export const WebsocketContext = createContext<{
 	sendMessage: (_e: string, _: any) => void;
-	awaitingPayment: boolean;
+	paymentDetail: {
+		waiting: boolean;
+		error: boolean;
+		alreadyWaiting: boolean;
+	};
 	tpeInformations: TpeId[];
 }>({
 	sendMessage: (_e: string, _: any) => {},
-	awaitingPayment: false,
+	paymentDetail: {
+		waiting: false,
+		error: false,
+		alreadyWaiting: false,
+	},
 	tpeInformations: [],
 });
 
@@ -31,11 +41,16 @@ export const WebsocketWrapper = ({
 }: {
 	children: React.ReactNode;
 }) => {
-	const [awaitingPayment, setAwaitingPayment] = useState<boolean>(false);
+	const [paymentDetail, setPaymentDetail] = useState<{
+		waiting: boolean;
+		error: boolean;
+		alreadyWaiting: boolean;
+	}>({ waiting: false, error: false, alreadyWaiting: false });
 	const { clearCart } = useContext<CartStore>(CartContext);
 	const { dispatch: dispatchMessage } =
 		useContext<MessageStore>(MessageContext);
 	const [tpeInformations, setTpeInformations] = useState<TpeId[]>([]);
+	const navigation = useNavigation();
 	const socket = useMemo<Socket>(
 		() =>
 			io(API_URL, {
@@ -61,7 +76,11 @@ export const WebsocketWrapper = ({
 			console.info('payment-client');
 			if (data.status === 'success') {
 				clearCart();
-				setAwaitingPayment(false);
+				setPaymentDetail({
+					waiting: false,
+					error: false,
+					alreadyWaiting: false,
+				});
 				dispatchMessage({
 					message: 'Paiement effectué',
 					typeMessage: MessageType.SUCCESS,
@@ -99,7 +118,11 @@ export const WebsocketWrapper = ({
 				code: 'La validation du paiement a échoué',
 				duration: 3000,
 			});
-			setAwaitingPayment(false);
+			setPaymentDetail({
+				waiting: false,
+				error: true,
+				alreadyWaiting: false,
+			});
 		});
 
 		socket.on('client-waiting', () => {
@@ -109,7 +132,22 @@ export const WebsocketWrapper = ({
 				code: 'Un client attend déjà une validation de paiement',
 				duration: 3000,
 			});
-			setAwaitingPayment(false);
+			setPaymentDetail({
+				waiting: false,
+				error: false,
+				alreadyWaiting: true,
+			});
+		});
+
+		socket.on('tpe-disconnected', args => {
+			console.info('tpe-disconnected');
+			setTpeInformations(args.allTpe);
+			navigation.navigate(Routes.SETTINGS as never);
+			dispatchMessage({
+				type: ActionTypeMessage.ADD_ERROR,
+				code: "Le TPE s'est déconnecté",
+				duration: 3000,
+			});
 		});
 
 		socket.on('payment-validated', () => {
@@ -135,15 +173,25 @@ export const WebsocketWrapper = ({
 		(eventName: string, message: any) => {
 			if (socket) {
 				socket.emit(eventName, message);
-				if (eventName === 'validate-payment') setAwaitingPayment(true);
+				if (eventName === 'validate-payment') {
+					setPaymentDetail({
+						waiting: true,
+						error: false,
+						alreadyWaiting: false,
+					});
+				}
 			}
 		},
 		[socket]
 	);
 
 	const value = useMemo(
-		() => ({ sendMessage, awaitingPayment, tpeInformations }),
-		[tpeInformations, awaitingPayment]
+		() => ({
+			sendMessage,
+			tpeInformations,
+			paymentDetail,
+		}),
+		[tpeInformations, paymentDetail]
 	);
 
 	return (

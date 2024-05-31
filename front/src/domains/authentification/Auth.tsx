@@ -80,7 +80,6 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 					duration: 3000,
 				});
 			} catch (err: any) {
-				console.error(err);
 				dispatchMessage({
 					type: ActionTypeMessage.ADD_ERROR,
 					code: 'LOGIN_FAILED ' + err.message,
@@ -105,7 +104,6 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 
 	const logout = useCallback(() => {
 		dispatch({ type: AuthAction.LOGOUT });
-		localStorage.removeItem('token');
 	}, []);
 
 	const health = useCallback(

@@ -8,6 +8,8 @@ import { Product } from '../../components/Product';
 import { MessageContext } from '../../domains/message/Context';
 import { ActionTypeMessage } from '../../domains/message/types';
 import { CustomButton } from '../../domains/templating/buttons/Button';
+import { CartContext } from '../../domains/userCart/Cart';
+import { CartStore } from '../../domains/userCart/types';
 import { RootStackParamList, Routes } from '../../router/routesName';
 import { useShop } from './useShop';
 
@@ -16,6 +18,7 @@ export const Shop = ({
 }: DrawerScreenProps<RootStackParamList, Routes>) => {
 	const { productStore, loggedUser, totalPrice } = useShop();
 	const { dispatch: dispatchMessage } = useContext(MessageContext);
+	const { cartStore } = useContext<CartStore>(CartContext);
 
 	return (
 		<View
@@ -35,6 +38,7 @@ export const Shop = ({
 					</ScrollView>
 					<View style={{ height: 60 }}>
 						<CustomButton
+							disabled={cartStore.length === 0}
 							onClick={() => {
 								if (loggedUser.tpeId.length === 0) {
 									dispatchMessage({

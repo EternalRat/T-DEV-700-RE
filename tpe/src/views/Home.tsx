@@ -8,7 +8,7 @@ import { RootStackParamList, Routes } from '../router/routesName';
 export const Home = ({
 	navigation,
 }: NativeStackScreenProps<RootStackParamList, Routes.HOME>) => {
-	const { screen, setScreen, metadata } = useContext(WebsocketContext);
+	const { metadata } = useContext(WebsocketContext);
 
 	return (
 		<View
@@ -19,11 +19,12 @@ export const Home = ({
 				padding: 16,
 				gap: 16,
 				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center',
 			}}>
 			<View
 				style={{
-					backgroundColor:
-						screen !== Routes.NFC ? '#99ffa0a8' : '#52ff5d9d',
+					backgroundColor: '#99ffa0a8',
 					height: '20%',
 					width: '100%',
 				}}>
@@ -34,20 +35,16 @@ export const Home = ({
 						height: '100%',
 						width: '100%',
 					}}
+					disabled={metadata.price === -1}
 					onPress={() => {
-						if (screen == Routes.NFC) {
-							setScreen(Routes.HOME);
-							return;
-						}
-						setScreen(Routes.NFC);
+						navigation.navigate(Routes.NFC);
 					}}>
 					<Text style={{ color: '#000' }}>NFC</Text>
 				</Pressable>
 			</View>
 			<View
 				style={{
-					backgroundColor:
-						screen !== Routes.QRSCANNER ? '#9b9dfea8' : '#6c6fff9d',
+					backgroundColor: '#9b9dfea8',
 					height: '20%',
 					width: '100%',
 				}}>
@@ -58,12 +55,9 @@ export const Home = ({
 						height: '100%',
 						width: '100%',
 					}}
+					disabled={metadata.price === -1}
 					onPress={() => {
-						if (screen == Routes.QRSCANNER) {
-							setScreen(Routes.HOME);
-							return;
-						}
-						setScreen(Routes.QRSCANNER);
+						navigation.navigate(Routes.QRSCANNER);
 					}}>
 					<Text style={{ color: '#000' }}>QRCode</Text>
 				</Pressable>
@@ -102,26 +96,6 @@ export const Home = ({
 					</Text>
 				</View>
 			)}
-			<View
-				style={{
-					backgroundColor: '#777',
-					height: 80,
-					width: '100%',
-					bottom: 0,
-				}}>
-				<Pressable
-					style={{
-						width: '100%',
-						height: 80,
-						justifyContent: 'center',
-						alignItems: 'center',
-					}}
-					onPress={() => {
-						navigation.navigate(screen);
-					}}>
-					<Text>Enter Screen</Text>
-				</Pressable>
-			</View>
 		</View>
 	);
 };

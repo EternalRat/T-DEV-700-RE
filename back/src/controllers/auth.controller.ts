@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import { Merchant } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
@@ -92,7 +92,7 @@ export namespace AuthController {
 	 * @returns {Promise<void>} A promise that resolves when the operation is complete.
 	 */
 	export const checkSecretPassword = async (req: Request, res: Response) => {
-		const connectedUser = req.user as User;
+		const connectedUser = req.user as Merchant;
 		try {
 			const user = await CMAuth.fetchById(connectedUser.id);
 			if (!user) {

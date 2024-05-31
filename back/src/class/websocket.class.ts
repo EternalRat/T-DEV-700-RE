@@ -63,6 +63,22 @@ export default class CMWebSocket {
 			this._clients[socket.id] = DEFAULT_CLIENT;
 			socket.on('disconnect', () => {
 				console.info('Client disconnected');
+				if (this._clients[socket.id].isMerchant) {
+					const tpes = [];
+					for (const [id, client] of Object.entries(this._clients)) {
+						if (client.isMerchant && id !== socket.id) {
+							tpes.push(id);
+						}
+					}
+					for (const [id, client] of Object.entries(this._clients)) {
+						if (client.isUser && client.tpeId === socket.id) {
+							this._clients[id].tpeId = undefined;
+							socket
+								.to(id)
+								.emit('tpe-disconnected', { allTpe: tpes });
+						}
+					}
+				}
 				socket.leave('tpe');
 				socket.leave('client');
 				delete this._clients[socket.id];
@@ -119,6 +135,7 @@ export default class CMWebSocket {
 						socket.emit('client-waiting');
 						return;
 					}
+					this._clients[tpeSocket].isWaiting = false;
 					socket.to(tpeSocket).emit('asking-payment', {
 						status: 'success',
 						price: args.amount,
@@ -133,6 +150,7 @@ export default class CMWebSocket {
 
 			socket.on('payment', async args => {
 				console.info('Payment received', args);
+				this._clients[socket.id].isWaiting = true;
 				const merchantSocket = Object.keys(this._clients).find(
 					key =>
 						this._clients[key].isUser &&

@@ -1,8 +1,6 @@
 import { API_URL } from '@env';
 import {
 	createContext,
-	Dispatch,
-	SetStateAction,
 	useCallback,
 	useContext,
 	useEffect,
@@ -11,7 +9,6 @@ import {
 } from 'react';
 import { io, Socket } from 'socket.io-client';
 
-import { Routes } from '../../router/routesName';
 import { MessageContext, MessageStore } from '../Message/Context';
 import { ActionTypeMessage, MessageType } from '../Message/types';
 
@@ -24,14 +21,10 @@ export const WebsocketContext = createContext<{
 	sendMessage: (_e: string, _: any) => void;
 	awaitingPayment: boolean;
 	metadata: Metadata;
-	screen: Routes;
-	setScreen: Dispatch<SetStateAction<Routes>>;
 }>({
 	sendMessage: (_e: string, _: any) => {},
 	awaitingPayment: false,
 	metadata: { price: 0, merchantId: '' },
-	screen: Routes.HOME,
-	setScreen: (_: SetStateAction<Routes>) => {},
 });
 
 export const WebsocketWrapper = ({
@@ -39,7 +32,6 @@ export const WebsocketWrapper = ({
 }: {
 	children: React.ReactNode;
 }) => {
-	const [screen, setScreen] = useState<Routes>(Routes.HOME);
 	const [awaitingPayment, setAwaitingPayment] = useState<boolean>(false);
 	const { dispatch: dispatchMessage } =
 		useContext<MessageStore>(MessageContext);
@@ -123,8 +115,8 @@ export const WebsocketWrapper = ({
 	);
 
 	const value = useMemo(
-		() => ({ sendMessage, awaitingPayment, metadata, screen, setScreen }),
-		[awaitingPayment, metadata, screen]
+		() => ({ sendMessage, awaitingPayment, metadata }),
+		[awaitingPayment, metadata]
 	);
 
 	return (
