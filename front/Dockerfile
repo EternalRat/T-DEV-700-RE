@@ -35,5 +35,3 @@ WORKDIR /app
 RUN mkdir -p ./build-apk/
 
 RUN mv ./android/app/build/outputs/apk/release/app-release.apk ./build-apk/client.apk
-
-ENTRYPOINT ["tail", "-f", "/dev/null"]
