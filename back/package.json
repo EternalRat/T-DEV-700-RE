@@ -12,7 +12,7 @@
     "format": "prettier --write \"./src/**/*.{js,ts,md,json}\"",
     "test:unit": "vitest --coverage.enabled true -c ./vitest.config.unit.ts",
     "test:unit:ui": "vitest -c ./vitest.config.unit.ts --ui",
-    "docs": "typedoc --out docs ./src/**/*.ts"
+    "docs": "typedoc --out ../docs ./src/**/*.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
