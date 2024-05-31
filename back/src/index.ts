@@ -12,6 +12,7 @@ import routes from "./routes";
 import CMWebSocket from "./class/websocket.class";
 import http from "http";
 import { JWT } from "./class/jwt.class";
+import { swaggerDoc } from "./utils/swagger";
 
 // Init the database client and create the instance
 DatabaseClient.getDatabaseInstance();
@@ -45,6 +46,8 @@ expressApp.get("/:file", (req: any, res: any) => {
         res.download("./build/client/client.apk");
     }
 });
+
+swaggerDoc(expressApp);
 
 httpServer.listen(PORT as number, () => {
     console.info(`⚡️ App listening on port ${PORT}`);
