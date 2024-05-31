@@ -12,5 +12,6 @@ export const Label = ({ children, style }: Props) => {
 const styles = StyleSheet.create({
 	label: {
 		fontSize: 14,
+		color: '#fff',
 	},
 });

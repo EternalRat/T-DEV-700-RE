@@ -18,7 +18,7 @@ import { useSettings } from './useSettings';
 export const Settings = ({
 	navigation,
 }: DrawerScreenProps<RootStackParamList, Routes.SETTINGS>) => {
-	const { loggedUser, login } = useContext<AuthStore>(AuthContext);
+	const { loggedUser, login, updateTPE } = useContext<AuthStore>(AuthContext);
 	const { auth, setUsername, setPassword, setTpeId } = useSettings();
 	const { tpeInformations, sendMessage } = useContext(WebsocketContext);
 
@@ -42,6 +42,7 @@ export const Settings = ({
 					<View
 						style={{
 							paddingBottom: 16,
+							width: '100%',
 						}}>
 						<Label style={{ color: '#fff' }}>
 							Nom d'utilisateur
@@ -75,6 +76,8 @@ export const Settings = ({
 						</Label>
 						<RNPickerSelect
 							style={{
+								inputAndroid: { color: '#fff' },
+								inputIOS: { color: '#fff' },
 								viewContainer: {
 									marginRight: 16,
 								},
@@ -179,6 +182,7 @@ export const Settings = ({
 								merchantId: loggedUser.id,
 								tpeId: auth.tpeId,
 							});
+							updateTPE(auth.tpeId);
 						}}
 						text='Se connecter'
 					/>

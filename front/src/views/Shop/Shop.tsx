@@ -13,7 +13,7 @@ import { useShop } from './useShop';
 
 export const Shop = ({
 	navigation,
-}: DrawerScreenProps<RootStackParamList, Routes.SHOP>) => {
+}: DrawerScreenProps<RootStackParamList, Routes>) => {
 	const { productStore, loggedUser, totalPrice } = useShop();
 	const { dispatch: dispatchMessage } = useContext(MessageContext);
 

@@ -76,7 +76,7 @@ export const DrawerContent = (props: DrawerContentComponentProps) => {
 						)}
 					/>
 					<DrawerItem
-						label={'Gérer les produits'}
+						label={'Gérer la boutique'}
 						onPress={() => {
 							props.navigation.reset({
 								routes: [{ name: Routes.ADMIN_PANEL }],

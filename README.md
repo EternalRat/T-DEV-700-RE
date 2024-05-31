@@ -39,3 +39,6 @@ When ngrok is running, create a .env in both tpe and front folder with the follo
 `API_URL=<ngrok_ip>`. Your ngrok ip will be display on the ngrok cli on the "Forwarding" line.
 
 Then run the command `docker compose up -d --build front tpe` or front then tpe and wait something like probably 10minutes.
+
+Once everything docker has finished, you can download the apk from the following url :
+`http://{local_ip}:8080/{client/tpe}.apk.

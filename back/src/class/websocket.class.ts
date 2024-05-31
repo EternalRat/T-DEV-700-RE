@@ -51,13 +51,10 @@ export default class CMWebSocket {
                 socket.emit("tpe-connected");
                 socket.join("tpe");
                 const tpes = [];
-                for (const tpe of this._io.sockets.adapter
-                    .socketRooms(socket.id)!
-                    .values()) {
-                    tpes.push(tpe);
-                }
-                if (tpes.includes("tpe")) {
-                    tpes.splice(tpes.indexOf("tpe"));
+                for (const [id, client] of Object.entries(this._clients)) {
+                    if (client.isMerchant) {
+                        tpes.push(id);
+                    }
                 }
                 socket.to("client").emit("new-tpe", { allTpe: tpes });
             });
@@ -75,11 +72,9 @@ export default class CMWebSocket {
             socket.on("link-client", (args) => {
                 console.log("Client linked");
                 const tpes = [];
-                if (this._io.sockets.adapter.rooms.get("tpe")) {
-                    for (const tpe of this._io.sockets.adapter.rooms
-                        .get("tpe")!
-                        .values()) {
-                        tpes.push(tpe);
+                for (const [id, client] of Object.entries(this._clients)) {
+                    if (client.isMerchant) {
+                        tpes.push(id);
                     }
                 }
                 socket.emit("new-tpe", { allTpe: tpes });
@@ -127,10 +122,13 @@ export default class CMWebSocket {
                         const cmUser = CMUser.fromJSON(user);
                         cmUser.setAmount(cmUser.getAmount() - args.price);
                         await cmUser.update();
+                        this._io.to(merchantSocket).emit("payment-client", {
+                            status: "success",
+                        });
+                        socket.emit("payment-done");
+                        return;
                     }
-                    this._io.to(merchantSocket).emit("payment-client", {
-                        status: "success",
-                    });
+                    socket.emit('payment-failed');
                 }
             });
         });

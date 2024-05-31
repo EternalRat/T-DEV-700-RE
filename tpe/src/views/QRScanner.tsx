@@ -43,7 +43,13 @@ export const QRSCanner = ({
 					});
 					dispatch({
 						type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
-						message: `Paiement en cours de ${amount}... Reprenez le client.`,
+						message: `Paiement en cours de ${
+							amount !== undefined ? amount : metadata.price
+						}... Remboursement de ${
+							amount !== undefined
+								? amount - metadata.price
+								: metadata.price
+						}. Reprenez le client.`,
 						typeMessage: MessageType.SUCCESS,
 						duration: 3000,
 					});

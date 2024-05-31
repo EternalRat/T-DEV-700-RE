@@ -1,6 +1,7 @@
 import NativeImage from '@chouicgames/react-native-images-to-native-images';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { Dispatch, SetStateAction, useContext } from 'react';
+import { useRoute } from '@react-navigation/native';
+import { Dispatch, SetStateAction, useContext, useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import Images, { Files } from '../../images/Images';
@@ -22,7 +23,14 @@ export const Header = ({
 	setProductModal,
 	setSelectedProduct,
 }: Props) => {
-	const { loggedUser } = useContext<AuthStore>(AuthContext);
+	const { loggedUser, health } = useContext<AuthStore>(AuthContext);
+	const { name } = useRoute();
+
+	useEffect(() => {
+		if (name !== Routes.SETTINGS) {
+			health(navigation);
+		}
+	}, [name]);
 
 	return (
 		<View
@@ -35,7 +43,7 @@ export const Header = ({
 				marginBottom: 16,
 			}}>
 			<View style={{ position: 'absolute', left: 0 }}>
-				{loggedUser.id !== -1 && (
+				{loggedUser.id !== -1 && name !== Routes.TRANSACTION && (
 					<TouchableOpacity onPress={() => navigation.openDrawer()}>
 						<NativeImage
 							file={Images[Files.hamburger]}

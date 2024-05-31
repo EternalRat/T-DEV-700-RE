@@ -1,13 +1,19 @@
 import { SetStateAction } from 'react';
-import { Modal } from 'react-native';
+import { Modal, TouchableWithoutFeedback } from 'react-native';
 
 interface Props {
 	children: React.ReactNode;
 	visible: boolean;
 	setVisible: (value: SetStateAction<boolean>) => void;
+	canBeClosed?: boolean;
 }
 
-export const CustomModal = ({ children, visible, setVisible }: Props) => (
+export const CustomModal = ({
+	children,
+	visible,
+	setVisible,
+	canBeClosed = false,
+}: Props) => (
 	<Modal
 		animationType='slide'
 		transparent={true}
@@ -15,6 +21,11 @@ export const CustomModal = ({ children, visible, setVisible }: Props) => (
 		onRequestClose={() => {
 			setVisible(!visible);
 		}}>
-		{children}
+		<TouchableWithoutFeedback
+			onPress={() => {
+				if (canBeClosed) setVisible(false);
+			}}>
+			{children}
+		</TouchableWithoutFeedback>
 	</Modal>
 );

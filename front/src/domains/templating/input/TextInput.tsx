@@ -9,10 +9,12 @@ import {
 	TextInput,
 	TextInputChangeEventData,
 	TextStyle,
+	TouchableWithoutFeedback,
 	View,
 } from 'react-native';
+import { Keyboard } from 'react-native';
 
-import { Color, CONTAINER_WIDTH } from '../style';
+import { Color } from '../style';
 
 interface Props {
 	value: string;
@@ -67,45 +69,47 @@ export const Input = ({
 	width = '100%',
 }: Props) => {
 	return (
-		<View
-			style={{
-				display: 'flex',
-				flexDirection: 'row',
-				alignItems: 'center',
-				width: width,
-				paddingTop: 5,
-			}}>
-			{icon && (
-				<View
-					style={{
-						width: 30,
-						height: 40,
-						backgroundColor: Color.GREY,
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-					}}>
-					<NativeImage
-						file={icon}
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+			<View
+				style={{
+					display: 'flex',
+					flexDirection: 'row',
+					alignItems: 'center',
+					width: width,
+					paddingTop: 5,
+				}}>
+				{icon && (
+					<View
 						style={{
-							width: 18,
-							height: '100%',
-							resizeMode: 'contain',
-							tintColor: Color.BLACK,
-							...imageStyle,
-						}}
-					/>
-				</View>
-			)}
-			<TextInput
-				keyboardType={keyboardType}
-				textContentType={type}
-				style={[styles.input, style]}
-				value={value}
-				onChange={updateText}
-				secureTextEntry={secured}
-			/>
-		</View>
+							width: 30,
+							height: 40,
+							backgroundColor: Color.GREY,
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+						}}>
+						<NativeImage
+							file={icon}
+							style={{
+								width: 18,
+								height: '100%',
+								resizeMode: 'contain',
+								tintColor: Color.BLACK,
+								...imageStyle,
+							}}
+						/>
+					</View>
+				)}
+				<TextInput
+					keyboardType={keyboardType}
+					textContentType={type}
+					style={[styles.input, style]}
+					value={value}
+					onChange={updateText}
+					secureTextEntry={secured}
+				/>
+			</View>
+		</TouchableWithoutFeedback>
 	);
 };
 
@@ -114,9 +118,10 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		borderColor: Color.BORDER,
 		borderWidth: 1,
-		width: CONTAINER_WIDTH - 30,
+		width: '85%',
 		height: 39.5,
 		paddingLeft: 8,
 		left: -1,
+		color: '#FFFFFF',
 	},
 });

@@ -25,6 +25,7 @@ export const Product = ({ product, isCheckout = false, quantity }: Props) => {
 		return cartStore.find(productCart => productCart.id === product.id);
 	}, [cartStore, product]);
 	const maxProduct = useMemo(() => {
+		if (!settings) return;
 		const setting = settings.find(
 			setting => setting.property === 'maxProduct'
 		);
@@ -134,7 +135,7 @@ export const Product = ({ product, isCheckout = false, quantity }: Props) => {
 						</Text>
 						<CustomButton
 							onClick={() => {
-								if (actualProduct?.quantity === 0) return;
+								if (!actualProduct) return;
 								removeProduct(product.id);
 							}}
 							style={{

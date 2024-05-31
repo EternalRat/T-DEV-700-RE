@@ -4,6 +4,7 @@ import {
 	AuthedUser,
 	AuthReducer,
 	FillUserAction,
+	UpdateTpeAction,
 } from './types';
 
 const configReducer: AuthReducer = {
@@ -15,6 +16,11 @@ const configReducer: AuthReducer = {
 	},
 	[AuthAction.LOGOUT]: (_s: AuthedUser, _a: Action) => {
 		return { id: -1, name: '', tpeId: '' };
+	},
+	[AuthAction.UPDATE_TPE]: (state: AuthedUser, action: Action) => {
+		const newState = JSON.parse(JSON.stringify(state)) as AuthedUser;
+		newState.tpeId = (action as UpdateTpeAction).tpeId;
+		return newState;
 	},
 };
 

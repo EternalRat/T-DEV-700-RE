@@ -44,7 +44,20 @@ export const SecretModal = () => {
 						style={{ width: '90%' }}
 					/>
 					<CustomButton
-						text='Submit'
+						style={{
+							backgroundColor: 'white',
+							height: 40,
+							width: 180,
+							display: 'flex',
+							alignSelf: 'center',
+							justifyContent: 'center',
+							borderRadius: 5,
+						}}
+						textStyle={{
+							color: 'black',
+							textAlign: 'center',
+						}}
+						text='Vérification'
 						onClick={() => {
 							accessPanelAdmin(password).then(val => {
 								if (val) {

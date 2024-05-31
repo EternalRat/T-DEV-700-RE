@@ -32,10 +32,10 @@ export namespace SettingsController {
         req: Request,
         res: Response,
     ): Promise<void> => {
-        const { setting } = req.params; // Extracts the setting parameter from the request
+        const { settings } = req.body; // Extracts the setting parameter from the request
         const id = (req.user as User).id; // Extracts the user ID from the request object
         const configuration = Configuration.fromJSON({
-            ...JSON.parse(setting), // Parses the setting parameter into a JSON object
+            ...settings, // Parses the setting parameter into a JSON object
             merchantId: id, // Adds the merchant ID to the configuration
         });
         try {

@@ -11,7 +11,7 @@ import {
 	updateMerchantSettings,
 } from '../../api/settings.api';
 import { MessageContext, MessageStore } from '../message/Context';
-import { ActionTypeMessage } from '../message/types';
+import { ActionTypeMessage, MessageType } from '../message/types';
 import { reducer } from './reducer';
 import { ActionTypeSettings, SettingsStore } from './types';
 
@@ -40,7 +40,10 @@ export const SettingsWrapper = ({
 		try {
 			const response = await getMerchantSettings();
 			const { data } = response;
-			dispatch({ type: ActionTypeSettings.GET_SETTINGS, settings: data });
+			dispatch({
+				type: ActionTypeSettings.GET_SETTINGS,
+				settings: data.settings,
+			});
 		} catch {
 			dispatchMessage({
 				type: ActionTypeMessage.ADD_ERROR,
@@ -59,6 +62,12 @@ export const SettingsWrapper = ({
 					id,
 					property,
 					value,
+				});
+				dispatchMessage({
+					type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
+					message: 'Settings mit à jour',
+					typeMessage: MessageType.SUCCESS,
+					duration: 3000,
 				});
 			} catch {
 				dispatchMessage({

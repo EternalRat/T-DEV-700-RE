@@ -47,8 +47,8 @@ export const ProductModal = ({
 	addProduct,
 	editProduct,
 }: Props) => (
-	<CustomModal setVisible={setVisible} visible={visible}>
-		{product && (
+	<CustomModal setVisible={setVisible} visible={visible} canBeClosed>
+		{product ? (
 			<View
 				style={{
 					width: '100%',
@@ -66,9 +66,15 @@ export const ProductModal = ({
 						gap: 16,
 						backgroundColor: '#333',
 					}}>
-					<View>
+					<View
+						style={{
+							width: '100%',
+						}}>
 						<Label>Name</Label>
 						<Input
+							style={{
+								width: '100%',
+							}}
 							value={product.name}
 							updateText={e => {
 								setProduct({
@@ -78,9 +84,15 @@ export const ProductModal = ({
 							}}
 						/>
 					</View>
-					<View>
+					<View
+						style={{
+							width: '100%',
+						}}>
 						<Label>Description</Label>
 						<Input
+							style={{
+								width: '100%',
+							}}
 							value={product.description}
 							updateText={e => {
 								setProduct({
@@ -90,12 +102,18 @@ export const ProductModal = ({
 							}}
 						/>
 					</View>
-					<View>
+					<View
+						style={{
+							width: '100%',
+						}}>
 						<Label>Type</Label>
 						<RNPickerSelect
 							style={{
 								viewContainer: {
-									width: 200,
+									width: '100%',
+									borderColor: '#fff',
+									borderWidth: 1,
+									height: 50,
 								},
 							}}
 							value={product.type}
@@ -107,9 +125,15 @@ export const ProductModal = ({
 							}
 						/>
 					</View>
-					<View>
+					<View
+						style={{
+							width: '100%',
+						}}>
 						<Label>Prix</Label>
 						<Input
+							style={{
+								width: '100%',
+							}}
 							value={product.price.toString()}
 							keyboardType='numeric'
 							updateText={e => {
@@ -125,6 +149,19 @@ export const ProductModal = ({
 					</View>
 					<View>
 						<CustomButton
+							style={{
+								backgroundColor: 'white',
+								height: 40,
+								width: 180,
+								display: 'flex',
+								alignSelf: 'center',
+								justifyContent: 'center',
+								borderRadius: 5,
+							}}
+							textStyle={{
+								color: 'black',
+								textAlign: 'center',
+							}}
 							text={product.id ? 'Modifier' : 'Créer'}
 							onClick={async () => {
 								if (
@@ -155,6 +192,8 @@ export const ProductModal = ({
 					</View>
 				</View>
 			</View>
+		) : (
+			<></>
 		)}
 	</CustomModal>
 );

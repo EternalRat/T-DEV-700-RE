@@ -23,18 +23,16 @@ export interface AuthStore {
 	) => Promise<void>;
 	logout: () => void;
 	health: (
-		navigation: DrawerNavigationProp<
-			RootStackParamList,
-			Routes.SETTINGS,
-			undefined
-		>
+		navigation: DrawerNavigationProp<RootStackParamList, Routes>
 	) => void;
 	accessPanelAdmin: (secretPassword: string) => Promise<boolean>;
+	updateTPE: (tpeId: string) => void;
 }
 
 export enum AuthAction {
 	FILL_USER = 'FILL_USER',
 	LOGOUT = 'LOGOUT',
+	UPDATE_TPE = 'UPDATE_TPE',
 }
 
 export interface FillUserAction {
@@ -42,10 +40,17 @@ export interface FillUserAction {
 	tpeId: string;
 }
 
+export interface UpdateTpeAction {
+	tpeId: string;
+}
+
 export type Action =
 	| ({
 			type: AuthAction.FILL_USER;
 	  } & FillUserAction)
+	| ({
+			type: AuthAction.UPDATE_TPE;
+	  } & UpdateTpeAction)
 	| {
 			type: AuthAction.LOGOUT;
 	  };

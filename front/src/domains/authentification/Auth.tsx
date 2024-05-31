@@ -28,10 +28,9 @@ export const defaultAuth: AuthStore = {
 		_n: DrawerNavigationProp<RootStackParamList, Routes.SETTINGS, undefined>
 	) => Promise.resolve(),
 	logout: () => {},
-	health: (
-		_n: DrawerNavigationProp<RootStackParamList, Routes.SETTINGS, undefined>
-	) => {},
+	health: (_n: DrawerNavigationProp<RootStackParamList, Routes>) => {},
 	accessPanelAdmin: (_: string) => Promise.resolve(false),
+	updateTPE: (_: string) => {},
 };
 
 export const AuthContext = createContext<AuthStore>(defaultAuth);
@@ -110,23 +109,11 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 	}, []);
 
 	const health = useCallback(
-		(
-			navigation: DrawerNavigationProp<
-				RootStackParamList,
-				Routes.SETTINGS,
-				undefined
-			>
-		) => {
+		(navigation: DrawerNavigationProp<RootStackParamList, Routes>) => {
 			loginHealth()
 				.then(res => {
 					const { status, data } = res;
 					if (status === 200) {
-						const { user } = data;
-						dispatch({
-							type: AuthAction.FILL_USER,
-							user,
-							tpeId: '',
-						});
 						return;
 					}
 					dispatchMessage({
@@ -145,8 +132,12 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 					navigation.navigate(Routes.SETTINGS);
 				});
 		},
-		[]
+		[loggedUser]
 	);
+
+	const updateTPE = useCallback((tpeId: string) => {
+		dispatch({ type: AuthAction.UPDATE_TPE, tpeId });
+	}, []);
 
 	const value = useMemo(
 		() => ({
@@ -155,6 +146,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 			logout,
 			health,
 			accessPanelAdmin,
+			updateTPE,
 		}),
 		[loggedUser]
 	);

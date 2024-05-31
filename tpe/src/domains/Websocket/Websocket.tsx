@@ -95,6 +95,19 @@ export const WebsocketWrapper = ({
 			console.info('disconnected');
 		});
 
+		socket.on('payment-done', () => {
+			setMetadata({ price: -1, merchantId: '' } as Metadata);
+			setAwaitingPayment(true);
+		});
+
+		socket.on('payment-failed', () => {
+			dispatchMessage({
+				code: 'Retentez le paiement.',
+				type: ActionTypeMessage.ADD_ERROR,
+				duration: 3000,
+			});
+		});
+
 		return () => {
 			socket.close();
 		};
@@ -104,7 +117,6 @@ export const WebsocketWrapper = ({
 		(eventName: string, message: any) => {
 			if (socket) {
 				socket.emit(eventName, message);
-				if (eventName === 'payment') setAwaitingPayment(true);
 			}
 		},
 		[socket]

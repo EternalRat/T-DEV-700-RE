@@ -8,7 +8,7 @@ import { RootStackParamList, Routes } from '../router/routesName';
 export const Home = ({
 	navigation,
 }: NativeStackScreenProps<RootStackParamList, Routes.HOME>) => {
-	const { screen, setScreen } = useContext(WebsocketContext);
+	const { screen, setScreen, metadata } = useContext(WebsocketContext);
 
 	return (
 		<View
@@ -18,6 +18,7 @@ export const Home = ({
 				width: '100%',
 				padding: 16,
 				gap: 16,
+				display: 'flex',
 			}}>
 			<View
 				style={{
@@ -67,11 +68,46 @@ export const Home = ({
 					<Text style={{ color: '#000' }}>QRCode</Text>
 				</Pressable>
 			</View>
+			{metadata.price !== -1 && (
+				<View
+					style={{
+						width: '100%',
+						height: 120,
+						display: 'flex',
+						justifyContent: 'center',
+					}}>
+					<Text
+						style={{
+							color: '#fff',
+							fontSize: 24,
+							textAlign: 'center',
+						}}>
+						Il y a un achat de :{' '}
+					</Text>
+					<Text
+						style={{
+							color: '#fff',
+							fontSize: 24,
+							textAlign: 'center',
+						}}>
+						{metadata.price}€
+					</Text>
+					<Text
+						style={{
+							color: '#fff',
+							fontSize: 24,
+							textAlign: 'center',
+						}}>
+						en attente.
+					</Text>
+				</View>
+			)}
 			<View
 				style={{
 					backgroundColor: '#777',
 					height: 80,
 					width: '100%',
+					bottom: 0,
 				}}>
 				<Pressable
 					style={{
