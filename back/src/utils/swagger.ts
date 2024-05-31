@@ -1,6 +1,4 @@
 import swaggerJSDoc from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express";
-import { Express } from "express";
 
 const swaggerOptions = {
     swaggerDefinition: {
@@ -12,16 +10,11 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: "http://localhost:8080",
+                url: "http://localhost:8080/api",
             },
         ],
     },
-    apis: ["./routes/*.ts", "index.ts"],
+    apis: ["./build/routes/**/*.js", "./build/index.js"],
 };
 
-// Initialisation de swagger-jsdoc
-const swaggerDocs = swaggerJSDoc(swaggerOptions);
-
-export const swaggerDoc = (app: Express) => {
-    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-};
+export const swaggerDocs = swaggerJSDoc(swaggerOptions);

@@ -12,7 +12,8 @@ import routes from "./routes";
 import CMWebSocket from "./class/websocket.class";
 import http from "http";
 import { JWT } from "./class/jwt.class";
-import { swaggerDoc } from "./utils/swagger";
+import { swaggerDocs } from "./utils/swagger";
+import swaggerUi from "swagger-ui-express";
 
 // Init the database client and create the instance
 DatabaseClient.getDatabaseInstance();
@@ -31,6 +32,7 @@ expressApp.use(cookieParser());
 expressApp.use(express.json());
 expressApp.use(express.urlencoded({ extended: true }));
 
+expressApp.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 expressApp.use("/api", routes);
 
 CMWebSocket.getInstance(httpServer);
@@ -46,8 +48,6 @@ expressApp.get("/:file", (req: any, res: any) => {
         res.download("./build/client/client.apk");
     }
 });
-
-swaggerDoc(expressApp);
 
 httpServer.listen(PORT as number, () => {
     console.info(`⚡️ App listening on port ${PORT}`);
