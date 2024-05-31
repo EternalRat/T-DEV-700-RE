@@ -102,7 +102,7 @@ Once that is done, you will need to build the back with the command `docker comp
 When the API is hosted and running, create a .env in both tpe and front folder with the following content :
 `API_URL=http://your_local_ip:8080`.
 
-Then run the command `docker compose up -d --build front tpe` or front then tpe and wait something like probably 10minutes.
+Then run the command `yarn android` in front then tpe on another device (tpe must be a physical one).
 
 When the server is running, you can access a swagger documentation on the following url : `http://{your_local_ip}:8080/api-docs`.
 
