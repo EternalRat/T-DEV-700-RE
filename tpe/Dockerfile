@@ -34,6 +34,6 @@ WORKDIR /app
 
 RUN mkdir -p ./build-apk/
 
-RUN mv ./android/app/build/outputs/apk/release/app-release.apk ./build-apk/client.apk
+RUN mv ./android/app/build/outputs/apk/release/app-release.apk ./build-apk/tpe.apk
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
