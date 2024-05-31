@@ -110,7 +110,7 @@ describe("Configuration Controller", () => {
     it("should update a configuration", async () => {
         const req = {} as any as Request;
         req.user = { id: 1 };
-        req.params = {
+        req.body = {
             setting: JSON.stringify({
                 id: 1,
                 property: "testProperty",
@@ -130,7 +130,7 @@ describe("Configuration Controller", () => {
     it("should handle update errors", async () => {
         const req = {} as any as Request;
         req.user = { id: 1 };
-        req.params = {
+        req.body = {
             setting: JSON.stringify({
                 id: 1,
                 property: "testProperty",
