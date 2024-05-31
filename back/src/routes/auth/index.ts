@@ -1,6 +1,7 @@
-import express from "express";
-import { AuthController } from "../../controllers/auth.controller";
-import { JWT } from "../../class/jwt.class";
+import express from 'express';
+
+import { JWT } from '../../class/jwt.class';
+import { AuthController } from '../../controllers/auth.controller';
 
 const router = express.Router();
 
@@ -30,7 +31,7 @@ const router = express.Router();
  *       403:
  *         description: Invalid credentials
  */
-router.post("/login", AuthController.login);
+router.post('/login', AuthController.login);
 
 /**
  * @swagger
@@ -46,7 +47,7 @@ router.post("/login", AuthController.login);
  *       404:
  *         description: User not found
  */
-router.get("/", JWT.authToken, AuthController.getAuthedUser);
+router.get('/', JWT.authToken, AuthController.getAuthedUser);
 
 /**
  * @swagger
@@ -76,6 +77,6 @@ router.get("/", JWT.authToken, AuthController.getAuthedUser);
  *       500:
  *         description: Internal server error
  */
-router.post("/admin", JWT.authToken, AuthController.checkSecretPassword);
+router.post('/admin', JWT.authToken, AuthController.checkSecretPassword);
 
 export default router;

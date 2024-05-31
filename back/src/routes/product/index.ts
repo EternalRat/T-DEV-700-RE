@@ -1,5 +1,6 @@
-import express from "express";
-import { ProductController } from "../../controllers/product.controller";
+import express from 'express';
+
+import { ProductController } from '../../controllers/product.controller';
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.get("/", ProductController.getAll);
+router.get('/', ProductController.getAll);
 
 /**
  * @swagger
@@ -42,7 +43,7 @@ router.get("/", ProductController.getAll);
  *       500:
  *         description: Internal server error
  */
-router.get("/:id", ProductController.get);
+router.get('/:id', ProductController.get);
 
 /**
  * @swagger
@@ -67,7 +68,7 @@ router.get("/:id", ProductController.get);
  *       500:
  *         description: Internal server error
  */
-router.get("/merchant/:id", ProductController.getByMerchantId);
+router.get('/merchant/:id', ProductController.getByMerchantId);
 
 /**
  * @swagger
@@ -97,7 +98,7 @@ router.get("/merchant/:id", ProductController.getByMerchantId);
  *       500:
  *         description: Internal server error
  */
-router.post("/", ProductController.create);
+router.post('/', ProductController.create);
 
 /**
  * @swagger
@@ -134,7 +135,7 @@ router.post("/", ProductController.create);
  *       500:
  *         description: Internal server error
  */
-router.put("/:id", ProductController.update);
+router.put('/:id', ProductController.update);
 
 /**
  * @swagger
@@ -157,7 +158,7 @@ router.put("/:id", ProductController.update);
  *       500:
  *         description: Internal server error
  */
-router.delete("/:id", ProductController.remove);
+router.delete('/:id', ProductController.remove);
 
 /**
  * @swagger
@@ -180,7 +181,7 @@ router.delete("/:id", ProductController.remove);
  *       500:
  *         description: Internal server error
  */
-router.delete("/merchant/:id", ProductController.deleteByMerchantId);
+router.delete('/merchant/:id', ProductController.deleteByMerchantId);
 
 /**
  * @swagger
@@ -196,6 +197,6 @@ router.delete("/merchant/:id", ProductController.deleteByMerchantId);
  *       500:
  *         description: Internal server error
  */
-router.delete("/", ProductController.deleteAll);
+router.delete('/', ProductController.deleteAll);
 
 export default router;

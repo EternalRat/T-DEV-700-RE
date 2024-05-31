@@ -41,4 +41,8 @@ When ngrok is running, create a .env in both tpe and front folder with the follo
 Then run the command `docker compose up -d --build front tpe` or front then tpe and wait something like probably 10minutes.
 
 Once everything docker has finished, you can download the apk from the following url :
-`http://{local_ip}:8080/{client/tpe}.apk.
+`http://{local_ip}:8080/{client/tpe}.apk`.
+
+When the server is running, you can access a swagger documentation on the following url : `http://{local_ip}:8080/api-docs`.
+
+There is also a documentation of the code at the url `https://eternalrat.github.io/T-DEV-700-RE/index.html`.

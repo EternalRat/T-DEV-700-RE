@@ -1,9 +1,8 @@
-import express from "express";
-import { SettingsController } from "../../controllers/settings.controller";
-import { JWT } from "src/class/jwt.class";
+import express from 'express';
+
+import { SettingsController } from '../../controllers/settings.controller';
 
 const router = express.Router();
-
 
 /**
  * @swagger
@@ -21,7 +20,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.get("/", SettingsController.get);
+router.get('/', SettingsController.get);
 
 /**
  * @swagger
@@ -49,7 +48,7 @@ router.get("/", SettingsController.get);
  *       500:
  *         description: Internal server error
  */
-router.patch("/", SettingsController.update);
+router.patch('/', SettingsController.update);
 
 /**
  * @swagger
@@ -65,6 +64,6 @@ router.patch("/", SettingsController.update);
  *       500:
  *         description: Internal server error
  */
-router.delete("/", SettingsController.remove);
+router.delete('/', SettingsController.remove);
 
 export default router;

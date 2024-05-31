@@ -35,5 +35,18 @@ jobs:
       - name: Install dependencies
         run: cd back && yarn install
 
+      - name: Checking linter
+        run: |
+          cd ./back
+          yarn lint
+
+      - name: Checking typings
+        run: |
+          cd ./back
+          yarn tsc
+
       - name: Run Vitest tests with coverage
         run: cd back && yarn test:unit
+
+      - name: Build the back
+        run: cd back && yarn build

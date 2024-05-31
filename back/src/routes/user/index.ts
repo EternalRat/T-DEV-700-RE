@@ -1,5 +1,6 @@
-import express from "express";
-import { UserController } from "../../controllers/user.controller";
+import express from 'express';
+
+import { UserController } from '../../controllers/user.controller';
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.get("/", UserController.getAll);
+router.get('/', UserController.getAll);
 
 /**
  * @swagger
@@ -42,7 +43,7 @@ router.get("/", UserController.getAll);
  *       500:
  *         description: Internal server error
  */
-router.get("/:id", UserController.get);
+router.get('/:id', UserController.get);
 
 /**
  * @swagger
@@ -67,7 +68,7 @@ router.get("/:id", UserController.get);
  *       500:
  *         description: Internal server error
  */
-router.get("/nfc/:id", UserController.getByNFC);
+router.get('/nfc/:id', UserController.getByNFC);
 
 /**
  * @swagger
@@ -92,7 +93,7 @@ router.get("/nfc/:id", UserController.getByNFC);
  *       500:
  *         description: Internal server error
  */
-router.get("/qrcode/:id", UserController.getByQRCode);
+router.get('/qrcode/:id', UserController.getByQRCode);
 
 /**
  * @swagger
@@ -117,7 +118,7 @@ router.get("/qrcode/:id", UserController.getByQRCode);
  *       500:
  *         description: Internal server error
  */
-router.post("/", UserController.create);
+router.post('/', UserController.create);
 
 /**
  * @swagger
@@ -149,7 +150,7 @@ router.post("/", UserController.create);
  *       500:
  *         description: Internal server error
  */
-router.put("/:id", UserController.update);
+router.put('/:id', UserController.update);
 
 /**
  * @swagger
@@ -172,7 +173,7 @@ router.put("/:id", UserController.update);
  *       500:
  *         description: Internal server error
  */
-router.delete("/:id", UserController.remove);
+router.delete('/:id', UserController.remove);
 
 /**
  * @swagger
@@ -188,6 +189,6 @@ router.delete("/:id", UserController.remove);
  *       500:
  *         description: Internal server error
  */
-router.delete("/", UserController.deleteAll);
+router.delete('/', UserController.deleteAll);
 
 export default router;

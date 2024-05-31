@@ -1,9 +1,10 @@
-import express from "express";
-import authRoutes from "./auth";
-import productRoutes from "./product";
-import userRoutes from "./user";
-import settingsRoutes from "./settings";
-import { JWT } from "../class/jwt.class";
+import express from 'express';
+
+import { JWT } from '../class/jwt.class';
+import authRoutes from './auth';
+import productRoutes from './product';
+import settingsRoutes from './settings';
+import userRoutes from './user';
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ const router = express.Router();
  *       200:
  *         description: Successful response.
  */
-router.use("/auth", authRoutes);
+router.use('/auth', authRoutes);
 
 /**
  * @swagger
@@ -29,7 +30,7 @@ router.use("/auth", authRoutes);
  *       401:
  *         description: Unauthorized.
  */
-router.use("/product", JWT.authToken, productRoutes);
+router.use('/product', JWT.authToken, productRoutes);
 
 /**
  * @swagger
@@ -42,7 +43,7 @@ router.use("/product", JWT.authToken, productRoutes);
  *       401:
  *         description: Unauthorized.
  */
-router.use("/user", JWT.authToken, userRoutes);
+router.use('/user', JWT.authToken, userRoutes);
 
 /**
  * @swagger
@@ -55,6 +56,6 @@ router.use("/user", JWT.authToken, userRoutes);
  *       401:
  *         description: Unauthorized.
  */
-router.use("/settings", JWT.authToken, settingsRoutes);
+router.use('/settings', JWT.authToken, settingsRoutes);
 
 export default router;
